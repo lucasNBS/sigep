@@ -1,0 +1,73 @@
+:root {
+  --background: #fafafa;
+  --primary: #006ec4;
+  --secondary: #c7dcf0;
+
+  --dark-100: #16151c;
+  --dark-90: #2e2b33;
+  --dark-80: #464349;
+
+  --gray-100: #a2a1a8;
+  --gray-20: #e8e8ea;
+
+  --green: #0caf60;
+  --red: #e03137;
+  --white: #fff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+@font-face {
+  font-family: "Lexend Light";
+  src: url("/static/fonts/Lexend-Light.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url("/static/fonts/Lexend-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lexend Bold";
+  src: url("/static/fonts/Lexend-Bold.ttf") format("truetype");
+  font-weight: bolder;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins Light";
+  src: url("/static/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/static/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins Bold";
+  src: url("/static/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: bolder;
+  font-style: normal;
+  font-display: swap;
+}
