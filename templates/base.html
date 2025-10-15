@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
+  {% block head %}
+  {% endblock %}
+</head>
+<body class="background">
+  <aside class="aside">
+    <header class="aside-content">
+      <h1 class="logo-container">
+        <img class="logo-image" src="{% static 'icons/Logo.svg' %}" alt="Logo da SIGEP">
+        <p class="logo-text">SIGEP</p>
+      </h1>
+      <nav class="aside-content-container">
+        <ul class="navbar-container">
+          <li class="navbar-item-container selected">
+            <img class="navbar-item-image selected" src="{% static 'icons/Panel.svg' %}" alt="Painel">
+            <a class="navbar-item-text selected" href="#">Painel</a>
+          </li>
+          <li class="navbar-item-container">
+            <img class="navbar-item-image" src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio">
+            <a class="navbar-item-text" href="#">Patrimônio</a>
+          </li>
+          <li class="navbar-item-container">
+            <img class="navbar-item-image" src="{% static 'icons/Inventory.svg' %}" alt="Inventários">
+            <a class="navbar-item-text" href="#">Inventários</a>
+          </li>
+          <li class="navbar-item-container">
+            <img class="navbar-item-image" src="{% static 'icons/Users.svg' %}" alt="Usuários">
+            <a class="navbar-item-text" href="#">Usuários</a>
+          </li>
+        </ul>
+      </nav>
+      <a class="navbar-item-container" href="#">
+        <img class="navbar-item-image" src="{% static 'icons/Logout.svg' %}" alt="Sair da Insituição">
+        <p class="navbar-item-text">Sair da Insituição</p>
+      </a>
+    </header>
+  </aside>
+  <main class="main">
+    <div class="main-top-content-container">
+      <div class="institution-container">
+        <img class="institution-image" src="https://fastly.picsum.photos/id/468/32/32.jpg?hmac=rvVNi05gwPeWMORoleQQuCQ9fU5xBfweAsy6MKSetSU" alt="Logo da empresa">
+        <p class="institution-text">Amazon</p>
+      </div>
+      <div class="user-container">
+        <img class="user-profile-image" src="{% static 'icons/User.svg' %}" alt="Foto de perfil do usuário">
+        <div class="user-content-container">
+          <p class="user-name">Ciro Daniel Gurgel Moura</p>
+          <p class="user-role">Consultor de Patrimônio</p>
+        </div>
+        <img class="user-arrow" src="{% static 'icons/Arrow.svg' %}" alt="Abrir detalhes do perfil">
+      </div>
+    </div>
+    <section class="main-content-container">
+      {% block main %}
+      {% endblock %}
+    </section>
+  </main>
+</body>
+</html>

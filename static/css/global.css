@@ -2,6 +2,7 @@
   --background: #fafafa;
   --primary: #006ec4;
   --secondary: #c7dcf0;
+  --tertiary: #bdd6ee;
 
   --dark-100: #16151c;
   --dark-90: #2e2b33;
@@ -13,6 +14,7 @@
   --green: #0caf60;
   --red: #e03137;
   --white: #fff;
+  --blue: #113d65;
 }
 
 *,
