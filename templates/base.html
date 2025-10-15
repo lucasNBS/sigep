@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/global.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
   <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
   {% block head %}
   {% endblock %}
@@ -59,8 +60,7 @@
       </div>
     </div>
     <section class="main-content-container">
-      {% block main %}
-      {% endblock %}
+      {% include 'partials/table.html' %}
     </section>
   </main>
 </body>
