@@ -1,0 +1,19 @@
+{% load static %}
+<article class="card-container">
+  <div class="card-top-container">
+    <p class="card-title">{{ title }}</p>
+    {% if type == 'cube' %}
+      <img class="card-icon" src="{% static 'icons/Cube.svg' %}" alt="{{ title }}">
+    {% elif type == 'usable' %}
+      <img class="card-icon" src="{% static 'icons/BoxFound.svg' %}" alt="{{ title }}">
+    {% elif type == 'lost' %}
+      <img class="card-icon" src="{% static 'icons/BoxNotFound.svg' %}" alt="{{ title }}">
+    {% elif type == 'inventory' %}
+      <img class="card-icon" src="{% static 'icons/Inventory.svg' %}" alt="{{ title }}">
+    {% endif %}
+  </div>
+  <p class="card-data">
+    <span class="{{ type }}">{{ total }}</span>
+    {{ data }}
+  </p>
+</article>
