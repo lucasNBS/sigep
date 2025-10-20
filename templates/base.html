@@ -12,6 +12,7 @@
   {% endblock %}
 </head>
 <body class="background">
+  <div class="aside-space"></div>
   <aside class="aside">
     <header class="aside-content">
       <h1 class="logo-container">
@@ -60,7 +61,8 @@
       </div>
     </div>
     <section class="main-content-container">
-      {% include 'partials/table.html' %}
+      {% block main %}
+      {% endblock %}
     </section>
   </main>
 </body>

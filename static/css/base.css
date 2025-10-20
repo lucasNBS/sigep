@@ -3,9 +3,20 @@
   gap: 30px;
   background-color: var(--background);
   padding: 20px;
+  padding-top: 0px;
+}
+
+.aside-space {
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  max-width: 280px;
+  background: transparent;
 }
 
 .aside {
+  width: 100%;
+  top: 20px;
+  position: fixed;
   min-height: calc(100vh - 40px);
   max-width: 280px;
   background-color: var(--secondary);
@@ -121,11 +132,17 @@
 }
 
 .main-top-content-container {
+  box-sizing: content-box;
+  background-color: var(--background);
+  position: sticky;
+  padding-top: 20px;
   height: 82px;
+  top: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--gray-20);
+  box-shadow: 0px -7px 0px 7px var(--background);
 }
 
 .main-top-title {

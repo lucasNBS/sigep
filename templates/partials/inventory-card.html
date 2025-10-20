@@ -1,0 +1,15 @@
+{% load static %}
+<article class="inventory-card-container">
+  <p class="inventory-card-title">{{ title }}</p>
+  <div class="inventory-data-container">
+    <p class="inventory-data">Total de itens: <span>{{ total }}</span></p>
+    <p class="inventory-data">Registrados: <span>{{ registered }}</span></p>
+    <p class="inventory-data">Pendentes: <span>{{ pending }}</span></p>
+  </div>
+  <button class="inventory-link">
+    <img class="inventory-link-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Acessar inventário">
+    <p class="inventory-link-text">
+      Acessar Inventário
+    </p>
+  </button>
+</article>
