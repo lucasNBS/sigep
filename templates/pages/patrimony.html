@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/patrimony.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <div class="top-container">
+    <h2 class="main-title">Patrimônio</h2>
+    <div class="main-options-container">
+      <div class="option-container filter">
+        <img class="icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
+        <span>Filtro</span>
+      </div>
+      <div class="option-container action">
+        <img class="icon" src="{% static 'icons/AddCircle.svg' %}" alt="Adicionar Item">
+        <span>Adicionar Item</span>
+      </div>
+      <div class="option-container action">
+        <img class="icon" src="{% static 'icons/FileDownload.svg' %}" alt="Importar Itens">
+        <span>Importar Itens</span>
+      </div>
+    </div>
+  </div>
+  {% include 'partials/table.html' %}
+</div>
+{% endblock %}
