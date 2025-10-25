@@ -1,0 +1,22 @@
+{% load static %}
+
+<article class="card">
+    <p class="card-title">{{ company_name }}</p>
+
+    <img class="card-logo" src="{{ company_logo_url }}">
+
+    <p class="card-role">{{ role }}</p>
+
+    <div class="card-stats">
+        <div class="stat">
+            <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+            <p class="stat-number">{{ items_total }}</p>
+            <p class="stat-label">Itens em Estoque</p>
+        </div>
+        <div class="stat">
+            <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+            <p class="stat-number">{{ users_total }}</p>
+            <p class="stat-label">Usuários</p>
+        </div>
+    </div>
+</article>
