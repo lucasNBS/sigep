@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import home
+from core.views import home, inventory, inventory_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
+    path('inventario/', inventory),
+    path('inventario/<int:id>/', inventory_detail),
 ]
