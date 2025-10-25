@@ -104,7 +104,6 @@
     font-size: 14px;
     line-height: 22px;
     color: #A2A1A8;
-    appearance: none;
 }
 
 .one-line-input{
@@ -144,4 +143,31 @@
 
 .date-input{
     padding: 13px;
+}
+
+.custom-arrow{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("../icons/ArrowDown.svg");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 25px;
+}
+
+.custom-date{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("../icons/Calendar.svg");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 25px;
+}
+
+.custom-date::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
 }
