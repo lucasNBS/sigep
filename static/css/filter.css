@@ -18,7 +18,7 @@
 .filter-box {
     background-color: #FFFFFF;
     border-radius: 20px;
-    width: 581px;
+    width: 605px;
     padding: 24px;
 }
 
@@ -83,4 +83,65 @@
     color: #fff;
 }
 
+.content{
+    width: '100%';
+}
 
+.one-input-inline{
+    width: '100%';
+    display: block;
+    margin-bottom: 18px;
+}
+
+.filter-input{
+    display: flex;
+    border: 1px solid #16151C;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    color: #A2A1A8;
+    appearance: none;
+}
+
+.one-line-input{
+    width: 557px;
+}
+
+.label-text{
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+    color: #16151C;
+}
+
+.two-input-inline{
+    width: '100%';
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.two-line-input{
+    width: 271px;
+}
+
+.three-input-inline{
+    width: '100%';
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.three-line-input{
+    width: 176px;
+}
+
+.date-input{
+    padding: 13px;
+}
