@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/record.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <div class="top-container">
+    <h2 class="main-title">Registros</h2>
+    <div class="actions-container">
+      <div class="action-container filter">
+        <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
+        <span>Filtro</span>
+      </div>
+    </div>
+  </div>
+  {% include 'partials/table.html' %}
+</div>
+{% endblock %}
