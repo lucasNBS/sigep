@@ -10,8 +10,8 @@
 
 <section class="p-profile">
   <div class="profile__photo">
-    {% if user_photo_url %}
-      <img src="{{ user_photo_url }}" alt="Foto do usuário">
+    {% if user_photo %}
+      <img src="{{ user_photo }}" alt="Foto do usuário">
     {% else %}
       <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
     {% endif %}

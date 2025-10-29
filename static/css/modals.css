@@ -1,0 +1,119 @@
+:root{
+  --dark-500:#16151C;
+  --primary-500:#006EC4;
+  --gray20: rgba(162,161,168,0.20);
+}
+
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:1000;
+  justify-content:center;
+  align-items:center;
+  font-family:'Lexend',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+.modal.active{ display:flex; }
+
+.modal-box{
+  background:#fff;
+  width:415px;
+  max-width:90vw;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  animation:fadeIn .25s ease;
+}
+
+/* Header */
+.modal-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:8px;
+}
+.modal-title{
+  font-size:20px;
+  line-height:30px;
+  font-weight:600;
+  color:var(--dark-500);
+  margin:0;
+}
+.close-button{ background:transparent; border:0; cursor:pointer; }
+
+/* Body/Footer */
+.modal-body{ display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+.modal-footer{ display:flex; justify-content:flex-end; gap:10px; }
+
+/* Labels */
+.label{
+  display:block;
+  font-size:12px;
+  line-height:18px;
+  font-weight:300;
+  color:var(--dark-500);
+  margin:8px 0 6px;
+}
+
+/* Inputs */
+.input{
+  width:100%;
+  border:1px solid var(--dark-500);
+  border-radius:10px;
+  padding:12px 14px;
+  background:#fff;
+  color:var(--dark-500);
+  font-size:14px;
+  line-height:22px;
+  font-weight:300;
+  outline:0;
+  box-shadow:none;
+}
+.input::placeholder{ color:var(--dark-500); opacity:.75; }
+.input:focus{ border-color:var(--dark-500); box-shadow:none; }
+
+/* Dropzone */
+.dropzone{
+  border:1px dashed var(--dark-500);
+  border-radius:10px;
+  min-height:60px;
+  padding:12px 14px;
+  display:flex; align-items:center;
+  color:var(--dark-500);
+  font-size:14px; line-height:22px; font-weight:300;
+  cursor:pointer; user-select:none;
+}
+#logo-filename{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* Buttons */
+.filter-button{
+  height:40px;
+  padding:0 20px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  font-size:14px; line-height:22px; font-weight:300;
+  cursor:pointer; transition:filter .15s;
+}
+.filter-button:hover{ filter:brightness(.97); }
+
+.cancel-button{
+  background:#fff;
+  border:1px solid var(--gray20);
+  color:var(--dark-500);
+}
+.apply-button{
+  background:var(--primary-500);
+  color:#fff;
+  border:none;
+}
+.apply-button:hover{ filter:brightness(.95); }
+
+/* Confirm text (modal) */
+.confirm-text{
+  font-size:14px; line-height:22px; font-weight:300;
+  color:var(--dark-500);
+}
+.confirm-text strong{ font-weight:700; }
+
+/* Anim */
+@keyframes fadeIn{ from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
