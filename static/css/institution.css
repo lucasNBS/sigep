@@ -1,98 +1,143 @@
 .card {
+  position: relative;
   width: 291px;
   height: 349px;
   background: #fff;
   border: 1px solid rgba(162, 161, 168, 0.2);
   border-radius: 8px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-sizing: border-box;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  box-sizing: border-box;
+  text-align: center;
 }
 
+/* HEADER */
+.card-header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* Institution name / is admin*/
 .card-title {
-  font-family: 'Lexend', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
+  margin: 0;
+  font: 500 20px/30px 'Inter', sans-serif;
   color: #383E49;
-  margin-bottom: 15px;
+  text-align: center;
 }
 
-.card-logo {
+
+.card-header.is-admin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.card-header.is-admin .card-title {
+  text-align: left;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.btn-icon img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.9;
+}
+
+.btn-icon:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-icon.edit img {
+  filter: brightness(0) saturate(100%);
+}
+
+
+/* Logo */
+.company-logo {
   width: 130px;
   height: 130px;
   border: 1px solid #D9E1E1;
   border-radius: 50%;
   object-fit: cover;
+  margin-top: 12px;
 }
 
+/* Profile */
 .card-role {
+  margin: 12px 0 8px;
   font-family: 'Lexend', sans-serif;
   font-weight: 300;
   font-size: 12px;
+  line-height: 18px;
   color: #A2A1A8;
-  margin: 10px 0 20px 0;
-  text-align: center;
 }
 
+/* Numbers */
 .card-stats {
+  margin-top: auto;
   display: flex;
-  justify-content: space-around;
-  width: 100%;
+  gap: 40px;
+  justify-content: center;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
-.icon {
+.stat-icon {
   width: 30px;
   height: 30px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.box-icon {
+.stat-box {
   background: #FFEEDB;
-  position: relative;
 }
 
-.box-icon::before {
-  content: '';
-  position: absolute;
-  inset: 25%;
-  background: #DBA362;
-  border: 0.2px solid #DBA362;
-}
-
-.user-icon {
+.stat-user {
   background: #ECEAFF;
-  position: relative;
 }
 
-.user-icon::before {
-  content: '';
-  position: absolute;
-  inset: 25%;
-  border: 1.5px solid rgba(129, 122, 243, 0.6);
-  border-radius: 50%;
+.stat-icon img {
+  width: 20px;
+  height: 20px;
 }
 
 .stat-number {
-  font-family: 'Lexend Light';
-  font-weight: 600;
-  font-size: 16px;
+  font: 600 16px/24px 'Inter', sans-serif;
   color: #5D6679;
 }
 
 .stat-label {
-  font-family: 'Lexend Light';
-  font-weight: 500;
-  font-size: 14px;
-  color: #444444;
-  text-align: center;
+  font: 500 14px/20px 'Inter', sans-serif;
+  color: #444;
 }
