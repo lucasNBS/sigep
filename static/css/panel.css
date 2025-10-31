@@ -18,8 +18,9 @@
 }
 
 .cards-container {
-  display: flex;
+  display: grid;
   gap: 32px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .card-container {
@@ -74,9 +75,9 @@
 }
 
 .inventory-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .inventory-card-container {
@@ -134,4 +135,15 @@
   font-family: "Lexend Light";
   font-size: 14px;
   color: var(--white);
+}
+
+@media screen and (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .inventory-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
