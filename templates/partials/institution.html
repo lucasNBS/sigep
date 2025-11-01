@@ -18,16 +18,25 @@
 
   <img src="{% static 'img/amazon.png' %}" alt="company_logo" class="company-logo">
 
+  {% if role == 'Administrador' %}
+  <p class="admin-role">{{ role }}</p>
+  {% else %}
   <p class="card-role">{{ role }}</p>
+  {% endif %}
 
   <div class="card-stats">
     <div class="stat">
-      <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+      <div class="stat-icon stat-box">
+        <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+      </div>
       <p class="stat-number">{{ items_total }}</p>
       <p class="stat-label">Itens em Estoque</p>
     </div>
+
     <div class="stat">
-      <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+      <div class="stat-icon stat-user">
+        <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+      </div>
       <p class="stat-number">{{ users_total }}</p>
       <p class="stat-label">Usuários</p>
     </div>

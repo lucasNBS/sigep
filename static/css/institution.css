@@ -14,18 +14,18 @@
   text-align: center;
 }
 
-/* HEADER */
+/* Header */
 .card-header {
   position: relative;
   width: 100%;
   margin-bottom: 8px;
 }
 
-/* Institution name / is admin*/
+/* Institution name / is admin */
 .card-title {
   margin: 0;
   font: 500 20px/30px 'Inter', sans-serif;
-  color: #383E49;
+  color: #000611;
   text-align: center;
 }
 
@@ -47,6 +47,14 @@
   gap: 10px;
 }
 
+.admin-role {
+  margin: 12px 0 8px;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 18px;
+  color: #000611;
+}
 .btn-icon {
   width: 28px;
   height: 28px;
