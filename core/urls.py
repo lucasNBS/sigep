@@ -22,8 +22,8 @@ from core.views import home, patrimony_form, inventory_form, patrimony_detail, r
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('patrimonio/criar/', patrimony_form),
-    path('inventario/criar/', inventory_form),
-    path('patrimonio/<int:id>/', patrimony_detail),
-    path('patrimonio/<int:id>/registrar/', record_form),
+    path('patrimonio/criar/', patrimony_form, name='patrimony-create'),
+    path('inventario/criar/', inventory_form, name='inventory-create'),
+    path('patrimonio/<int:id>/', patrimony_detail, name='patrimony-detail'),
+    path('patrimonio/<int:id>/registrar/', record_form, name='patrimonio-register'),
 ]
