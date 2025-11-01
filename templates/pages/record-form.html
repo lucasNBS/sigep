@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/record-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">Monitor</h2>
+  <div class="description-container">
+    <div class="description">
+      <p class="detail"><span class="title">Serial:</span> E300FH29</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Categoria:</span> Equipamento</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Sala:</span> Sala 75</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Responsável:</span> Lucas Nunes</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Nota Fiscal:</span> Monitor - E300FH29</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Data de Cadastro:</span> 22/03/2022</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Cadastrado Por:</span> Thiago Morais</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">QR code:</span> Visualizar</p>
+    </div>
+
+    <div class="description column">
+      <span class="title">Descrição:</span>
+      <p class="text">Monitor LED 24'' Full HD Samsung – modelo S24F350, tela antirreflexo, conexão HDMI e VGA, base ajustável</p>
+    </div>
+
+    <div class="description column">
+      <span class="title">Observações:</span>
+      <p class="text">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</p>
+    </div>
+  </div>
+
+  <form class="record-form-container" method="post">
+    <h3 class="record-form-title">Registrar Item</h3>
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Sala</label>
+        <input class="form-field-input" type="text" placeholder="Sala">
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Estado de Conservação</label>
+        <input class="form-field-input" type="text" placeholder="Bom">
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field flex-2">
+        <label class="form-field-label">Descrição</label>
+        <textarea class="form-field-textarea" type="text" placeholder="Informe as características principais do equipamento"></textarea>
+      </div>
+    </div>
+  </form>
+
+  <div class="actions-container">
+    <div class="action remove">
+      Cancelar
+    </div>
+    <div class="action edit">
+      <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Registrar">
+      Registrar
+    </div>
+  </div>
+</div>
+{% endblock %}

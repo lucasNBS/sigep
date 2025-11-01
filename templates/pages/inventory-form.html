@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/inventory-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">Abrir Processo de Inventário</h2>
+  <form class="form-container" method="post">
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Título</label>
+        <input class="form-field-input" type="text" placeholder="Inventário Anual 2025">
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field flex-2">
+        <label class="form-field-label">Equipe de Consultoria</label>
+        <input class="form-field-input" type="text" placeholder="Lucas Nunes, Thiago Morais, João Vicente, Geisa Abrantes">
+      </div>
+      <div class="form-field flex-1">
+        <label class="form-field-label">Consultor Líder</label>
+        <input class="form-field-input" type="text" placeholder="Thiago Morais">
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Salas</label>
+        <input class="form-field-input" type="text" placeholder="Sala 75">
+      </div>
+    </div>
+    <div class="actions-container">
+      <button class="action cancel">
+        Cancelar
+      </button>
+      <button class="action confirm">
+        <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
+        Abrir Inventário
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

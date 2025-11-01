@@ -1,0 +1,135 @@
+.main-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-title {
+  font-family: "Lexend Bold";
+  font-size: 30px;
+  color: var(--dark-100);
+}
+
+.form-container {
+  margin-top: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 16px;
+}
+
+.form-line {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 1;
+  gap: 15px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 1;
+  gap: 4px;
+}
+
+.form-field-label {
+  width: 100%;
+  font-family: "Lexend Light";
+  font-size: 14px;
+  color: var(--dark-100);
+}
+
+.form-field-input {
+  width: 100%;
+  background-color: transparent;
+  font-family: "Lexend Light";
+  font-size: 14px;
+  color: var(--dark-100);
+  padding: 14px 16px;
+  border: 1px solid var(--dark-100);
+  border-radius: 10px;
+}
+
+.form-field-input::placeholder {
+  color: var(--gray-100);
+}
+
+.input-file {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border: 1px dashed var(--dark-100);
+}
+
+.input-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.input-file-text {
+  font-family: "Lexend Light";
+  font-size: 14px;
+  color: var(--dark-100);
+}
+
+.form-field-textarea {
+  background-color: transparent;
+  font-family: "Lexend Light";
+  font-size: 14px;
+  color: var(--dark-100);
+  padding: 14px 16px;
+  resize: none;
+  width: 100%;
+  height: 120px;
+  border: 1px solid var(--dark-100);
+  border-radius: 10px;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.actions-container {
+  margin-top: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action {
+  height: 52px;
+  font-family: "Lexend Light";
+  font-size: 14px;
+  display: flex;
+  padding: 14px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+}
+
+.cancel {
+  background-color: transparent;
+  border: 1px solid var(--gray-100);
+  color: var(--dark-100);
+}
+
+.confirm {
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.action-icon {
+  width: 24px;
+  height: 24px;
+}
