@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Filtrar Patrimônios</title>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/filter.css' %}">
+</head>
+<body>
+    <div class="modal" id="filterModal">
+        <div class="filter-box">
+            <form method="get" action="">
+            <div class="filter-header">
+                {% if type == 'patrimony' %}
+                <p class="filter-title" >Filtrar Patrimônios</p>
+                {% elif type == 'user' %}
+                <p class="filter-title" >Filtrar Usuários</p>
+                {% elif type == 'inventory' %}
+                <p class="filter-title" >Filtrar Inventários</p>        
+                {% elif type == 'register' %}
+                <p class="filter-title" >Filtrar Registros</p>        
+                {% endif %}
+                
+                <button class="close-button" onclick="closeFilter()">
+                    <img src="{% static 'icons/cancel.svg' %}" alt="Fechar">
+                </button>
+                
+            </div class="filter-form">           
+                {% if type == 'patrimony' %}
+                    {% include 'partials/filter-patrimony.html' %}
+                {% elif type == 'user' %}
+                    {% include 'partials/filter-user.html' %}
+                {% elif type == 'inventory' %}
+                    {% include 'partials/filter-inventory.html' %}        
+                {% elif type == 'register' %}
+                    {% include 'partials/filter-register.html' %}        
+                {% endif %}
+            <div>
+                
+            </div>
+
+            <div class="buttons-row">
+                <button class=" filter-button cancel-button" >Cancelar</button>
+                <button class="filter-button apply-button" > 
+                    <img src="{% static 'icons/search.svg'%}" alt="Aplicar"> Aplicar
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openFilter() {
+        document.getElementById('filterModal').classList.add('active');
+        }
+
+        function closeFilter() {
+        document.getElementById('filterModal').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>

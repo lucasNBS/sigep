@@ -1,0 +1,51 @@
+.main-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.top-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-title {
+  font-family: "Lexend Bold";
+  font-size: 30px;
+  color: var(--dark-100);
+}
+
+.main-options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.option-container {
+  border-radius: 10px;
+  padding: 13px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: "Lexend Light";
+  font-size: 14px;
+}
+
+.filter {
+  border: 1px solid var(--gray-20);
+}
+
+.action {
+  color: var(--white);
+  background-color: var(--primary);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
