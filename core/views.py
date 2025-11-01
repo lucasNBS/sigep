@@ -5,3 +5,9 @@ def home(request):
 
 def records(request):
   return render(request, "pages/record.html", {})
+
+def patrimony(request):
+  return render(request, "pages/patrimony.html", {})
+
+def profile(request):
+  return render(request, "pages/profile.html", {})

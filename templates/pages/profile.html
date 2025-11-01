@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/institution.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<section class="p-profile">
+  <div class="profile__photo">
+    {% if user_photo %}
+      <img src="{{ user_photo }}" alt="Foto do usuário">
+    {% else %}
+      <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
+    {% endif %}
+  </div>
+
+  <div class="profile__info">
+    <h2 class="profile__name">{{ user_name }}</h2>
+
+    <ul class="profile__meta">
+      <li><strong>E-mail:</strong> {{ user_email }}</li>
+      <li><strong>Total de Itens Cadastrados:</strong> {{ total_items }}</li>
+      <li><strong>Total de Registros:</strong> {{ total_records }}</li>
+      <li><strong>Total de Inventários Abertos:</strong> {{ total_inventories }}</li>
+      <li><strong>Total de Itens sob sua Responsabilidade:</strong> {{ total_responsibility_items }}</li>
+    </ul>
+  </div>
+</section>
+
+<section class="p-actions">
+  <a class="btn btn--ghost" href="{{ back_url }}">
+    <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
+    </svg>
+    Voltar
+  </a>
+
+  <a class="btn btn--primary" href="{{ edit_url }}">
+    <img src="{% static 'icons/edit.svg' %}" alt="Editar" width="20" height="20">
+    Editar
+  </a>
+</section>
+
+<section class="p-cards">
+  {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
+  {% include 'partials/institution.html' with company_name='Amazon' role='Gerente de Patrimônios' items_total='868' users_total='200' %}
+  {% include 'partials/institution.html' with company_name='Amazon' role='Cosultor de Patrimônios' items_total='868' users_total='200' %}
+  {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
+</section>
+
+{% endblock %}
