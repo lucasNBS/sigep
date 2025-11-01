@@ -22,6 +22,6 @@ from core.views import home, inventory, inventory_detail
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('inventario/', inventory),
-    path('inventario/<int:id>/', inventory_detail),
+    path('inventario/', inventory, name='inventory'),
+    path('inventario/<int:id>/', inventory_detail, name='inventory-detail'),
 ]
