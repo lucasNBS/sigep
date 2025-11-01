@@ -22,5 +22,5 @@ from core.views import home, user
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('usuario/', user),
+    path('usuario/', user, name='users'),
 ]
