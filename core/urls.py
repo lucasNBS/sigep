@@ -22,5 +22,5 @@ from core.views import home, records
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
-    path('registro/', records),
+    path('registro/', records, name='records'),
 ]
