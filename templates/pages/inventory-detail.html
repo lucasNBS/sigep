@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/inventory-detail.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <div class="inventory-data-container">
+    <h2 class="main-title">Inventário Anual de 2025</h2>
+    <div class="details-container">
+      <div class="data-container">
+        <p class="data"><span>Data de Abertura:</span> 22/03/2025</p>
+        <p class="data"><span>Aberto por:</span> Ciro Daniel</p>
+        <p class="data"><span>Status:</span> Aberto</p>
+        <p class="data">
+          <span>Salas:</span>
+          <span class="line">
+            Sala 75, Sala 82, Sala 87, Sala 92
+          </span>
+        </p>
+      </div>
+      <div class="data-container">
+        <p class="data">
+          <span>Equipe de Consultoria:</span>
+          <span class="line">
+            Ciro Daniel, Lucas Nunes, Thiago Morais
+          </span>
+        </p>
+        <p class="data">
+          <span>Líder da Equipe de Consultoria:</span>
+          <span class="line">
+            Geisa Abrantes
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="top-container">
+    <h3 class="main-title">Registros</h3>
+    <div class="actions-container">
+      <div class="action-button filter">
+        <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
+        <span>Filtro</span>
+      </div>
+      <div class="action-button action">
+        <img class="action-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Registrar Item">
+        <span>Registrar Item</span>
+      </div>
+      <div class="action-button action">
+        <img class="action-icon" src="{% static 'icons/FileDownload.svg' %}" alt="Importar Itens">
+        <span>Importar Itens</span>
+      </div>
+    </div>
+  </div>
+  {% include 'partials/table.html' %}
+</div>
+{% endblock %}

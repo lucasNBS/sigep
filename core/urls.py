@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import home, patrimony, profile
+from core.views import home, patrimony, profile, inventory, inventory_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
     path('patrimonio/', patrimony, name='patrimony'),
     path('perfil/', profile, name='profile'),
+    path('inventario/', inventory, name='inventory'),
+    path('inventario/<int:id>/', inventory_detail, name='inventory-detail'),
 ]
