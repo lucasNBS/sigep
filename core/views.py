@@ -14,3 +14,9 @@ def patrimony_detail(request, id):
 
 def record_form(request, id):
   return render(request, "pages/record-form.html", {})
+
+def patrimony(request):
+  return render(request, "pages/patrimony.html", {})
+
+def profile(request):
+  return render(request, "pages/profile.html", {})
