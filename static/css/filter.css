@@ -1,0 +1,177 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(22, 21, 28, 0.24);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.filter-box {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    width: 605px;
+    padding: 24px;
+}
+
+.filter-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-bottom:16px;
+}
+
+.filter-title{
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    color: #16151C;
+}
+
+.close-button{
+    background-color: #fff;
+}
+
+.filter-form{
+    width: '100%';
+    height: '100%';
+}
+
+.buttons-row{
+    height: '100%';
+    width: '100%';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+
+.filter-button{
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    border-radius: 10px;
+    height: 63px;
+    width: 163px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cancel-button{
+    border: 1px solid rgba(162, 161, 168, 0.2);  
+    background-color: #fff; 
+}
+
+.apply-button{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.content{
+    width: '100%';
+}
+
+.one-input-inline{
+    width: '100%';
+    display: block;
+    margin-bottom: 18px;
+}
+
+.filter-input{
+    display: flex;
+    border: 1px solid #16151C;
+    border-radius: 10px;
+    padding: 14px;
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 22px;
+    color: #A2A1A8;
+}
+
+.one-line-input{
+    width: 557px;
+}
+
+.label-text{
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+    color: #16151C;
+}
+
+.two-input-inline{
+    width: '100%';
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.two-line-input{
+    width: 271px;
+}
+
+.three-input-inline{
+    width: '100%';
+    display: flex;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.three-line-input{
+    width: 176px;
+}
+
+.date-input{
+    padding: 13px;
+}
+
+.custom-arrow{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("../icons/ArrowDown.svg");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 25px;
+}
+
+.custom-date{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    background-image: url("../icons/Calendar.svg");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 25px;
+}
+
+.custom-date::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.two-thirds-input{
+    width: 369px;
+}

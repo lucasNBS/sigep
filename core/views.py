@@ -8,3 +8,9 @@ def inventory(request):
 
 def inventory_detail(request, id):
   return render(request, "pages/inventory-detail.html", {})
+
+def patrimony(request):
+  return render(request, "pages/patrimony.html", {})
+
+def profile(request):
+  return render(request, "pages/profile.html", {})
