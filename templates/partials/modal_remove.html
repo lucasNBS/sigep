@@ -13,7 +13,7 @@
 
       <div class="modal-body">
         <p class="confirm-text">
-          Deseja realmente excluir a instituição <span id="remove-nome" style="font-weight:700;">{{ company_name }}</span>?
+          Deseja realmente excluir a instituição <span id="remove-nome" class="highlight-name">{{ company_name }}</span>?
         </p>
       </div>
 
@@ -29,30 +29,5 @@
   </div>
 </div>
 
-<script>
-(() => {
-  const modal = document.getElementById('removeModal');
-  const form  = document.getElementById('form-remove');
-  const nome  = document.getElementById('remove-nome');
 
-  function open(instId, instNome = '') {
-    // if (form && instId) form.action = `/instituicoes/${instId}/remover/`;
-    nome.textContent = instNome || '—';
-    modal.classList.add('active');
-  }
-
-  function close() {
-    modal.classList.remove('active');
-  }
-
-  window.openRemoveModal = open;
-
-  // close for buttons and outside click
-  document.getElementById('removeModalCloseBtn')?.addEventListener('click', close);
-  document.getElementById('removeModalCancelBtn')?.addEventListener('click', close);
-  modal.addEventListener('mousedown', (e) => { if (e.target === modal) close(); });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) close();
-  });
-})();
-</script>
+<script src="{% static 'js/modal_remove.js' %}"></script>

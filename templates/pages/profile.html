@@ -4,14 +4,15 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 <link rel="stylesheet" href="{% static 'css/institution.css' %}">
+<link rel="stylesheet" href="{% static 'css/modals.css' %}"> {# CSS do modal (mesmo estilo do filtro) #}
 {% endblock %}
 
 {% block main %}
 
 <section class="p-profile">
   <div class="profile__photo">
-    {% if user_photo %}
-      <img src="{{ user_photo }}" alt="Foto do usuário">
+    {% if user_photo_url %}
+      <img src="{{ user_photo_url }}" alt="Foto do usuário">
     {% else %}
       <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
     {% endif %}
@@ -30,25 +31,40 @@
   </div>
 </section>
 
-<section class="p-actions">
-  <a class="btn btn--ghost" href="{{ back_url }}">
+<section class="p-actions" style="display:flex; gap:12px;">
+  {# Botão de teste: ABRE MODAL DE REMOVER #}
+  <button
+    type="button"
+    class="btn btn--ghost"
+    onclick="openRemoveModal(1, 'Amazon')"
+  >
     <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
     </svg>
-    Voltar
-  </a>
+    Voltar (teste Remover)
+  </button>
 
-  <a class="btn btn--primary" href="{{ edit_url }}">
+  {# Botão de teste: ABRE MODAL DE EDITAR #}
+  <button
+    type="button"
+    class="btn btn--primary"
+    onclick="openEditModal(1, 'Amazon', '08.642.510/0001-74')"
+  >
     <img src="{% static 'icons/edit.svg' %}" alt="Editar" width="20" height="20">
-    Editar
-  </a>
+    Editar (teste Editar)
+  </button>
 </section>
 
+{# Você pode manter os cards abaixo, mas não é necessário para o teste dos modais #}
 <section class="p-cards">
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
 </section>
+
+{# === Inclui os dois modais (cada um com seu JS interno expondo openEditModal / openRemoveModal) === #}
+{% include 'partials/modal_edit.html' %}
+{% include 'partials/modal_remove.html' %}
 
 {% endblock %}
