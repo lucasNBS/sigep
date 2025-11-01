@@ -1,22 +1,44 @@
 {% load static %}
 
 <article class="card">
+  <div class="card-header {% if role == 'Administrador' %}is-admin{% endif %}">
     <p class="card-title">{{ company_name }}</p>
 
-    <img src="{% static 'img/amazon.png' %}" alt="company_logo">
-
-    <p class="card-role">{{ role }}</p>
-
-    <div class="card-stats">
-        <div class="stat">
-            <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
-            <p class="stat-number">{{ items_total }}</p>
-            <p class="stat-label">Itens em Estoque</p>
-        </div>
-        <div class="stat">
-            <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
-            <p class="stat-number">{{ users_total }}</p>
-            <p class="stat-label">Usuários</p>
-        </div>
+    {% if role == 'Administrador' %}
+    <div class="card-actions">
+      <button class="btn-icon edit" title="Editar">
+        <img src="{% static 'icons/Edit.svg' %}" alt="Editar">
+      </button>
+      <button class="btn-icon delete" title="Excluir">
+        <img src="{% static 'icons/Trash.svg' %}" alt="Excluir">
+      </button>
     </div>
+    {% endif %}
+  </div>
+
+  <img src="{% static 'img/amazon.png' %}" alt="company_logo" class="company-logo">
+
+  {% if role == 'Administrador' %}
+  <p class="admin-role">{{ role }}</p>
+  {% else %}
+  <p class="card-role">{{ role }}</p>
+  {% endif %}
+
+  <div class="card-stats">
+    <div class="stat">
+      <div class="stat-icon stat-box">
+        <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+      </div>
+      <p class="stat-number">{{ items_total }}</p>
+      <p class="stat-label">Itens em Estoque</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon stat-user">
+        <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+      </div>
+      <p class="stat-number">{{ users_total }}</p>
+      <p class="stat-label">Usuários</p>
+    </div>
+  </div>
 </article>

@@ -1,17 +1,22 @@
-:root {
+:root{
   --bg: #FAFAFA;
   --dark: #16151C;
   --primary: #006EC4;
   --muted: #5D6679;
+
+  --font-body: 'Lexend', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 
+html, body {
+  font-family: var(--font-body);
+}
+
 body {
   margin: 0;
   background: var(--bg);
-  font-family: "Lexend Bold";
   color: var(--dark);
 }
 
@@ -21,7 +26,7 @@ body {
   padding: 0 30px;
 }
 
-/* header */
+/* Header */
 .header {
   display: flex;
   align-items: center;
@@ -31,7 +36,9 @@ body {
 
 .header__title {
   margin: 0;
-  font: 600 20px/1.5 "Lexend", Inter, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 .header__actions {
@@ -49,8 +56,10 @@ body {
   border: 1px solid var(--border);
   border-radius: 8px;
   color: var(--dark);
-  font: 600 16px/1.5 "Lexend", Inter, sans-serif;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .profile-btn .chev { display: block; }
@@ -72,7 +81,7 @@ body {
   margin: 0 0 24px 0;
 }
 
-/* profile*/
+/* Profile */
 .p-profile {
   display: flex;
   align-items: center;
@@ -92,20 +101,22 @@ body {
   background: #eee;
 }
 
-.p-profile .profile__info {
-  flex: 1;
-}
+.p-profile .profile__info { flex: 1; }
 
 .p-profile .profile__name {
   margin: 0 0 10px 0;
-  font: 600 28px/1.3 "Lexend", Inter, sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.3;
 }
 
 .p-profile .profile__meta {
   list-style: none;
   margin: 0;
   padding: 0;
-  font: 500 15px/1.6 "Lexend", Inter, sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--muted);
 }
 
@@ -113,7 +124,7 @@ body {
   color: var(--dark);
 }
 
-/* actions */
+/* Actions */
 .actions, .p-actions {
   display: flex;
   justify-content: space-between;
@@ -128,7 +139,9 @@ body {
   padding: 14px 20px;
   border-radius: 10px;
   text-decoration: none;
-  font: 300 14px/22px "Lexend", Inter, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 .btn--ghost {
@@ -143,7 +156,7 @@ body {
 
 .btn svg { display: block; }
 
-/* grid cards*/
+/* Grid cards */
 .cards, .p-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
