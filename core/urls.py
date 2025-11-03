@@ -16,8 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from core.views import home, patrimony, profile, patrimony_form, inventory_form, patrimony_detail, record_form
+from core.views import home, patrimony, profile, patrimony_form, inventory_form, patrimony_detail, record_form, records, user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +27,6 @@ urlpatterns = [
     path('inventario/criar/', inventory_form, name='inventory-create'),
     path('patrimonio/<int:id>/', patrimony_detail, name='patrimony-detail'),
     path('patrimonio/<int:id>/registrar/', record_form, name='patrimonio-register'),
+    path('registro/', records, name='records'),
+    path('usuario/', user, name='users'),
 ]

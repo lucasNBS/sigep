@@ -7,11 +7,13 @@
   <link rel="stylesheet" href="{% static 'css/global.css' %}">
   <link rel="stylesheet" href="{% static 'css/base.css' %}">
   <link rel="stylesheet" href="{% static 'css/table.css' %}">
+  <script src="{% static 'js/aside.js' %}" defer></script>
   <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
   {% block head %}
   {% endblock %}
 </head>
 <body class="background">
+  <div class="aside-background"></div>
   <div class="aside-space"></div>
   <aside class="aside">
     <header class="aside-content">
@@ -48,6 +50,7 @@
   <main class="main">
     <div class="main-top-content-container">
       <div class="institution-container">
+        <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
         <img class="institution-image" src="https://fastly.picsum.photos/id/468/32/32.jpg?hmac=rvVNi05gwPeWMORoleQQuCQ9fU5xBfweAsy6MKSetSU" alt="Logo da empresa">
         <p class="institution-text">Amazon</p>
       </div>
