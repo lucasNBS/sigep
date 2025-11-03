@@ -12,8 +12,8 @@
 }
 
 .section-title {
-  font-family: "Lexend Bold";
-  font-size: 30px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-xl);
   color: var(--dark-100);
 }
 
@@ -42,8 +42,8 @@
 }
 
 .card-title {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-90);
 }
 
@@ -55,13 +55,13 @@
 .card-data {
   display: flex;
   flex-direction: column;
-  font-family: "Lexend Light";
-  font-size: 12px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xxs);
   color: var(--dark-80);
 }
 
 .card-data span {
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
   font-size: 18px;
   color: var(--dark-100);
 }
@@ -93,7 +93,7 @@
 }
 
 .inventory-card-title {
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
   font-size: 18px;
   color: var(--primary);
 }
@@ -105,13 +105,13 @@
 }
 
 .inventory-data {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
 }
 
 .inventory-data span {
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
 }
 
 .inventory-link {
@@ -132,8 +132,8 @@
 }
 
 .inventory-link-text {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--white);
 }
 

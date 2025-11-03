@@ -14,8 +14,8 @@
 }
 
 .main-title {
-  font-family: "Lexend Bold";
-  font-size: 30px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-xl);
   color: var(--darl-100);
 }
 
@@ -33,8 +33,8 @@
   gap: 10px;
   padding: 13px 20px;
   border-radius: 10px;
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
 }
 
 .action-icon {

@@ -5,7 +5,7 @@
   background: #fff;
   border: 1px solid rgba(162, 161, 168, 0.2);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
   padding: 16px;
   display: flex;
@@ -24,18 +24,16 @@
 /* Institution name / is admin */
 .card-title {
   margin: 0;
-  font: 500 20px/30px 'Inter', sans-serif;
+  font: 500 20px/30px "Inter", sans-serif;
   color: #000611;
   text-align: center;
 }
-
 
 .card-header.is-admin {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 .card-header.is-admin .card-title {
   text-align: left;
@@ -49,9 +47,9 @@
 
 .admin-role {
   margin: 12px 0 8px;
-  font-family: 'Lexend', sans-serif;
+  font-family: "Lexend", sans-serif;
   font-weight: 300;
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   line-height: 18px;
   color: #000611;
 }
@@ -82,12 +80,11 @@
   filter: brightness(0) saturate(100%);
 }
 
-
 /* Logo */
 .company-logo {
   width: 130px;
   height: 130px;
-  border: 1px solid #D9E1E1;
+  border: 1px solid #d9e1e1;
   border-radius: 50%;
   object-fit: cover;
   margin-top: 12px;
@@ -96,11 +93,11 @@
 /* Profile */
 .card-role {
   margin: 12px 0 8px;
-  font-family: 'Lexend', sans-serif;
+  font-family: "Lexend", sans-serif;
   font-weight: 300;
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   line-height: 18px;
-  color: #A2A1A8;
+  color: #a2a1a8;
 }
 
 /* Numbers */
@@ -128,11 +125,11 @@
 }
 
 .stat-box {
-  background: #FFEEDB;
+  background: #ffeedb;
 }
 
 .stat-user {
-  background: #ECEAFF;
+  background: #eceaff;
 }
 
 .stat-icon img {
@@ -141,11 +138,11 @@
 }
 
 .stat-number {
-  font: 600 16px/24px 'Inter', sans-serif;
-  color: #5D6679;
+  font: 600 16px/24px "Inter", sans-serif;
+  color: #5d6679;
 }
 
 .stat-label {
-  font: 500 14px/20px 'Inter', sans-serif;
+  font: 500 14px/20px "Inter", sans-serif;
   color: #444;
 }
