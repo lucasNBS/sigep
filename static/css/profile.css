@@ -1,17 +1,22 @@
 :root {
-  --bg: #FAFAFA;
-  --dark: #16151C;
-  --primary: #006EC4;
-  --muted: #5D6679;
+  --bg: #fafafa;
+  --dark: #16151c;
+  --primary: #006ec4;
+  --muted: #5d6679;
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; }
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
 
 body {
   margin: 0;
   background: var(--bg);
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
   color: var(--dark);
 }
 
@@ -53,11 +58,13 @@ body {
   cursor: pointer;
 }
 
-.profile-btn .chev { display: block; }
+.profile-btn .chev {
+  display: block;
+}
 
 .avatar {
   overflow: hidden;
-  border: 1px solid #28303F20;
+  border: 1px solid #28303f20;
 }
 
 .avatar img {
@@ -114,7 +121,8 @@ body {
 }
 
 /* actions */
-.actions, .p-actions {
+.actions,
+.p-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -141,10 +149,13 @@ body {
   color: #fff;
 }
 
-.btn svg { display: block; }
+.btn svg {
+  display: block;
+}
 
 /* grid cards*/
-.cards, .p-cards {
+.cards,
+.p-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 24px;

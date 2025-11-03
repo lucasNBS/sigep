@@ -1,12 +1,50 @@
 .main-container {
-  width: 100%;
   margin-top: 32px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
+.inventory-data-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.details-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.data-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.data,
+.data p {
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
+  line-height: 20px;
+  color: var(--dark-100);
+}
+
+.data span {
+  font-family: var(--font-primary-bold);
+}
+
+.data .line {
+  font-family: var(--font-primary-light);
+  display: block;
+}
+
 .top-container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,7 +53,7 @@
 .main-title {
   font-family: var(--font-primary-bold);
   font-size: var(--font-size-xl);
-  color: var(--dark-100);
+  color: var(--darl-100);
 }
 
 .actions-container {
@@ -25,15 +63,20 @@
   gap: 16px;
 }
 
-.action-container {
-  padding: 13px 20px;
+.action-button {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding: 13px 20px;
   border-radius: 10px;
   font-family: var(--font-primary-light);
   font-size: var(--font-size-xs);
+}
+
+.action-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .filter {
@@ -44,9 +87,4 @@
 .action {
   background-color: var(--primary);
   color: var(--white);
-}
-
-.action-icon {
-  width: 24px;
-  height: 24px;
 }

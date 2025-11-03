@@ -24,7 +24,7 @@
 .table-cell {
   padding: 16px;
   font-family: "Poppins";
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.4px;
 }
 
@@ -42,8 +42,8 @@
 }
 
 .table-pagination-text {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--gray-100);
 }
 
@@ -54,8 +54,8 @@
   padding: 12px;
   border: 1px solid var(--gray-20);
   border-radius: 10px;
-  font-family: "Lexend";
-  font-size: 14px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   gap: 16px;
 }
@@ -96,15 +96,15 @@
   align-items: center;
   width: 36px;
   height: 36px;
-  font-family: "Lexend";
-  font-size: 14px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   border: 1px solid var(--gray-20);
   border-radius: 8px;
 }
 
 .table-pagination-numbers-item.selected {
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
   border: 1px solid var(--primary);
   color: var(--primary);
 }

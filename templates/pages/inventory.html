@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/inventory.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <div class="top-container">
+    <h2 class="main-title">Inventários</h2>
+    <div class="actions-container">
+      <div class="action-button filter">
+        <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
+        <span>Filtro</span>
+      </div>
+      <div class="action-button action">
+        <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Abrir Processo de Inventário">
+        <span>Abrir Processo de Inventário</span>
+      </div>
+    </div>
+  </div>
+  {% include 'partials/table.html' %}
+</div>
+{% endblock %}
