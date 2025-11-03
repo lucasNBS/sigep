@@ -15,6 +15,12 @@ def patrimony_detail(request, id):
 def record_form(request, id):
   return render(request, "pages/record-form.html", {})
 
+def inventory(request):
+  return render(request, "pages/inventory.html", {})
+
+def inventory_detail(request, id):
+  return render(request, "pages/inventory-detail.html", {})
+
 def records(request):
   return render(request, "pages/record.html", {})
 
