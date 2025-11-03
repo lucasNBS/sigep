@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    {% block extra_head %}{% endblock %}
+    <title>Login</title>
+  </head>
+  <body>
+    <main>
+      <div class="login-container">
+        <div class="login-image-container">
+          <div class="logo-container">
+            <img src="{% static 'icons/Logo.svg' %}" alt="Logo SIGEP" />
+            <h1>SIGEP</h1>
+          </div>
+          <img
+            class="login-image"
+            src="{% static 'img/Stock.svg' %}"
+            alt="Imagem de login"
+          />
+        </div>
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    {% block extra_scripts %} {% endblock %}
+  </body>
+</html>
