@@ -6,6 +6,9 @@ def home(request):
 def records(request):
   return render(request, "pages/record.html", {})
 
+def user(request):
+  return render(request, "pages/user.html", {})
+
 def patrimony(request):
   return render(request, "pages/patrimony.html", {})
 
