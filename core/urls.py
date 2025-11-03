@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from core.views import home, patrimony, profile, inventory, inventory_detail
+from core.views import home, patrimony, profile, records, user, inventory, inventory_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,6 @@ urlpatterns = [
     path('perfil/', profile, name='profile'),
     path('inventario/', inventory, name='inventory'),
     path('inventario/<int:id>/', inventory_detail, name='inventory-detail'),
+    path('registro/', records, name='records'),
+    path('usuario/', user, name='users'),
 ]

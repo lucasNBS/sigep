@@ -9,6 +9,12 @@ def inventory(request):
 def inventory_detail(request, id):
   return render(request, "pages/inventory-detail.html", {})
 
+def records(request):
+  return render(request, "pages/record.html", {})
+
+def user(request):
+  return render(request, "pages/user.html", {})
+
 def patrimony(request):
   return render(request, "pages/patrimony.html", {})
 
