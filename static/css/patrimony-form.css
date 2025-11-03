@@ -5,8 +5,8 @@
 }
 
 .main-title {
-  font-family: "Lexend Bold";
-  font-size: 30px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-xl);
   color: var(--dark-100);
 }
 
@@ -38,16 +38,16 @@
 
 .form-field-label {
   width: 100%;
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
 }
 
 .form-field-input {
   width: 100%;
   background-color: transparent;
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   padding: 14px 16px;
   border: 1px solid var(--dark-100);
@@ -73,15 +73,15 @@
 }
 
 .input-file-text {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
 }
 
 .form-field-textarea {
   background-color: transparent;
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   padding: 14px 16px;
   resize: none;
@@ -108,8 +108,8 @@
 
 .action {
   height: 52px;
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   display: flex;
   padding: 14px 20px;
   justify-content: center;
