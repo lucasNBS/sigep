@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/patrimony-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">Cadastrar Item</h2>
+  <form class="form-container" method="post">
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Item</label>
+        <input class="form-field-input" type="text" placeholder="Monitor">
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Serial</label>
+        <input class="form-field-input" type="text" placeholder="E300GH29">
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Nota Fiscal</label>
+        <div class="form-field-input input-file">
+          <img class="input-icon" src="{% static 'icons/PickFile.svg' %}" alt="Escoler Arquivo">
+          <p class="input-file-text">Nota Fiscal</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Categoria</label>
+        <input class="form-field-input" type="text" placeholder="Equipamentos">
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Sala</label>
+        <input class="form-field-input" type="text" placeholder="Sala 75">
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Responsável</label>
+        <input class="form-field-input" type="text" placeholder="Ciro Daniel">
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field flex-2">
+        <label class="form-field-label">Descrição</label>
+        <textarea class="form-field-textarea" type="text" placeholder="Informe as características principais do equipamento"></textarea>
+      </div>
+      <div class="form-field flex-1">
+        <label class="form-field-label">Observações</label>
+        <textarea class="form-field-textarea" type="text" placeholder="Informações adicionais sobre o item"></textarea>
+      </div>
+    </div>
+    <div class="actions-container">
+      <button class="action cancel">
+        Cancelar
+      </button>
+      <button class="action confirm">
+        <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

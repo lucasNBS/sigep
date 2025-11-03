@@ -62,7 +62,7 @@
 
 .card-data span {
   font-family: var(--font-primary-bold);
-  font-size: 18px;
+  font-size: var(--font-size-m);
   color: var(--dark-100);
 }
 
@@ -94,7 +94,7 @@
 
 .inventory-card-title {
   font-family: var(--font-primary-bold);
-  font-size: 18px;
+  font-size: var(--font-size-m);
   color: var(--primary);
 }
 
