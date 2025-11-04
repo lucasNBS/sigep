@@ -133,3 +133,23 @@
   width: 24px;
   height: 24px;
 }
+
+@media screen and (max-width: 768px) {
+  .break {
+    flex-direction: column;
+  }
+
+  .tablet-100 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .form-line {
+    flex-direction: column;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+}

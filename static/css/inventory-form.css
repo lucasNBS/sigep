@@ -133,3 +133,13 @@
   width: 24px;
   height: 24px;
 }
+
+@media screen and (max-width: 550px) {
+  .form-line {
+    flex-direction: column;
+  }
+
+  .form-field {
+    width: 100%;
+  }
+}

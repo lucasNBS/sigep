@@ -4,7 +4,12 @@
   gap: 24px;
 }
 
+.table-responsive-container {
+  width: 100%;
+}
+
 .table-container {
+  width: 100%;
   border: none;
   border-collapse: collapse;
 }
@@ -107,4 +112,21 @@
   font-family: var(--font-primary-bold);
   border: 1px solid var(--primary);
   color: var(--primary);
+}
+
+@media screen and (max-width: 1200px) {
+  .table-container {
+    min-width: 984px;
+  }
+
+  .table-responsive-container {
+    width: calc(100vw - 40px);
+    overflow: auto;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .table-pagination-text {
+    display: none;
+  }
 }
