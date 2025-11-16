@@ -1,0 +1,33 @@
+{% load static %}
+<div class="modal" id="removeModal">
+  <div class="modal-box">
+    <form id="form-remove" method="POST" action="">
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Remover Instituição</p>
+        <button type="button" class="close-button" id="removeModalCloseBtn">
+          <img src="{% static 'icons/cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="confirm-text">
+          Deseja realmente excluir a instituição <span id="remove-nome" class="highlight-name">{{ company_name }}</span>?
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="filter-button cancel-button" id="removeModalCancelBtn">
+          Cancelar
+        </button>
+        <button type="submit" class="filter-button apply-button">
+          Confirmar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script src="{% static 'js/modal_remove.js' %}"></script>

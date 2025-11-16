@@ -1,3 +1,11 @@
+:root{
+  --font-body: 'Lexend', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+html, body{
+  font-family: var(--font-body);
+}
+
 .card {
   position: relative;
   width: 291px;
@@ -5,7 +13,7 @@
   background: var(--white);
   border: 1px solid rgba(162, 161, 168, 0.2);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   box-sizing: border-box;
   padding: 16px;
   display: flex;
@@ -24,7 +32,9 @@
 /* Institution name / is admin */
 .card-title {
   margin: 0;
-  font: 500 20px/30px "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 30px;
   color: #000611;
   text-align: center;
 }
@@ -47,12 +57,12 @@
 
 .admin-role {
   margin: 12px 0 8px;
-  font-family: var(--font-primary), sans-serif;
   font-weight: 300;
-  font-size: var(--font-size-xxs);
+  font-size: 12px;
   line-height: 18px;
   color: #000611;
 }
+
 .btn-icon {
   width: 28px;
   height: 28px;
@@ -84,7 +94,7 @@
 .company-logo {
   width: 130px;
   height: 130px;
-  border: 1px solid #d9e1e1;
+  border: 1px solid #D9E1E1;
   border-radius: 50%;
   object-fit: cover;
   margin-top: 12px;
@@ -93,11 +103,10 @@
 /* Profile */
 .card-role {
   margin: 12px 0 8px;
-  font-family: var(--font-primary), sans-serif;
   font-weight: 300;
-  font-size: var(--font-size-xxs);
+  font-size: 12px;
   line-height: 18px;
-  color: var(--gray-100);
+  color: #A2A1A8;
 }
 
 /* Numbers */
@@ -125,11 +134,11 @@
 }
 
 .stat-box {
-  background: #ffeedb;
+  background: #FFEEDB;
 }
 
 .stat-user {
-  background: #eceaff;
+  background: #ECEAFF;
 }
 
 .stat-icon img {
@@ -138,11 +147,15 @@
 }
 
 .stat-number {
-  font: 600 16px/24px "Inter", sans-serif;
-  color: #5d6679;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #5D6679;
 }
 
 .stat-label {
-  font: 500 14px/20px "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
   color: #444;
 }
