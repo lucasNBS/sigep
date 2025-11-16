@@ -105,6 +105,11 @@
   text-decoration: none;
 }
 
+.forgot-password-link {
+  width: 100%;
+  text-align: right;
+}
+
 .login-button {
   width: 445px;
   height: 53px;
@@ -207,10 +212,50 @@ input:-webkit-autofill {
   font-family: "Lexend Bold", sans-serif;
 }
 
+.login-button-link {
+  width: 445px;
+  height: 54px;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold !important;
+  color: #fff !important;
+
+  padding: 16px 0;
+}
+
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
     gap: 40px;
     padding: 20px;
+  }
+  .login-image {
+    width: 100%;
+  }
+  .login-image-container {
+    max-width: 100%;
+  }
+  .login-form-container {
+    max-width: 100%;
+  }
+  .login-form {
+    width: calc(100vw - 40px);
+  }
+  .input-group {
+    width: 100%;
+  }
+  .login-button {
+    width: 100%;
+  }
+  .login-button-link {
+    width: 100%;
+  }
+  .login-form-footer {
+    margin: 0;
   }
 }
