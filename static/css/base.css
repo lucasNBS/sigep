@@ -7,8 +7,8 @@
 }
 
 .aside-space {
-  width: 100%;
   min-height: calc(100vh - 40px);
+  min-width: 280px;
   max-width: 280px;
   background: transparent;
 }
@@ -23,6 +23,11 @@
   border-radius: 20px;
   padding: 30px;
   display: flex;
+  z-index: 100;
+}
+
+.menu-image {
+  display: none;
 }
 
 .aside-content {
@@ -47,7 +52,7 @@
 
 .logo-text {
   font-family: "Poppins Bold";
-  font-size: 32px;
+  font-size: var(--font-size-xxl);
   color: var(--blue);
 }
 
@@ -73,8 +78,8 @@
 }
 
 .institution-text {
-  font-family: "Lexend Bold";
-  font-size: 20px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-m);
   color: var(--dark-100);
 }
 
@@ -100,8 +105,8 @@
 }
 
 .navbar-item-text {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   line-height: 22px;
   color: var(--dark-100);
   text-decoration: none;
@@ -120,8 +125,8 @@
 }
 
 .navbar-item-text.selected {
-  font-family: "Lexend Bold";
-  font-size: 16px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-s);
   color: var(--primary);
 }
 
@@ -146,8 +151,8 @@
 }
 
 .main-top-title {
-  font-family: "Lexend Bold";
-  font-size: 20px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-m);
   color: var(--dark-100);
 }
 
@@ -178,14 +183,14 @@
   width: 140px;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-family: "Lexend Bold";
-  font-size: 16px;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-s);
   color: var(--dark-100);
 }
 
 .user-role {
-  font-family: "Lexend Light";
-  font-size: 12px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xxs);
   color: var(--gray-100);
 }
 
@@ -199,4 +204,50 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+.aside-background {
+  background-color: rgba(0, 0, 0, 0);
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  transition: background-color 200ms ease-in;
+}
+
+@media screen and (max-width: 1200px) {
+  .aside-space {
+    display: none;
+  }
+
+  .menu-image {
+    display: unset;
+  }
+
+  .aside {
+    transition: transform 200ms ease-in;
+    transform: translate(-300px);
+  }
+
+  .menu-image {
+    width: 48px;
+    height: 48px;
+  }
+
+  .open {
+    display: flex;
+    z-index: 100;
+
+    transform: translate(0px);
+  }
+
+  .aside-background.open {
+    background-color: rgba(0, 0, 0, 0.25);
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .institution-text {
+    display: none;
+  }
 }

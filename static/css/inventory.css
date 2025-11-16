@@ -1,5 +1,6 @@
 .main-container {
   margin-top: 32px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -15,39 +16,40 @@
 .main-title {
   font-family: var(--font-primary-bold);
   font-size: var(--font-size-xl);
-  color: var(--dark-100);
+  color: var(--darl-100);
 }
 
-.main-options-container {
+.actions-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
 }
 
-.option-container {
-  border-radius: 10px;
-  padding: 13px 20px;
+.action-button {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding: 13px 20px;
+  border-radius: 10px;
   font-family: var(--font-primary-light);
   font-size: var(--font-size-xs);
 }
 
+.action-icon {
+  width: 24px;
+  height: 24px;
+}
+
 .filter {
   border: 1px solid var(--gray-20);
+  color: var(--dark-100);
 }
 
 .action {
-  color: var(--white);
   background-color: var(--primary);
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
+  color: var(--white);
 }
 
 @media screen and (max-width: 768px) {
@@ -57,7 +59,7 @@
     gap: 8px;
   }
 
-  .main-options-container {
+  .actions-container {
     flex-wrap: wrap;
     row-gap: 8px;
     justify-content: flex-end;
