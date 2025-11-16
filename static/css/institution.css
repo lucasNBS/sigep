@@ -2,7 +2,7 @@
   position: relative;
   width: 291px;
   height: 349px;
-  background: #fff;
+  background: var(--white);
   border: 1px solid rgba(162, 161, 168, 0.2);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -47,7 +47,7 @@
 
 .admin-role {
   margin: 12px 0 8px;
-  font-family: "Lexend", sans-serif;
+  font-family: var(--font-primary), sans-serif;
   font-weight: 300;
   font-size: var(--font-size-xxs);
   line-height: 18px;
@@ -93,11 +93,11 @@
 /* Profile */
 .card-role {
   margin: 12px 0 8px;
-  font-family: "Lexend", sans-serif;
+  font-family: var(--font-primary), sans-serif;
   font-weight: 300;
   font-size: var(--font-size-xxs);
   line-height: 18px;
-  color: #a2a1a8;
+  color: var(--gray-100);
 }
 
 /* Numbers */
