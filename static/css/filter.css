@@ -16,7 +16,7 @@
 }
 
 .filter-box {
-  background-color: #ffffff;
+  background-color: var(--white);
   border-radius: 20px;
   width: 605px;
   padding: 24px;
@@ -32,16 +32,16 @@
 }
 
 .filter-title {
-  font-family: "Lexend";
+  font-family: var(--font-primary);
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: var(--font-size-m);
   line-height: 30px;
-  color: #16151c;
+  color: var(--dark-100);
 }
 
 .close-button {
-  background-color: #fff;
+  background-color: var(--white);
 }
 
 .filter-form {
@@ -59,10 +59,10 @@
 }
 
 .filter-button {
-  font-family: "Lexend";
+  font-family: var(--font-primary);
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   line-height: 22px;
   border-radius: 10px;
   height: 63px;
@@ -75,12 +75,12 @@
 
 .cancel-button {
   border: 1px solid rgba(162, 161, 168, 0.2);
-  background-color: #fff;
+  background-color: var(--white);
 }
 
 .apply-button {
   background-color: var(--primary);
-  color: #fff;
+  color: var(--white);
 }
 
 .content {
@@ -95,15 +95,15 @@
 
 .filter-input {
   display: flex;
-  border: 1px solid #16151c;
+  border: 1px solid var(--dark-100);
   border-radius: 10px;
   padding: 14px;
-  font-family: "Lexend";
+  font-family: var(--font-primary);
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   line-height: 22px;
-  color: #a2a1a8;
+  color: var(--gray-100);
 }
 
 .one-line-input {
@@ -111,12 +111,12 @@
 }
 
 .label-text {
-  font-family: "Lexend";
+  font-family: var(--font-primary);
   font-style: normal;
   font-weight: 300;
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   line-height: 18px;
-  color: #16151c;
+  color: var(--dark-100);
 }
 
 .two-input-inline {

@@ -2,8 +2,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Lexend Regular", sans-serif;
-  font-size: 16px;
+  font-family: var(--font-primary), sans-serif;
+  font-size: var(--font-size-s);
 }
 
 .login-container {
@@ -53,10 +53,10 @@
 .input-group .input-field {
   width: 100%;
   height: 100%;
-  font-size: 16px;
+  font-size: var(--font-size-s);
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   outline: none;
   background-color: transparent;
 }
@@ -73,17 +73,17 @@
 
 .input-group .input-field::placeholder {
   color: var(--gray-100);
-  font-size: 14px;
+  font-size: var(--font-size-xs);
 }
 
 .login-form-title {
-  font-size: 30px;
+  font-size: var(--font-size-xl);
   line-height: 30px;
   color: var(--dark-100);
 }
 
 .login-form-subtitle {
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   line-height: 20px;
   color: var(--gray-100);
   margin: 8px 0 32px 0;
@@ -95,8 +95,8 @@
   justify-content: center;
   align-items: flex-end;
   margin-top: 30px;
-  font-family: "Lexend Regular";
-  font-size: 14px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
   color: var(--gray-100);
 }
 
@@ -117,7 +117,7 @@
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: var(--font-size-s);
   cursor: pointer;
   margin-top: 30px;
   font-weight: bold;
@@ -173,7 +173,7 @@ input:-webkit-autofill {
 }
 
 .forgot-password-link {
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   letter-spacing: normal;
 }
 
@@ -183,7 +183,7 @@ input:-webkit-autofill {
 }
 
 .register-prompt {
-  font-size: 14px;
+  font-size: var(--font-size-xs);
   letter-spacing: normal;
   font-weight: normal;
   margin: 16px auto 0 auto;
@@ -207,9 +207,9 @@ input:-webkit-autofill {
 }
 
 .logo-container h1 {
-  font-size: 32px;
+  font-size: var(--font-size-xxl);
   color: var(--blue);
-  font-family: "Lexend Bold", sans-serif;
+  font-family: var(--font-primary-bold), sans-serif;
 }
 
 .login-button-link {
