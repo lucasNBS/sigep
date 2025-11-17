@@ -101,6 +101,35 @@ html, body {
   box-shadow:0 0 0 3px color-mix(in srgb, var(--primary-500) 20%, transparent);
 }
 
+/* selects */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-custom {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: none !important;
+  padding-right: 40px;
+}
+
+.select-custom::-ms-expand {
+  display: none;
+}
+
+.select-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+}
+
 /* Dropzone */
 .dropzone{
   border:1px dashed var(--dark-500);
