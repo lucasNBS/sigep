@@ -21,7 +21,6 @@
   document.getElementById('registerItemModalCancelBtn')
     ?.addEventListener('click', close);
 
-  // Close modal when clicking outside of it
   modal.addEventListener('mousedown', (e) => {
     if (e.target === modal) close();
   });
