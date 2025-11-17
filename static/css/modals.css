@@ -112,7 +112,7 @@ html, body {
   -webkit-appearance: none;
   -moz-appearance: none;
 
-  background-image: none !important;
+  background-image: none;
   padding-right: 40px;
 }
 
@@ -268,4 +268,14 @@ html, body {
 }
 
 /* Anim */
-@keyframes fadeIn{ from{opacity:0; transform:translateY(-10px);} to{opacity:1; transform:translateY(0);} }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

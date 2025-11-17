@@ -1,0 +1,51 @@
+{%load static%}
+<button type="button" class="filter-button apply-button">
+  Convidar Usuário
+</button>
+
+<div class="modal active" id="invite-user-modal">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2 class="modal-title">Convidar Usuário</h2>
+
+      <button type="button" class="close-button" id="inviteModalCloseBtn">
+          <img src="{% static 'icons/cancel.svg' %}" alt="Fechar">
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <p class="confirm-text">
+        O usuário receberá um e-mail o convidando a fazer parte da instituição
+      </p>
+
+      <div>
+        <label for="invite-email" class="label">E-mail</label>
+        <input
+          id="invite-email"
+          type="email"
+          class="input"
+          placeholder="ciro.daniel@gmail.com"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="invite-role" class="label">Cargo</label>
+        <select id="invite-role" class="input">
+          <option selected>Gerente de Patrimônio</option>
+          <option>Consultor de Patrimônio</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="filter-button cancel-button">
+        Cancelar
+      </button>
+      <button type="submit" class="filter-button apply-button">
+        Convidar
+      </button>
+    </div>
+  </div>
+</div>
