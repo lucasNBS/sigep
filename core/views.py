@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 def home(request):
+  return render(request, "pages/dashboard.html", {})
+
+def institution(request):
   return render(request, "pages/panel.html", {})
 
 def login(request):

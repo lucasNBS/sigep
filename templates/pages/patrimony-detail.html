@@ -54,7 +54,7 @@
 
   <div class="main-options-container">
     <h2 class="main-title">Histórico de Registros</h2>
-    <div class="action filter">
+    <div class="action filter" data-open-modal-filter>
       <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
       Filtro
     </div>
@@ -79,4 +79,5 @@
     </div>
   </div>
 </div>
+{% include 'partials/filter-base.html' with type='register' %}
 {% endblock %}

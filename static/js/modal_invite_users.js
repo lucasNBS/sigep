@@ -1,36 +1,42 @@
 (() => {
-  const modal = document.getElementById('inviteUserModal');
-  const form  = document.getElementById('form-invite-user');
+  const modal = document.getElementById("inviteUserModal");
+  const form = document.getElementById("form-invite-user");
 
-  const inputEmail = document.getElementById('invite-email');
-  const inputCargo = document.getElementById('invite-role');
+  const inputCargo = document.getElementById("invite-role");
 
-  function open(email = '', cargo = 'consultor') {
-
-    if (inputEmail) inputEmail.value = email;
+  function open(email = "", cargo = "consultor") {
     if (inputCargo) inputCargo.value = cargo;
 
-    modal.classList.add('active');
+    modal.classList.add("active");
   }
 
   function close() {
-    modal.classList.remove('active');
+    modal.classList.remove("active");
   }
 
   window.openInviteUserModal = open;
 
-  document.getElementById('inviteUserModalCloseBtn')
-    ?.addEventListener('click', close);
+  document
+    .getElementById("inviteUserModalCloseBtn")
+    ?.addEventListener("click", close);
 
-  document.getElementById('inviteUserModalCancelBtn')
-    ?.addEventListener('click', close);
+  document
+    .getElementById("inviteUserModalCancelBtn")
+    ?.addEventListener("click", close);
 
   // close for buttons and outside click
-  modal.addEventListener('mousedown', (e) => {
+  modal.addEventListener("mousedown", (e) => {
     if (e.target === modal) close();
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) close();
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("active")) close();
   });
 
+  const openInviteUserButtons = document.querySelectorAll(
+    "[data-open-invite-user-modal]"
+  );
+
+  for (const button of openInviteUserButtons) {
+    button.addEventListener("click", open);
+  }
 })();

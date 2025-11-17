@@ -1,8 +1,8 @@
 (() => {
-  const modal = document.getElementById("editModal");
-  const form = document.getElementById("form-edit");
-  const nome = document.getElementById("edit-nome");
-  const cnpj = document.getElementById("edit-cnpj");
+  const modal = document.getElementById("createModal");
+  const form = document.getElementById("form-create");
+  const nome = document.getElementById("create-nome");
+  const cnpj = document.getElementById("create-cnpj");
   const file = document.getElementById("logo-input");
   const fileName = document.getElementById("logo-filename");
 
@@ -18,14 +18,14 @@
     modal.classList.remove("active");
   }
 
-  window.openEditModal = open;
+  window.openCreateModal = open;
 
   // close for buttons and outside click
   document
-    .getElementById("editModalCloseBtn")
+    .getElementById("createModalCloseBtn")
     ?.addEventListener("click", close);
   document
-    .getElementById("editModalCancelBtn")
+    .getElementById("createModalCancelBtn")
     ?.addEventListener("click", close);
   modal.addEventListener("mousedown", (e) => {
     if (e.target === modal) close();
@@ -51,11 +51,11 @@
     cnpj.value = out;
   });
 
-  const openInstitutionEditButtons = document.querySelectorAll(
-    "[data-open-institution-edit-modal]"
+  const openInstitutionCreateButtons = document.querySelectorAll(
+    "[data-open-institution-create-modal]"
   );
 
-  for (const button of openInstitutionEditButtons) {
+  for (const button of openInstitutionCreateButtons) {
     button.addEventListener("click", open);
   }
 })();

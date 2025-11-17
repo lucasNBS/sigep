@@ -1,12 +1,12 @@
 {% load static %}
-<div class="modal" id="editModal">
+<div class="modal" id="createModal">
   <div class="modal-box">
-    <form id="form-edit" method="POST" enctype="multipart/form-data" action="">
+    <form id="form-create" method="POST" enctype="multipart/form-data" action="">
       {% csrf_token %}
 
       <div class="modal-header">
-        <p class="modal-title">Editar Instituição</p>
-        <button type="button" class="close-button" id="editModalCloseBtn">
+        <p class="modal-title">Cadastrar Instituição</p>
+        <button type="button" class="close-button" id="createModalCloseBtn">
           <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
         </button>
       </div>
@@ -18,12 +18,12 @@
           <span id="logo-filename">Selecione uma imagem…</span>
         </label>
 
-        <label class="label" for="edit-nome">Nome</label>
-        <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" required>
+        <label class="label" for="create-nome">Nome</label>
+        <input type="text" id="create-nome" name="nome" class="input" value="{{company_name}}" required>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="filter-button cancel-button" id="editModalCancelBtn">Cancelar</button>
+        <button type="button" class="filter-button cancel-button" id="createModalCancelBtn">Cancelar</button>
         <button type="submit" class="filter-button apply-button">
           <img src="{% static 'icons/EditSave.svg' %}" alt="Salvar"> Salvar
         </button>
@@ -31,4 +31,4 @@
     </form>
   </div>
 </div>
-<script src="{% static 'js/modal_edit.js' %}"></script>
+<script src="{% static 'js/modal_create.js' %}"></script>

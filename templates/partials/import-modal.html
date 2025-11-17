@@ -1,48 +1,37 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Convidar Usuários</title>
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <link rel="stylesheet" href="{% static 'css/modals.css' %}">
-</head>
-<body>
-    <div class="modal" id="invitationModal">
-        <div class="modal-box">
-            <form method="get">
-            <div class="modal-header">
+<div class="modal" id="invitationModal" data-close-import-modal>
+    <div class="modal-box">
+        <form method="get">
+        <div class="modal-header">
 
-                <p class="modal-title" >Importar Itens</p>
+            <p class="modal-title" >{{ type }} Itens</p>
 
-                <button class="close-button" onclick="closeModal()">
-                    <img src="{% static 'icons/cancel.svg' %}" alt="Fechar">
-                </button>
-            </div >           
+            <button class="close-button" type="button">
+                <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar" data-close-import-modal>
+            </button>
+        </div >           
 
-            <div class="modal-body">
+        <div class="modal-body">
 
-                <p class="secondary-text" >Baixe e preencha a Planilha Modelo abaixo e cadastre múltiplos itens simultaneamente</p>
+            <p class="secondary-text">{{ description }}</p>
 
-                <button class="filter-button import-download import-font" > 
-                    <img src="{% static 'icons/ExcelModel.svg'%}" alt="Aplicar"> Planilha Modelo
-                </button>
-            
-                <label class="dropzone import-select" for="logo-input">
-                <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-                <span id="logo-filename " class="file-select import-font">Escolher Arquivo</span>
-                </label>
-            </div>
-
-            <div class="modal-footer buttons-row" >
-                <button class=" filter-button cancel-button" >Cancelar</button>
-                <button class="filter-button apply-button" > 
-                    <img src="{% static 'icons/FileDownload.svg'%}" alt="Aplicar"> Importar
-                </button>
-            </div>
-            </form>
+            <button class="import-download import-font" > 
+                <img src="{% static 'icons/ExcelModel.svg'%}" alt="Aplicar"> Planilha Modelo
+            </button>
+        
+            <label class="dropzone import-select" for="logo-input">
+            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
+            <span id="logo-filename " class="file-select import-font">Escolher Arquivo</span>
+            </label>
         </div>
+
+        <div class="modal-footer buttons-row" >
+            <button class=" filter-button cancel-button" type="button" data-close-import-modal>Cancelar</button>
+            <button class="filter-button apply-button" > 
+                <img src="{% static 'icons/FileDownload.svg'%}" alt="Aplicar">{{ type }}
+            </button>
+        </div>
+        </form>
     </div>
-        <script src="{% static 'js/import-sheet.js' %}"></script>
-</body>
-</html>
+</div>
+<script src="{% static 'js/import-sheet.js' %}"></script>

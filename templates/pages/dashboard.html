@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/institution.css' %}">
+  <link rel="stylesheet" href="{% static 'css/modals.css' %}">
+  <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
+</head>
+<body>
+  <main class="main">
+    <div class="main-top-content-container">
+      <div class="institution-container">
+        <p class="institution-text">Olá 👋🏻</p>
+      </div>
+      <div class="user-container">
+        <img
+          class="user-profile-image"
+          src="{% static 'icons/User.svg' %}"
+          alt="Foto de perfil do usuário"
+        />
+        <div class="user-content-container">
+          <p class="user-name">Ciro Daniel Gurgel Moura</p>
+        </div>
+        <img
+          class="user-arrow"
+          src="{% static 'icons/Arrow.svg' %}"
+          alt="Abrir detalhes do perfil"
+        />
+      </div>
+    </div>
+    <section class="main-content-container">
+      <div class="actions-container">
+        <button class="action" data-open-institution-create-modal>
+          <img src="{% static 'icons/Clipboard.svg' %}" alt="Criar Instituição">
+          Criar Instituição
+        </button>
+      </div>
+      <div class="institutions-grid">
+        {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
+        {% include 'partials/institution.html' with company_name='Amazon' role='Gerente de Patrimônios' items_total='868' users_total='200' %}
+        {% include 'partials/institution.html' with company_name='Amazon' role='Cosultor de Patrimônios' items_total='868' users_total='200' %}
+      </div>
+    </section>
+  </main>
+  {% include 'partials/modal_create.html' %}
+</body>
+</html>
