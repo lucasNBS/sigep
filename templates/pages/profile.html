@@ -4,15 +4,14 @@
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 <link rel="stylesheet" href="{% static 'css/institution.css' %}">
-<link rel="stylesheet" href="{% static 'css/modals.css' %}"> {# CSS dos modais #}
 {% endblock %}
 
 {% block main %}
 
 <section class="p-profile">
   <div class="profile__photo">
-    {% if user_photo_url %}
-      <img src="{{ user_photo_url }}" alt="Foto do usuário">
+    {% if user_photo %}
+      <img src="{{ user_photo }}" alt="Foto do usuário">
     {% else %}
       <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
     {% endif %}
@@ -31,60 +30,25 @@
   </div>
 </section>
 
-<section class="p-actions" style="display:flex; gap:12px;">
-  {# Botão de teste: ABRE MODAL DE REMOVER #}
-  <button
-    type="button"
-    class="btn btn--ghost"
-    onclick="openRemoveModal(1, 'Amazon')"
-  >
+<section class="p-actions">
+  <a class="btn btn--ghost" href="{{ back_url }}">
     <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
     </svg>
-    Voltar (teste Remover)
-  </button>
+    Voltar
+  </a>
 
-  {# Botão de teste: ABRE MODAL DE EDITAR #}
-  <button
-    type="button"
-    class="btn btn--primary"
-    onclick="openEditModal(1, 'Amazon', '08.642.510/0001-74')"
-  >
+  <a class="btn btn--primary" href="{{ edit_url }}">
     <img src="{% static 'icons/edit.svg' %}" alt="Editar" width="20" height="20">
-    Editar (teste Editar)
-  </button>
-
-  {# Botão: ABRE MODAL DE CONVIDAR USUÁRIO #}
-  <button
-    type="button"
-    class="btn btn--primary"
-    onclick="openInviteUserModal()"
-  >
-    <img src="{% static 'icons/send.svg' %}" alt="Convidar" width="20" height="20">
-    Convidar Usuário
-  </button>
-
-  <button
-    type="button"
-    class="btn btn--primary"
-    onclick="openRegisterItemModal()"
-  >
-    <img src="{% static 'icons/send.svg' %}" alt="Convidar" width="20" height="20">
-    Registrar item
-  </button>
+    Editar
+  </a>
 </section>
 
 <section class="p-cards">
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
-  {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
-  {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
+  {% include 'partials/institution.html' with company_name='Amazon' role='Gerente de Patrimônios' items_total='868' users_total='200' %}
+  {% include 'partials/institution.html' with company_name='Amazon' role='Cosultor de Patrimônios' items_total='868' users_total='200' %}
   {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
 </section>
-
-{# Modais #}
-{% include 'partials/modal_edit.html' %}
-{% include 'partials/modal_remove.html' %}
-{% include 'partials/modal_invite_users.html' %}
-{% include 'partials/modal_items_register.html' %}
 
 {% endblock %}
