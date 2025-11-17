@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="{% static 'css/table.css' %}" />
     <link rel="stylesheet" href="{% static 'css/modals.css' %}">
     <link rel="stylesheet" href="{% static 'css/filter.css' %}">
+    <script src="{% static 'js/aside.js' %}" defer></script>
     {% block head %} {% endblock %}
     <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
   </head>
   <body class="background">
+    <div class="aside-background"></div>
     <div class="aside-space"></div>
     <aside class="aside">
       <header class="aside-content">
@@ -73,6 +75,7 @@
     <main class="main">
       <div class="main-top-content-container">
         <div class="institution-container">
+          <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
           <img
             class="institution-image"
             src="{% static 'img/amazon.png' %}"

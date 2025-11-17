@@ -59,18 +59,19 @@
 }
 
 .filter-button {
+  height: auto;
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 300;
   font-size: var(--font-size-xs);
   line-height: 22px;
   border-radius: 10px;
-  height: 63px;
   width: 163px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  padding: 13px 20px;
 }
 
 .cancel-button {

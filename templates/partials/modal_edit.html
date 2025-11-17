@@ -12,14 +12,18 @@
       </div>
 
       <div class="modal-body">
-        <label class="label">Logo</label>
-        <label class="dropzone" for="logo-input">
-          <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-          <span id="logo-filename">Selecione uma imagem…</span>
-        </label>
+        <div>
+          <label class="label">Logo</label>
+          <label class="dropzone" for="logo-input">
+            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
+            <span id="logo-filename">Selecione uma imagem…</span>
+          </label>
+        </div>
 
-        <label class="label" for="edit-nome">Nome</label>
-        <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" required>
+        <div>
+          <label class="label" for="edit-nome">Nome</label>
+          <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" required>
+        </div>
       </div>
 
       <div class="modal-footer">
