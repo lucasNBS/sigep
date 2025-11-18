@@ -1,116 +1,427 @@
 {% load static %}
 <div class="table-content-container">
-  <table class="table-container">
-    <thead class="table-header">
-      <tr class="table-row">
-        <th class="table-cell">Serial</th>
-        <th class="table-cell">Item</th>
-        <th class="table-cell">Categoria</th>
-        <th class="table-cell">Sala</th>
-        <th class="table-cell">Estado de Conservação</th>
-        <th class="table-cell">Responsável</th>
-        <th class="table-cell">Data de Cadastro</th>
-      </tr>
-    </thead>
-    <tbody class="table-body">
-      <tr class="table-row">
-        <td class="table-cell">100074</td>
-        <td class="table-cell">Cadeira</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Bom</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100123</td>
-        <td class="table-cell">Mesa</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 84</td>
-        <td class="table-cell">Ocioso</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100082</td>
-        <td class="table-cell">Computador</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Recuperável</td>
-        <td class="table-cell">Lucas Nunes</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100074</td>
-        <td class="table-cell">Cadeira</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Bom</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100123</td>
-        <td class="table-cell">Mesa</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 84</td>
-        <td class="table-cell">Ocioso</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100082</td>
-        <td class="table-cell">Computador</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Recuperável</td>
-        <td class="table-cell">Lucas Nunes</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100074</td>
-        <td class="table-cell">Cadeira</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Bom</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100123</td>
-        <td class="table-cell">Mesa</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 84</td>
-        <td class="table-cell">Ocioso</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100082</td>
-        <td class="table-cell">Computador</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Recuperável</td>
-        <td class="table-cell">Lucas Nunes</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-      <tr class="table-row">
-        <td class="table-cell">100074</td>
-        <td class="table-cell">Cadeira</td>
-        <td class="table-cell">Equipamento</td>
-        <td class="table-cell">Sala 75</td>
-        <td class="table-cell">Bom</td>
-        <td class="table-cell">Thiago Morais</td>
-        <td class="table-cell">22/02/2023</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive-container">
+    <table class="table-container">
+      {% if type == 'patrimony' %}
+      <thead class="table-header">
+        <tr class="table-row">
+          <th class="table-cell">Serial</th>
+          <th class="table-cell">Item</th>
+          <th class="table-cell">Categoria</th>
+          <th class="table-cell">Sala</th>
+          <th class="table-cell">Estado de Conservação</th>
+          <th class="table-cell">Responsável</th>
+          <th class="table-cell">Data de Cadastro</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100123</td>
+          <td class="table-cell">Mesa</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 84</td>
+          <td class="table-cell">Ocioso</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100082</td>
+          <td class="table-cell">Computador</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Recuperável</td>
+          <td class="table-cell">Lucas Nunes</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100123</td>
+          <td class="table-cell">Mesa</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 84</td>
+          <td class="table-cell">Ocioso</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100082</td>
+          <td class="table-cell">Computador</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Recuperável</td>
+          <td class="table-cell">Lucas Nunes</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100123</td>
+          <td class="table-cell">Mesa</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 84</td>
+          <td class="table-cell">Ocioso</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100082</td>
+          <td class="table-cell">Computador</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Recuperável</td>
+          <td class="table-cell">Lucas Nunes</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Equipamento</td>
+          <td class="table-cell">Sala 75</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+      </tbody>
+      {% elif type == 'inventory' %}
+      <thead class="table-header">
+        <tr class="table-row">
+          <th class="table-cell">Título</th>
+          <th class="table-cell">Criador</th>
+          <th class="table-cell">Consultor de Patrimônio Líder</th>
+          <th class="table-cell">Consultores de Patrimônio</th>
+          <th class="table-cell">Data de Cadastro</th>
+          <th class="table-cell">Status</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Inventário Anual 2023</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">Lucas Nunes, Geisa Vitória</td>
+          <td class="table-cell">22/02/2023</td>
+          <td class="table-cell">Encerrado</td>
+        </tr>
+      </tbody>
+      {% elif type == 'user' %}
+      <thead class="table-header">
+        <tr class="table-row">
+          <th class="table-cell">Nome</th>
+          <th class="table-cell">E-mail</th>
+          <th class="table-cell">Cargo</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
+          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
+          <td class="table-cell">Gerente de Patrimônio</td>
+        </tr>
+      </tbody>
+      {% elif type == 'records' %}
+      <thead class="table-header">
+        <tr class="table-row">
+          <th class="table-cell">Serial</th>
+          <th class="table-cell">Item</th>
+          <th class="table-cell">Estado de Conservação</th>
+          <th class="table-cell">Consultor</th>
+          <th class="table-cell">Data de Registro</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">100074</td>
+          <td class="table-cell">Cadeira</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+      </tbody>
+      {% elif type == 'records-detail' %}
+      <thead class="table-header">
+        <tr class="table-row">
+          <th class="table-cell">Observações</th>
+          <th class="table-cell">Estado de Conservação</th>
+          <th class="table-cell">Consultor</th>
+          <th class="table-cell">Data de Registro</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
+          <td class="table-cell">Bom</td>
+          <td class="table-cell">Thiago Morais</td>
+          <td class="table-cell">22/02/2023</td>
+        </tr>
+      </tbody>
+      {% endif %}
+    </table>
+  </div>
   <div class="table-managment-container">
     <div class="table-pagination-size">
       <p class="table-pagination-text">Itens por Página</p>
-      <div class="table-pagination-number">
+      <div class="table-pagination-number" id="btn-numbers">
         10
         <img class="table-pagination-number-selector" src="{% static 'icons/Arrow.svg' %}" alt="Selecionar itens por página">
+        {% include 'partials/dropdown_page.html' %}
       </div>
     </div>
     <div class="table-pagination">

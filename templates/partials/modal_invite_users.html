@@ -1,0 +1,51 @@
+{% load static %}
+<div class="modal" id="inviteUserModal">
+  <div class="modal-box">
+    <form id="form-invite-user" method="POST">
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Convidar Usuário</p>
+
+        <button type="button" class="close-button" id="inviteUserModalCloseBtn">
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <p class="confirm-text secondary-text">
+          O usuário receberá um e-mail o convidando a fazer parte da instituição.
+        </p>
+
+        <label class="label" for="invite-email">E-mail</label>
+        <input type="email" id="invite-email" name="email" class="input" placeholder="usuario@email.com" required>
+
+        <label class="label" for="invite-role">Cargo</label>
+
+        <div class="select-wrapper">
+          <select id="invite-role" name="role" class="input select-custom" required>
+            <option value="consultor">Consultor de Patrimônio</option>
+            <option value="administrador">Gerente de Patrimônnio</option>
+          </select>
+
+          <img src="{% static 'icons/ArrowDown.svg' %}" class="select-icon">
+        </div>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="filter-button cancel-button" id="inviteUserModalCancelBtn">
+          Cancelar
+        </button>
+
+        <button type="submit" class="filter-button apply-button">
+          Convidar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<script src="{% static 'js/modal_invite_users.js' %}"></script>

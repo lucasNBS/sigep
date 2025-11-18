@@ -1,0 +1,19 @@
+{% extends 'base-dashboard.html' %}
+{% load static %}
+
+{% block main %}
+<section class="main-content-container">
+  <div class="actions-container">
+    <button class="action" data-open-institution-create-modal>
+      <img src="{% static 'icons/Clipboard.svg' %}" alt="Criar Instituição">
+      Criar Instituição
+    </button>
+  </div>
+  <div class="institutions-grid">
+    {% include 'partials/institution.html' with company_name='Amazon' role='Administrador' items_total='868' users_total='200' %}
+    {% include 'partials/institution.html' with company_name='Amazon' role='Gerente de Patrimônios' items_total='868' users_total='200' %}
+    {% include 'partials/institution.html' with company_name='Amazon' role='Cosultor de Patrimônios' items_total='868' users_total='200' %}
+  </div>
+</section>
+{% include 'partials/modal_create.html' %}
+{% endblock %}

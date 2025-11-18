@@ -57,6 +57,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# if DEBUG:
+#     MIDDLEWARE += [
+#         'django.middleware.cache.UpdateCacheMiddleware',
+#         'django.middleware.cache.FetchFromCacheMiddleware',
+#     ]
+
+#     CACHE_MIDDLEWARE_SECONDS = 0  # Não guarda cache
+#     CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
@@ -80,14 +90,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("DB_NAME"),
+#         "USER": env("DB_USER"),
+#         "PASSWORD": env("DB_PASSWORD"),
+#         "HOST": env("DB_HOST"),
+#         "PORT": env("DB_PORT"),
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST"),
-        "PORT": env("DB_PORT"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

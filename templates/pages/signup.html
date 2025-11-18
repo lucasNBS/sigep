@@ -1,0 +1,91 @@
+{% extends "base-login.html" %}
+{% load static %}
+
+{% block head %}
+  <script src="{% static 'js/login.js' %}" defer></script>
+{% endblock %}
+
+{% block main %}
+<div class="login-form-container">
+  <form class="login-form" method="POST">
+    {% csrf_token %}
+    <h1 class="login-form-title">Bem-vindo!</h1>
+    <p class="login-form-subtitle">Cadastre-se no SIGEP</p>
+    <div class="input-group">
+      <label class="input-label" for="username">Nome</label>
+      <input
+        class="input-field"
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Digite seu usuário"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="email">Email</label>
+      <input
+        class="input-field"
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Digite seu email"
+        required
+      />
+    </div>
+    <div class="input-group">
+      <div class="input-with-toggle">
+        <div class="password-input-group">
+          <label class="input-label" for="password">Senha</label>
+          <input
+            class="input-field"
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Digite sua senha"
+            required
+          />
+        </div>
+        <div class="password-visibility-toggle">
+          <button type="button" class="toggle-password-visibility">
+            <img
+              src="{% static 'icons/CrossedEye.svg' %}"
+              alt="Toggle Password Visibility"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="input-group">
+      <div class="input-with-toggle">
+        <div class="password-input-group">
+          <label class="input-label" for="password">Confirmar senha</label>
+          <input
+            class="input-field"
+            type="password"
+            id="password-confirm"
+            name="password-confirm"
+            placeholder="Confirme sua senha"
+            required
+          />
+        </div>
+        <div class="password-visibility-toggle">
+          <button type="button" class="toggle-password-visibility">
+            <img
+              src="{% static 'icons/CrossedEye.svg' %}"
+              alt="Alterar visibilidade da senha"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="login-form-footer">
+      <button class="login-button" type="submit">Cadastrar</button>
+      <span class="register-prompt"
+        >Já possui uma conta?
+        <a class="register-link" href="#">Entre</a>
+      </span>
+    </div>
+  </form>
+</div>
+{% endblock %}

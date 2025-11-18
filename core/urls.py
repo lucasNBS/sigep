@@ -1,25 +1,26 @@
-"""
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 
-from core.views import home
+from core.views import home, institution, patrimony, profile, patrimony_form, inventory_form, patrimony_detail, record_form, records, user, user_detail, inventory, inventory_detail, login, signup, forgot_password, reset_password, new_password
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path('', home, name='dashboard'),
+    path('instituicao/', institution, name='institution'),
+    path('patrimonio/', patrimony, name='patrimony'),
+    path('perfil/', profile, name='profile'),
+    path('patrimonio/criar/', patrimony_form, name='patrimony-create'),
+    path('inventario/criar/', inventory_form, name='inventory-create'),
+    path('patrimonio/<int:id>/', patrimony_detail, name='patrimony-detail'),
+    path('patrimonio/<int:id>/registrar/', record_form, name='patrimonio-register'),
+    path('inventario/', inventory, name='inventory'),
+    path('inventario/<int:id>/', inventory_detail, name='inventory-detail'),
+    path('registro/', records, name='records'),
+    path('usuario/', user, name='users'),
+    path('usuario/<int:id>/', user_detail, name='users-detail'),
+    path('login/', login, name='signin'),
+    path('criar-conta/', signup, name='signup'),
+    path('esqueceu-senha/', forgot_password, name='forgot-password'),
+    path('redefinir-senha/', reset_password, name='reset-password'),
+    path('nova-senha/', new_password, name='new-password'),
 ]
