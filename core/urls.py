@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
-from core.views import home, institution, patrimony, profile, patrimony_form, inventory_form, patrimony_detail, record_form, records, user, inventory, inventory_detail, login, signup, forgot_password, reset_password, new_password
+from core.views import home, institution, patrimony, profile, patrimony_form, inventory_form, patrimony_detail, record_form, records, user, user_detail, inventory, inventory_detail, login, signup, forgot_password, reset_password, new_password
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('inventario/<int:id>/', inventory_detail, name='inventory-detail'),
     path('registro/', records, name='records'),
     path('usuario/', user, name='users'),
+    path('usuario/<int:id>/', user_detail, name='users-detail'),
     path('login/', login, name='signin'),
     path('criar-conta/', signup, name='signup'),
     path('esqueceu-senha/', forgot_password, name='forgot-password'),

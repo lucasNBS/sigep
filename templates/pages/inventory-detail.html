@@ -44,9 +44,10 @@
         <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
         <span>Filtro</span>
       </div>
-      <div class="action-button action" data-open-register-item-modal>
+      <div class="action-button action" id="btn-scan">
         <img class="action-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Registrar Item">
         <span>Registrar Item</span>
+        {% include 'partials/dropdown_register.html' %}
       </div>
       <div class="action-button action" data-open-modal-import>
         <img class="action-icon" src="{% static 'icons/FileDownload.svg' %}" alt="Registrar Itens">

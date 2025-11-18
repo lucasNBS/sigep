@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="{% static 'css/table.css' %}" />
     <link rel="stylesheet" href="{% static 'css/modals.css' %}">
     <link rel="stylesheet" href="{% static 'css/filter.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
     <script src="{% static 'js/aside.js' %}" defer></script>
+    <script src="{% static 'js/dropdown.js' %}" defer></script>
     {% block head %} {% endblock %}
     <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
   </head>
@@ -83,7 +85,7 @@
           />
           <p class="institution-text">Amazon</p>
         </div>
-        <div class="user-container">
+        <div class="user-container" id="btn-user-menu">
           <img
             class="user-profile-image"
             src="{% static 'icons/User.svg' %}"
@@ -98,6 +100,7 @@
             src="{% static 'icons/Arrow.svg' %}"
             alt="Abrir detalhes do perfil"
           />
+          {% include 'partials/dropdown_user.html' %}
         </div>
       </div>
       <section class="main-content-container">

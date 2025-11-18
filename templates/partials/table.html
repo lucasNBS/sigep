@@ -418,9 +418,10 @@
   <div class="table-managment-container">
     <div class="table-pagination-size">
       <p class="table-pagination-text">Itens por Página</p>
-      <div class="table-pagination-number">
+      <div class="table-pagination-number" id="btn-numbers">
         10
         <img class="table-pagination-number-selector" src="{% static 'icons/Arrow.svg' %}" alt="Selecionar itens por página">
+        {% include 'partials/dropdown_page.html' %}
       </div>
     </div>
     <div class="table-pagination">
