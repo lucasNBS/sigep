@@ -10,12 +10,13 @@
   <div class="top-container">
     <h2 class="main-title">Registros</h2>
     <div class="actions-container">
-      <div class="action-container filter">
+      <div class="action-container filter" data-open-modal-filter>
         <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
         <span>Filtro</span>
       </div>
     </div>
   </div>
-  {% include 'partials/table.html' %}
+  {% include 'partials/table.html' with type='records' %}
 </div>
+{% include 'partials/filter-base.html' with type='register' %}
 {% endblock %}

@@ -1,0 +1,152 @@
+.background {
+  display: flex;
+  gap: 30px;
+  background-color: var(--background);
+  padding: 20px;
+  padding-top: 0px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+}
+
+.logo-text {
+  font-family: "Poppins Bold";
+  font-size: var(--font-size-xxl);
+  color: var(--blue);
+}
+
+.institution-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.institution-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+}
+
+.institution-text {
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-m);
+  color: var(--dark-100);
+}
+
+.main {
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+.main-top-content-container {
+  box-sizing: content-box;
+  background-color: var(--background);
+  position: sticky;
+  padding-top: 20px;
+  margin: 0 30px;
+  height: 82px;
+  top: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-20);
+  box-shadow: 0px -7px 0px 7px var(--background);
+  z-index: 100;
+}
+
+.main-top-title {
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-m);
+  color: var(--dark-100);
+}
+
+.user-container {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--gray-20);
+  border-radius: 8px;
+  align-items: center;
+}
+
+.user-profile-image {
+  width: 40px;
+  height: 40px;
+}
+
+.user-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+
+.user-name {
+  white-space: nowrap;
+  width: 140px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-s);
+  color: var(--dark-100);
+}
+
+.user-role {
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xxs);
+  color: var(--gray-100);
+}
+
+.user-arrow {
+  width: 20px;
+  height: 20px;
+  transform: rotate(-90deg);
+}
+
+.main-content-container {
+  margin: 32px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  flex: 1;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.action {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  padding: 13px 20px;
+  gap: 10px;
+  border-radius: 10px;
+  font-family: var(--font-primary-light);
+  font-size: 14px;
+  color: var(--white);
+}
+
+.institutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}

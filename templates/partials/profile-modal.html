@@ -1,45 +1,36 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Convidar Usuários</title>
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <link rel="stylesheet" href="{% static 'css/modals.css' %}">
-</head>
-<body>
-    <div class="modal" id="editProfileModal">
-        <div class="modal-box">
-            <form method="get">
-            <div class="modal-header bottom-header">
+<div class="modal" id="editProfileModal" data-close-profile-modal>
+    <div class="modal-box">
+        <form method="get">
+        <div class="modal-header bottom-header">
 
-                <p class="modal-title" >Editar Perfil</p>
+            <p class="modal-title">Editar Perfil</p>
 
-                <button class="close-button" onclick="closeModal()">
-                    <img src="{% static 'icons/cancel.svg' %}" alt="Fechar">
-                </button>
-            </div >           
+            <button class="close-button" type="button">
+                <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar" data-close-profile-modal>
+            </button>
+        </div >           
 
-            <div class="modal-body profile-modal-body">
-                <label class="label">Foto</label>
-                <label class="dropzone attachment" for="logo-input">
-                <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-                <span id="logo-filename">Selecione uma imagem…</span>
-                </label>
+        <div class="modal-body profile-modal-body">
+            <label class="label">Foto</label>
+            <label class="dropzone attachment" for="logo-input">
+            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
+            <span id="logo-filename">Selecione uma imagem…</span>
+            </label>
 
-                <label class="label profile-name" for="edit-nome" >Nome</label>
-                <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" placeholder="Lucas Nunes Barreto Sampaio">
-            </div>
-
-            <div class="modal-footer buttons-row" >
-                <button class=" filter-button cancel-button" >Cancelar</button>
-                <button class="filter-button apply-button" > 
-                    <img src="{% static 'icons/EditSave.svg'%}" alt="Aplicar"> Salvar
-                </button>
-            </div>
-            </form>
+            <label class="label profile-name" for="edit-nome">Nome</label>
+            <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" placeholder="Lucas Nunes Barreto Sampaio">
         </div>
+
+        <div class="modal-footer buttons-row" >
+            <button class="filter-button cancel-button" data-close-profile-modal type="button">
+                Cancelar
+            </button>
+            <button class="filter-button apply-button"> 
+                <img src="{% static 'icons/EditSave.svg'%}" alt="Aplicar"> Salvar
+            </button>
+        </div>
+        </form>
     </div>
-        <script src="{% static 'js/edit-profile.js' %}"></script>
-</body>
-</html>
+</div>
+<script src="{% static 'js/edit-profile.js' %}"></script>

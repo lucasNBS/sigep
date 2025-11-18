@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/institution.css' %}">
+{% endblock %}
+
+{% block main %}
+<section class="main-content-container">
+  <div class="profile-spacer">
+    <section class="p-profile">
+      <div class="profile__photo">
+        {% if user_photo %}
+          <img src="{{ user_photo }}" alt="Foto do usuário">
+        {% else %}
+          <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
+        {% endif %}
+      </div>
+  
+      <div class="profile__info">
+        <h2 class="profile__name">Lucas Nunes Barreto Sampaio</h2>
+  
+        <ul class="profile__meta">
+          <li><strong>E-mail:</strong> lucasnunesbarretosampaio@email.com</li>
+          <li><strong>Cargo:</strong> Consultor de Patrimônio</li>
+          <li><strong>Total de Itens Cadastrados:</strong> 325</li>
+          <li><strong>Total de Registros:</strong> 107</li>
+          <li><strong>Total de Inventários Abertos:</strong> 21</li>
+          <li><strong>Total de Itens sob sua Responsabilidade:</strong> 44</li>
+        </ul>
+      </div>
+    </section>
+  
+    <section class="p-actions">
+      <a class="btn btn--ghost" href="#">
+        <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+        Voltar
+      </a>
+  
+      <div class="actions-container">
+        <a class="btn btn--primary" href="#">
+          <img src="{% static 'icons/UserRemove.svg' %}" alt="Remover Permissão" width="24" height="24">
+          Remover Permissão
+        </a>
+        <a class="btn btn--primary" href="#">
+          <img src="{% static 'icons/Edit.svg' %}" alt="Editar Permissão" width="20" height="20">
+          Editar Permissão
+        </a>
+      </div>
+    </section>
+  </div>
+
+  {% include 'partials/profile-modal.html' %}
+</section>
+{% endblock %}

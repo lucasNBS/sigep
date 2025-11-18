@@ -26,7 +26,7 @@
       <p class="detail"><span class="title">Responsável:</span> Lucas Nunes</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Nota Fiscal:</span> Monitor - E300FH29</p>
+      <p class="detail"><span class="title">Nota Fiscal:</span> 0000 0000 0000 000 0000 0000 0000 000 0000 0000 0000</p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
@@ -54,12 +54,12 @@
 
   <div class="main-options-container">
     <h2 class="main-title">Histórico de Registros</h2>
-    <div class="action filter">
+    <div class="action filter" data-open-modal-filter>
       <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
       Filtro
     </div>
   </div>
-  {% include 'partials/table.html' %}
+  {% include 'partials/table.html' with type='records-detail' %}
 
   <div class="actions-container">
     <div class="action cancel">
@@ -79,4 +79,5 @@
     </div>
   </div>
 </div>
+{% include 'partials/filter-base.html' with type='register' %}
 {% endblock %}

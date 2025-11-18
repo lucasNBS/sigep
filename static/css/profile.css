@@ -1,10 +1,11 @@
-:root{
-  --bg: #FAFAFA;
-  --dark: #16151C;
-  --primary: #006EC4;
-  --muted: #5D6679;
+:root {
+  --bg: #fafafa;
+  --dark: #16151c;
+  --primary: #006ec4;
+  --muted: #5d6679;
 
-  --font-body: 'Lexend', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-body: "Lexend", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    sans-serif;
 }
 
 * {
@@ -15,7 +16,8 @@ body {
   height: 100%;
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-body);
 }
 
@@ -93,9 +95,7 @@ body {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-bottom: 28px;
   background: var(--surface);
-  padding: 24px;
   border-radius: 16px;
   border: 1px solid var(--border);
 }
@@ -108,7 +108,9 @@ body {
   background: #eee;
 }
 
-.p-profile .profile__info { flex: 1; }
+.p-profile .profile__info {
+  flex: 1;
+}
 
 .p-profile .profile__name {
   margin: 0 0 10px 0;
@@ -132,11 +134,11 @@ body {
 }
 
 /* Actions */
-.actions, .p-actions {
+.actions,
+.p-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 28px 0 10px;
 }
 
 .btn {
@@ -166,9 +168,40 @@ body {
 }
 
 /* Grid cards */
-.cards, .p-cards {
+.cards,
+.p-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 24px;
-  margin-top: 16px;
+}
+
+.profile-spacer {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.actions-container {
+  display: flex;
+  gap: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .p-profile {
+    flex-direction: column;
+  }
+
+  .profile__info {
+    width: 100%;
+  }
+
+  .p-actions {
+    align-items: flex-start;
+  }
+
+  .actions-container {
+    flex-direction: column;
+    align-items: flex-end;
+  }
 }
