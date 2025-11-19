@@ -49,6 +49,7 @@
   </div>
 
   <form class="record-form-container" method="post">
+    {% csrf_token %}
     <h3 class="record-form-title">Registrar Item</h3>
     <div class="form-line">
       <div class="form-field">
@@ -69,9 +70,9 @@
   </form>
 
   <div class="actions-container">
-    <div class="action remove">
+    <a class="action remove" href="{% url 'patrimony' %}">
       Cancelar
-    </div>
+    </a>
     <div class="action edit">
       <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Registrar">
       Registrar

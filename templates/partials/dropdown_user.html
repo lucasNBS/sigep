@@ -1,13 +1,15 @@
 {% load static %}
 
 <div class="dropdown-menu" id="dropdown-user">
-  <div class="dropdown-item" id="open-profile">
+  <a class="dropdown-item" id="open-profile" href="{% url 'profile' %}">
     <img src="{% static 'icons/UserProfile.svg' %}" alt="Ícone de perfil" class="dropdown-item__icon">
     <span>Meu Perfil</span>
-  </div>
+  </a>
 
   <button type="submit" form="logout-form" class="dropdown-item dropdown-item--button">
     <img src="{% static 'icons/Logout.svg' %}" alt="Ícone de sair" class="dropdown-item__icon">
-    <span>Sair</span>
+    <a href="{% url 'signin' %}">
+      <span>Sair</span>
+    </a>
   </button>
 </div>

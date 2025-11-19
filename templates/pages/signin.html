@@ -45,13 +45,13 @@
       </div>
     </div>
     <div class="login-form-footer">
-      <a class="forgot-password-link" href="{% url 'forgot_password' %}"
+      <a class="forgot-password-link" href="{% url 'forgot-password' %}"
         >Esqueceu a senha?</a
       >
       <button class="login-button" type="submit">Entrar</button>
       <span class="register-prompt"
         >Não possui uma conta?
-        <a class="register-link" href="#">Registre-se</a>
+        <a class="register-link" href="{% url 'signup' %}">Registre-se</a>
       </span>
     </div>
   </form>

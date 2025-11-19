@@ -62,10 +62,10 @@
   {% include 'partials/table.html' with type='records-detail' %}
 
   <div class="actions-container">
-    <div class="action cancel">
+    <a class="action cancel" href="{% url 'patrimony' %}">
       <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
       Voltar
-    </div>
+    </a>
 
     <div class="actions-edit-container">
       <div class="action remove">

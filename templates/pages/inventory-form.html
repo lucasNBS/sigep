@@ -9,6 +9,7 @@
 <div class="main-container">
   <h2 class="main-title">Abrir Processo de Inventário</h2>
   <form class="form-container" method="post">
+    {% csrf_token %}
     <div class="form-line">
       <div class="form-field">
         <label class="form-field-label">Título</label>
@@ -32,9 +33,9 @@
       </div>
     </div>
     <div class="actions-container">
-      <button class="action cancel">
+      <a class="action cancel" href="{% url 'inventory' %}">
         Cancelar
-      </button>
+      </a>
       <button class="action confirm">
         <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
         Abrir Inventário
