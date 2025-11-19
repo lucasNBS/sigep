@@ -1,8 +1,9 @@
 {% load static %}
-
 <article class="card">
   <div class="card-header {% if role == 'Administrador' %}is-admin{% endif %}">
-    <p class="card-title">{{ company_name }}</p>
+    <a href="{% url 'institution' %}">
+      <p class="card-title">{{ company_name }}</p>
+    </a>
 
     {% if role == 'Administrador' %}
     <div class="card-actions">
@@ -43,4 +44,4 @@
   </div>
 </article>
 {% include 'partials/modal_edit.html' %}
-{% include 'partials/modal_remove.html' %}
+{% include 'partials/modal_remove.html' with title="Remover Instituição" text="Deseja realmente excluir esta instituição?" %}

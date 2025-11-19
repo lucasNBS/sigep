@@ -30,41 +30,59 @@
         </h1>
         <nav class="aside-content-container">
           <ul class="navbar-container">
-            <li class="navbar-item-container selected">
-              <img
-                class="navbar-item-image selected"
-                src="{% static 'icons/Panel.svg' %}"
-                alt="Painel"
-              />
-              <a class="navbar-item-text selected" href="#">Painel</a>
-            </li>
-            <li class="navbar-item-container">
-              <img
-                class="navbar-item-image"
-                src="{% static 'icons/OpenBox.svg' %}"
-                alt="Patrimônio"
-              />
-              <a class="navbar-item-text" href="#">Patrimônio</a>
-            </li>
-            <li class="navbar-item-container">
-              <img
-                class="navbar-item-image"
-                src="{% static 'icons/Inventory.svg' %}"
-                alt="Inventários"
-              />
-              <a class="navbar-item-text" href="#">Inventários</a>
-            </li>
-            <li class="navbar-item-container">
-              <img
-                class="navbar-item-image"
-                src="{% static 'icons/Users.svg' %}"
-                alt="Usuários"
-              />
-              <a class="navbar-item-text" href="#">Usuários</a>
-            </li>
+            <a href="{% url 'institution' %}">
+              <li class="navbar-item-container selected">
+                <img
+                  class="navbar-item-image selected"
+                  src="{% static 'icons/Panel.svg' %}"
+                  alt="Painel"
+                />
+                <span class="navbar-item-text selected">Painel</sp>
+              </li>
+            </a>
+            <a href="{% url 'patrimony' %}">
+              <li class="navbar-item-container">
+                <img
+                  class="navbar-item-image"
+                  src="{% static 'icons/OpenBox.svg' %}"
+                  alt="Patrimônio"
+                />
+                <span class="navbar-item-text">Patrimônio</span>
+              </li>
+            </a>
+            <a href="{% url 'inventory' %}">
+              <li class="navbar-item-container">
+                <img
+                  class="navbar-item-image"
+                  src="{% static 'icons/Inventory.svg' %}"
+                  alt="Inventários"
+                />
+                <span class="navbar-item-text">Inventários</span>
+              </li>
+            </a>
+            <a href="{% url 'users' %}">
+              <li class="navbar-item-container">
+                <img
+                  class="navbar-item-image"
+                  src="{% static 'icons/Users.svg' %}"
+                  alt="Usuários"
+                />
+                <span class="navbar-item-text">Usuários</span>
+              </li>
+            </a>
+            <a href="{% url 'records' %}">
+              <li class="navbar-item-container">
+                <img
+                  class="navbar-item-image"
+                  src="{% static 'icons/Register.svg' %}"
+                  alt="Registros"
+                />
+                <span class="navbar-item-text">Registros</span>
+              </li>
+            </a>
           </ul>
         </nav>
-        <a class="navbar-item-container" href="#">
+        <a class="navbar-item-container" href="{% url 'dashboard' %}">
           <img
             class="navbar-item-image"
             src="{% static 'icons/Logout.svg' %}"

@@ -5,7 +5,7 @@
       {% csrf_token %}
 
       <div class="modal-header">
-        <p class="modal-title">Remover Instituição</p>
+        <p class="modal-title">{{ title }}</p>
         <button type="button" class="close-button" id="removeModalCloseBtn">
           <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
         </button>
@@ -13,7 +13,7 @@
 
       <div class="modal-body">
         <p class="confirm-text">
-          Deseja realmente excluir esta instituição <span id="remove-nome" class="highlight-name">Amazon</span>?
+          {{ text }}
         </p>
       </div>
 

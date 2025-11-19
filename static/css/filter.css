@@ -45,13 +45,13 @@
 }
 
 .filter-form {
-  width: "100%";
-  height: "100%";
+  width: 100%;
+  height: 100%;
 }
 
 .buttons-row {
-  height: "100%";
-  width: "100%";
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,11 +85,11 @@
 }
 
 .content {
-  width: "100%";
+  width: 100%;
 }
 
 .one-input-inline {
-  width: "100%";
+  width: 100%;
   display: block;
   margin-bottom: 18px;
 }
@@ -121,7 +121,7 @@
 }
 
 .two-input-inline {
-  width: "100%";
+  width: 100%;
   display: flex;
   gap: 15px;
   margin-bottom: 18px;
@@ -132,7 +132,7 @@
 }
 
 .three-input-inline {
-  width: "100%";
+  width: 100%;
   display: flex;
   gap: 15px;
   margin-bottom: 18px;
@@ -177,131 +177,24 @@
   width: 369px;
 }
 
-@media screen and (max-width:768px) {
-  .filter-box{
-    width: 400px;
-    padding: 14px;
+@media screen and (max-width: 768px) {
+  .filter-box {
+    width: 100%;
+    max-height: 650px;
+    overflow: auto;
+    max-width: calc(100vw - 32px);
   }
 
-  .one-line-input{
-    width: 372px;
+  .two-input-inline,
+  .three-input-inline {
+    flex-direction: column;
   }
-
-  .one-input-inline{
-    margin-bottom: 0px;
+  .one-input-inline input,
+  .one-input-inline select,
+  .two-input-inline input,
+  .three-input-inline input,
+  .two-input-inline select,
+  .three-input-inline select {
+    width: 100%;
   }
-
-  .two-line-input{
-    width: 179px;
-  }
-
-  .two-input-inline{
-    margin-bottom: 0px;
-  }
-
-  .three-line-input{
-    width: 114px;
-  }  
-  
-  .three-input-inline{
-    margin-bottom: 0px;
-  }
-
-  .filter-input{
-    padding: 7px;
-    font-size:10px;
-  }
-
-  .label-text{
-    font-size: 8px;
-  }
-
-  .custom-date{
-    background-size: 20px;
-    background-position: right 5px center;
-  }
-
-  .buttons-row{
-    margin-top: 20px;
-  }
-
-  .filter-button{
-    height: 50px;
-    font-size: 10px;
-    width: 130px;
-    border-radius: 6px;
-  }
-
-  .filter-header{
-    margin-bottom: 0px;
-    padding-bottom: 0px;
-  }
-
-  .custom-arrow{
-    background-position: right 3px center;
-  }
-
-  .two-thirds-input{
-    width: 244px;
-  }
-
-}
-
-@media screen and (max-width:425px) {
-  .filter-box{
-    width: 280px;
-  }
-
-  .one-line-input{
-    width: 252px;
-  }
-
-  .two-line-input{
-    width: 119px;
-  }
-
-  .three-line-input{
-    width: 80px;
-  }  
-  
-  .three-input-inline{
-    gap: 8px;
-  }
-
-  .filter-input{
-    padding: 2px;
-    font-size:8px;
-    border-radius: 7px;
-    padding-left: 8px;
-  }
-
-  .label-text{
-    font-size:6px;
-    line-height: 8px;
-    font-weight: bold;
-  }
-
-  .custom-date{
-    background-size: 0px;
-    background-position: right 2px center;
-  }
-
-  .buttons-row{
-    margin-top: 12px;
-  }
-
-  .filter-button{
-    height: 42px;
-    width: 100px;
-  }
-
-  .custom-arrow{
-    background-position: right 0px center;
-    background-size: 16px;
-  }
-
-  .two-thirds-input{
-    width: 158px;
-  }
-
 }
