@@ -63,7 +63,7 @@
 
 .input-group:hover,
 .input-group .input-field:hover {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .input-group .input-label {
@@ -103,6 +103,10 @@
 .login-form-footer a {
   color: var(--primary);
   text-decoration: none;
+}
+
+.login-form-footer .login-button-link {
+  color: var(--white);
 }
 
 .forgot-password-link {
@@ -222,8 +226,7 @@ input:-webkit-autofill {
   cursor: pointer;
   margin-top: 30px;
   text-align: center;
-  font-weight: bold !important;
-  color: #fff !important;
+  font-weight: bold;
 
   padding: 16px 0;
 }
@@ -234,26 +237,18 @@ input:-webkit-autofill {
     gap: 40px;
     padding: 20px;
   }
-  .login-image {
+  .login-image,
+  .input-group,
+  .login-button,
+  .login-button-link {
     width: 100%;
   }
-  .login-image-container {
-    max-width: 100%;
-  }
+  .login-image-container,
   .login-form-container {
     max-width: 100%;
   }
   .login-form {
     width: calc(100vw - 40px);
-  }
-  .input-group {
-    width: 100%;
-  }
-  .login-button {
-    width: 100%;
-  }
-  .login-button-link {
-    width: 100%;
   }
   .login-form-footer {
     margin: 0;
