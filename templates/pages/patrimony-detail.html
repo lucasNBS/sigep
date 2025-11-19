@@ -68,16 +68,17 @@
     </a>
 
     <div class="actions-edit-container">
-      <div class="action remove">
+      <div class="action remove" data-open-institution-remove-modal>
         <img class="action-icon" src="{% static 'icons/Trash.svg' %}" alt="Desativar">
         Desativar
       </div>
-      <div class="action edit">
+      <a class="action edit" href="{% url 'patrimony-edit' 1 %}">
         <img class="action-icon" src="{% static 'icons/Edit.svg' %}" alt="Editar">
         Editar
-      </div>
+      </a>
     </div>
   </div>
 </div>
 {% include 'partials/filter-base.html' with type='register' %}
+{% include 'partials/modal_remove.html' with title="Desativar Item" text="Deseja realmente desativar este item do patrimônio?" %}
 {% endblock %}

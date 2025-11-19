@@ -24,8 +24,11 @@ def reset_password2(request):
 def new_password(request):
   return render(request, "pages/new-password.html", {})
 
-def patrimony_form(request):
-  return render(request, "pages/patrimony-form.html", {})
+def patrimony_create(request):
+  return render(request, "pages/patrimony-form.html", { 'title': 'Cadastrar Item' })
+
+def patrimony_edit(request, id):
+  return render(request, "pages/patrimony-form.html", { 'title': 'Editar Item' })
 
 def inventory_form(request):
   return render(request, "pages/inventory-form.html", {})
@@ -44,6 +47,9 @@ def inventory_detail(request, id):
 
 def records(request):
   return render(request, "pages/record.html", {})
+
+def records_scan(request):
+  return render(request, "pages/record-scan.html", {})
 
 def user(request):
   return render(request, "pages/user.html", {})

@@ -41,10 +41,10 @@
       </a>
   
       <div class="actions-container">
-        <a class="btn btn--primary" href="#">
+        <button type="button" class="btn btn--primary" data-open-institution-remove-modal>
           <img src="{% static 'icons/UserRemove.svg' %}" alt="Remover Permissão" width="24" height="24">
           Remover Permissão
-        </a>
+        </button>
         <button type="button" class="btn btn--primary" data-open-profile-modal>
           <img src="{% static 'icons/Edit.svg' %}" alt="Editar Permissão" width="20" height="20">
           Editar Permissão
@@ -54,5 +54,6 @@
   </div>
 
   {% include 'partials/profile-modal.html' %}
+  {% include 'partials/modal_remove.html' with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" %}
 </section>
 {% endblock %}

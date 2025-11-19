@@ -7,7 +7,7 @@
 
 {% block main %}
 <div class="main-container">
-  <h2 class="main-title">Cadastrar Item</h2>
+  <h2 class="main-title">{{ title }}</h2>
   <form class="form-container" method="post">
     {% csrf_token %}
     <div class="form-line">
