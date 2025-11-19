@@ -12,9 +12,17 @@ inputs.forEach((input, index) => {
       inputs[index - 1].classList.remove("input-field-reset-has-value");
     }
 
-    if (event.target.value.length === 1 && index < inputs.length - 1) {
-      inputs[index + 1].focus();
-      inputs[index + 1].classList.add("input-field-reset-has-value");
+    if (event.target.value.length === 1) {
+      if (index < inputs.length - 1) {
+        inputs[index + 1].focus();
+        inputs[index + 1].classList.add("input-field-reset-has-value");
+      } else {
+        // último input: direcionar foco para o link de login
+        const loginLink = document.querySelector(".login-button-link");
+        if (loginLink) {
+          loginLink.focus();
+        }
+      }
     } else if (event.target.value.length === 0 && index > 0) {
       inputs[index - 1].focus();
       inputs[index - 1].classList.remove("input-field-reset-has-value");

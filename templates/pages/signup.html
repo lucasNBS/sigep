@@ -80,10 +80,10 @@
       </div>
     </div>
     <div class="login-form-footer">
-      <button class="login-button" type="submit">Cadastrar</button>
+      <a href="{% url 'signin' %}" class="login-button-link">Cadastrar</a>
       <span class="register-prompt"
         >Já possui uma conta?
-        <a class="register-link" href="#">Entre</a>
+        <a class="register-link" href="{% url 'signin' %}">Entre</a>
       </span>
     </div>
   </form>

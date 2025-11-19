@@ -1,4 +1,5 @@
 :root {
+  --white: #ffffff;
   --dark-500: #16151c;
   --primary-500: #006ec4;
   --gray20: rgba(162, 161, 168, 0.2);
@@ -34,7 +35,7 @@ body {
 }
 
 .modal-box {
-  background: #fff;
+  background: var(--white);
   width: 415px;
   max-width: 90vw;
   border-radius: var(--radius-20);
@@ -91,7 +92,7 @@ body {
   border: 1px solid var(--dark-500);
   border-radius: var(--radius-10);
   padding: 12px 14px;
-  background: #fff;
+  background: var(--white);
   color: var(--dark-500);
   font-size: 14px;
   line-height: 22px;
@@ -178,13 +179,13 @@ body {
 }
 
 .cancel-button {
-  background: #fff;
+  background: var(--white);
   border-color: var(--gray20);
   color: var(--dark-500);
 }
 .apply-button {
   background: var(--primary-500);
-  color: #fff;
+  color: var(--white);
   border: none;
 }
 .apply-button:hover {

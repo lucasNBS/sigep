@@ -63,7 +63,7 @@
 
 .input-group:hover,
 .input-group .input-field:hover {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .input-group .input-label {
@@ -103,6 +103,15 @@
 .login-form-footer a {
   color: var(--primary);
   text-decoration: none;
+}
+
+.login-form-footer .login-button-link {
+  color: var(--white);
+}
+
+.forgot-password-link {
+  width: 100%;
+  text-align: right;
 }
 
 .login-button {
@@ -207,10 +216,41 @@ input:-webkit-autofill {
   font-family: var(--font-primary-bold), sans-serif;
 }
 
+.login-button-link {
+  width: 445px;
+  height: 54px;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+
+  padding: 16px 0;
+}
+
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
     gap: 40px;
     padding: 20px;
+  }
+  .login-image,
+  .input-group,
+  .login-button,
+  .login-button-link {
+    width: 100%;
+  }
+  .login-image-container,
+  .login-form-container {
+    max-width: 100%;
+  }
+  .login-form {
+    width: calc(100vw - 40px);
+  }
+  .login-form-footer {
+    margin: 0;
   }
 }
