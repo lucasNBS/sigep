@@ -11,7 +11,7 @@
   <div class="top-container">
     <h2 class="main-title">Patrimônio</h2>
     <div class="main-options-container">
-      <div class="option-container filter">
+      <div class="option-container filter" data-open-modal-filter>
         <img class="icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
         <span>Filtro</span>
       </div>
@@ -19,12 +19,14 @@
         <img class="icon" src="{% static 'icons/AddCircle.svg' %}" alt="Adicionar Item">
         <span>Adicionar Item</span>
       </div>
-      <div class="option-container action">
+      <div class="option-container action" data-open-modal-import>
         <img class="icon" src="{% static 'icons/FileDownload.svg' %}" alt="Importar Itens">
         <span>Importar Itens</span>
       </div>
     </div>
   </div>
-  {% include 'partials/table.html' %}
-  </div>
+  {% include 'partials/table.html' with type='patrimony' %}
+</div>
+{% include 'partials/filter-base.html' with type='patrimony' %}
+{% include 'partials/import-modal.html' with type='Importar' description='Baixe e preencha a Planilha Modelo abaixo e cadastre múltiplos itens simultaneamente' %}
 {% endblock %}

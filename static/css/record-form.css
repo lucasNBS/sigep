@@ -24,7 +24,7 @@
 
 .description {
   display: flex;
-  height: 20px;
+  min-height: 20px;
 }
 
 .column {

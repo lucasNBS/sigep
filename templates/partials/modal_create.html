@@ -1,0 +1,39 @@
+{% load static %}
+<div class="modal" id="createModal">
+  <div class="modal-box">
+    <form id="form-create" method="POST" enctype="multipart/form-data" action="">
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Cadastrar Instituição</p>
+        <button type="button" class="close-button" id="createModalCloseBtn">
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <label class="label">Logo</label>
+          <label class="dropzone" for="logo-input">
+            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
+            <span id="logo-filename">Selecione uma imagem…</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="label" for="create-nome">Nome</label>
+          <input type="text" id="create-nome" name="nome" class="input" value="{{company_name}}" required>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="filter-button cancel-button" id="createModalCancelBtn">Cancelar</button>
+        <button type="submit" class="filter-button apply-button">
+          <img src="{% static 'icons/EditSave.svg' %}" alt="Salvar"> Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="{% static 'js/modal_create.js' %}"></script>

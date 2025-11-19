@@ -1,0 +1,46 @@
+{% load static %}
+<div class="modal" id="registerItemModal">
+  <div class="modal-box">
+    <form id="form-register-item" method="POST">
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Registrar Item</p>
+
+        <button type="button" class="close-button" id="registerItemModalCloseBtn">
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <p class="confirm-text secondary-text">
+          Insira o serial do item a ser registrado
+        </p>
+
+        <label class="label" for="serial-input">Serial</label>
+
+        <input
+          type="text"
+          id="serial-input"
+          name="serial"
+          class="input"
+          placeholder="E3HFG900"
+          required
+        />
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="filter-button cancel-button" id="registerItemModalCancelBtn">
+          Cancelar
+        </button>
+
+        <button type="submit" class="filter-button apply-button">
+          Registrar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+<script src="{% static 'js/modal_items_register.js' %}"></script>

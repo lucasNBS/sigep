@@ -10,7 +10,7 @@
   <div class="top-container">
     <h2 class="main-title">Inventários</h2>
     <div class="actions-container">
-      <div class="action-button filter">
+      <div class="action-button filter" data-open-modal-filter>
         <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
         <span>Filtro</span>
       </div>
@@ -20,6 +20,7 @@
       </div>
     </div>
   </div>
-  {% include 'partials/table.html' %}
+  {% include 'partials/table.html' with type='inventory' %}
 </div>
+{% include 'partials/filter-base.html' with type='inventory' %}
 {% endblock %}

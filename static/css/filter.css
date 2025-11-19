@@ -35,7 +35,7 @@
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 600;
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-s);
   line-height: 30px;
   color: var(--dark-100);
 }
@@ -59,18 +59,19 @@
 }
 
 .filter-button {
+  height: auto;
   font-family: var(--font-primary);
   font-style: normal;
   font-weight: 300;
   font-size: var(--font-size-xs);
   line-height: 22px;
   border-radius: 10px;
-  height: 63px;
   width: 163px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  padding: 13px 20px;
 }
 
 .cancel-button {
@@ -174,4 +175,133 @@
 
 .two-thirds-input {
   width: 369px;
+}
+
+@media screen and (max-width:768px) {
+  .filter-box{
+    width: 400px;
+    padding: 14px;
+  }
+
+  .one-line-input{
+    width: 372px;
+  }
+
+  .one-input-inline{
+    margin-bottom: 0px;
+  }
+
+  .two-line-input{
+    width: 179px;
+  }
+
+  .two-input-inline{
+    margin-bottom: 0px;
+  }
+
+  .three-line-input{
+    width: 114px;
+  }  
+  
+  .three-input-inline{
+    margin-bottom: 0px;
+  }
+
+  .filter-input{
+    padding: 7px;
+    font-size:10px;
+  }
+
+  .label-text{
+    font-size: 8px;
+  }
+
+  .custom-date{
+    background-size: 20px;
+    background-position: right 5px center;
+  }
+
+  .buttons-row{
+    margin-top: 20px;
+  }
+
+  .filter-button{
+    height: 50px;
+    font-size: 10px;
+    width: 130px;
+    border-radius: 6px;
+  }
+
+  .filter-header{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+  }
+
+  .custom-arrow{
+    background-position: right 3px center;
+  }
+
+  .two-thirds-input{
+    width: 244px;
+  }
+
+}
+
+@media screen and (max-width:425px) {
+  .filter-box{
+    width: 280px;
+  }
+
+  .one-line-input{
+    width: 252px;
+  }
+
+  .two-line-input{
+    width: 119px;
+  }
+
+  .three-line-input{
+    width: 80px;
+  }  
+  
+  .three-input-inline{
+    gap: 8px;
+  }
+
+  .filter-input{
+    padding: 2px;
+    font-size:8px;
+    border-radius: 7px;
+    padding-left: 8px;
+  }
+
+  .label-text{
+    font-size:6px;
+    line-height: 8px;
+    font-weight: bold;
+  }
+
+  .custom-date{
+    background-size: 0px;
+    background-position: right 2px center;
+  }
+
+  .buttons-row{
+    margin-top: 12px;
+  }
+
+  .filter-button{
+    height: 42px;
+    width: 100px;
+  }
+
+  .custom-arrow{
+    background-position: right 0px center;
+    background-size: 16px;
+  }
+
+  .two-thirds-input{
+    width: 158px;
+  }
+
 }

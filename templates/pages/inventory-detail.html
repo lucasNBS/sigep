@@ -40,20 +40,24 @@
   <div class="top-container">
     <h3 class="main-title">Registros</h3>
     <div class="actions-container">
-      <div class="action-button filter">
+      <div class="action-button filter" data-open-modal-filter>
         <img class="action-icon" src="{% static 'icons/Filter.svg' %}" alt="Filtro">
         <span>Filtro</span>
       </div>
-      <div class="action-button action">
+      <div class="action-button action" id="btn-scan">
         <img class="action-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Registrar Item">
         <span>Registrar Item</span>
+        {% include 'partials/dropdown_register.html' %}
       </div>
-      <div class="action-button action">
-        <img class="action-icon" src="{% static 'icons/FileDownload.svg' %}" alt="Importar Itens">
-        <span>Importar Itens</span>
+      <div class="action-button action" data-open-modal-import>
+        <img class="action-icon" src="{% static 'icons/FileDownload.svg' %}" alt="Registrar Itens">
+        <span>Registrar Itens</span>
       </div>
     </div>
   </div>
-  {% include 'partials/table.html' %}
+  {% include 'partials/table.html' with type='records' %}
 </div>
+{% include 'partials/filter-base.html' with type='register' %}
+{% include 'partials/import-modal.html' with type='Registrar' description='Baixe e preencha a Planilha Modelo abaixo e registre múltiplos itens simultaneamente' %}
+{% include 'partials/modal_items_register.html' %}
 {% endblock %}

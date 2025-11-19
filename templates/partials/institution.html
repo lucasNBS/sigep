@@ -6,10 +6,10 @@
 
     {% if role == 'Administrador' %}
     <div class="card-actions">
-      <button class="btn-icon edit" title="Editar">
+      <button class="btn-icon edit" title="Editar" data-open-institution-edit-modal>
         <img src="{% static 'icons/Edit.svg' %}" alt="Editar">
       </button>
-      <button class="btn-icon delete" title="Excluir">
+      <button class="btn-icon delete" title="Excluir" data-open-institution-remove-modal>
         <img src="{% static 'icons/Trash.svg' %}" alt="Excluir">
       </button>
     </div>
@@ -42,3 +42,5 @@
     </div>
   </div>
 </article>
+{% include 'partials/modal_edit.html' %}
+{% include 'partials/modal_remove.html' %}

@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 def home(request):
+  return render(request, "pages/dashboard.html", {})
+
+def institution(request):
   return render(request, "pages/panel.html", {})
 
 def login(request):
@@ -44,6 +47,9 @@ def records(request):
 
 def user(request):
   return render(request, "pages/user.html", {})
+
+def user_detail(request, id):
+  return render(request, "pages/user-detail.html", {})
 
 def patrimony(request):
   return render(request, "pages/patrimony.html", {})
