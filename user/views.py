@@ -16,7 +16,7 @@ def forgot_password(request):
   return render(request, "pages/forgot-password.html")
 
 def reset_password(request):
-  return render(request, "pages/reset-password.html")
+  return render(request, "pages/reset-password.html", {})
 
 def new_password(request):
   return render(request, "pages/new-password.html", {})

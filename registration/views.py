@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def records(request):
+  return render(request, "pages/record.html", {})
+
+def records_scan(request):
+  return render(request, "pages/record-scan.html", {})
