@@ -3,9 +3,6 @@ from django.shortcuts import render
 def home(request):
   return render(request, "pages/dashboard.html", {})
 
-def institution(request):
-  return render(request, "pages/panel.html", {})
-
 def reset_password2(request):
   return render(request, "pages/reset-password2.html", {})
 
