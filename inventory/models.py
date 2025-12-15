@@ -51,34 +51,17 @@ class InventoryItem(models.Model):
         return f"{self.inventory.title} ↔ {self.item.name}"
 
 
-class Record(models.Model):
-    class ConservationState(models.TextChoices):
-        NEW = "new", "New"
-        GOOD = "good", "Good"
-        FAIR = "fair", "Fair"
-        POOR = "poor", "Poor"
-        UNUSABLE = "unusable", "Unusable"
-
-    inventory = models.ForeignKey(
-        Inventory, on_delete=models.CASCADE, related_name="records"
+class Room(models.Model):
+    institution = models.ForeignKey(
+        Institution, on_delete=models.CASCADE, related_name="rooms"
     )
-    item = models.ForeignKey(
-        Item, on_delete=models.CASCADE, related_name="records"
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="records"
-    )
-    notes = models.TextField(blank=True, null=True)
-    conservation_state = models.CharField(
-        max_length=20,
-        choices=ConservationState.choices,
-        default=ConservationState.GOOD
-    )
-    recorded_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=150)
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
-        verbose_name = "Record"
-        verbose_name_plural = "Records"
+        verbose_name = "Room"
+        verbose_name_plural = "Rooms"
+        unique_together = ("institution", "name")
 
     def __str__(self):
-        return f"Record: {self.item.name} — {self.inventory.title} — {self.conservation_state}"
+        return f"{self.name} — {self.institution.name}"

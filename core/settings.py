@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'inventory',
     'item',
     'registration',
-    'room',
 ]
 
 MIDDLEWARE = [

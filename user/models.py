@@ -1,25 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-class Role(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-
-    class Meta:
-        verbose_name = "Role"
-        verbose_name_plural = "Roles"
-
-    def __str__(self):
-        return self.name
+class RoleChoices(models.TextChoices):
+    ADMIN = "admin", "Administrador"
+    MANAGER = "manager", "Gerente"
+    USER = "user", "Usuário"
 
 
 class User(AbstractUser):
     photo_url = models.URLField(max_length=500, blank=True, null=True)
-    role = models.ForeignKey(
-        Role,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="users",
+    role = models.CharField(
+        max_length=20,
+        choices=RoleChoices.choices,
+        default=RoleChoices.USER,
     )
 
     class Meta:
