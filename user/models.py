@@ -1,18 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from enum import Enum
 
-class RoleChoices(models.TextChoices):
-    ADMIN = "admin", "Administrador"
-    MANAGER = "manager", "Gerente"
-    USER = "user", "Usuário"
+class Role(Enum):
+    ADMIN = ("admin", "Administrador")
+    MANAGER = ("manager", "Gerente")
+    USER = ("user", "Usuário")
+
+    def __init__(self, value, label):
+        self._value_ = value
+        self.label = label
+
+    @classmethod
+    def choices(cls):
+        return [(role.value, role.label) for role in cls]
 
 
 class User(AbstractUser):
     photo_url = models.URLField(max_length=500, blank=True, null=True)
     role = models.CharField(
         max_length=20,
-        choices=RoleChoices.choices,
-        default=RoleChoices.USER,
+        choices=Role.choices(),
+        default=Role.USER.value,
     )
 
     class Meta:
