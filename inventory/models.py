@@ -22,34 +22,9 @@ class Inventory(models.Model):
 
     items = models.ManyToManyField(
         Item,
-        through="InventoryItem",
         related_name="inventories",
         blank=True,
     )
-
-class InventoryItem(models.Model):
-    inventory = models.ForeignKey(
-        Inventory, on_delete=models.CASCADE, related_name="inventory_items"
-    )
-    item = models.ForeignKey(
-        Item, on_delete=models.CASCADE, related_name="inventory_items"
-    )
-    quantity = models.PositiveIntegerField(default=1)
-    notes = models.TextField(blank=True, null=True)
-
-    class Meta:
-        verbose_name = "Inventory - Item"
-        verbose_name_plural = "Inventories - Items"
-        constraints = [
-            models.UniqueConstraint(
-                fields=["inventory", "item"],
-                name="unique_inventory_item"
-            )
-        ]
-
-    def __str__(self):
-        return f"{self.inventory.title} ↔ {self.item.name}"
-
 
 class Room(models.Model):
     institution = models.ForeignKey(
