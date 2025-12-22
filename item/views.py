@@ -1,16 +1,76 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
 
-def patrimony(request):
-  return render(request, "pages/patrimony.html", {})
+from . import models, forms
 
-def patrimony_create(request):
-  return render(request, "pages/patrimony-form.html", { 'title': 'Cadastrar Item' })
+class ListItemView(ListView):
+  model = models.Item
+  queryset = models.Item.all_objects
+  template_name = "item/patrimony.html"
 
-def patrimony_edit(request, id):
-  return render(request, "pages/patrimony-form.html", { 'title': 'Editar Item' })
+  def get_paginate_by(self, queryset):
+    page_size = self.request.GET.get("size")
+    if page_size:
+      return page_size
+    return 10
 
-def patrimony_detail(request, id):
-  return render(request, "pages/patrimony-detail.html", {})
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    self.filterset = forms.ItemFilter(self.request.GET, queryset=queryset)
+    return self.filterset.qs.distinct()
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
+    context["filter"] = self.filterset
+    return context
+
+class CreateItemView(CreateView):
+  model = models.Item
+  template_name = "item/patrimony-form.html"
+  success_url = reverse_lazy("dashboard")
+  form_class = forms.ItemForm
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["title"] = "Cadastrar Item"
+    return context
+  
+class UpdateItemView(UpdateView):
+  model = models.Item
+  pk_url_kwarg = "id"
+  queryset = models.Item.all_objects
+  template_name = "item/patrimony-form.html"
+  success_url = reverse_lazy("dashboard")
+  form_class = forms.ItemForm
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["title"] = "Editar Item"
+    return context
+
+class DetailItemView(DetailView):
+  model = models.Item
+  pk_url_kwarg = "id"
+  queryset = models.Item.all_objects
+  template_name = "item/patrimony-detail.html"
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
+    return context
+
+class DeleteItemView(DeleteView):
+  model = models.Item
+  pk_url_kwarg = "id"
+  template_name = "item/confirm-delete.html"
+  success_url = reverse_lazy("dashboard")
+
+def restore_item_view(request, id):
+  item = models.Item.all_objects.get(id=id)
+  item.restore()
+  return redirect("dashboard")
 
 def record_form(request, id):
   return render(request, "pages/record-form.html", {})

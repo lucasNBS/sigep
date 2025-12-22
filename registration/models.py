@@ -2,14 +2,9 @@ from django.db import models
 from django.conf import settings
 from item.models import Item
 
-class Record(models.Model):
-    class ConservationState(models.TextChoices):
-        NEW = "new", "New"
-        GOOD = "good", "Good"
-        FAIR = "fair", "Fair"
-        POOR = "poor", "Poor"
-        UNUSABLE = "unusable", "Unusable"
+from . import choices
 
+class Record(models.Model):
     inventory = models.ForeignKey(
         "inventory.Inventory", on_delete=models.CASCADE, related_name="records"
     )
@@ -22,8 +17,8 @@ class Record(models.Model):
     notes = models.TextField(blank=True, null=True)
     conservation_state = models.CharField(
         max_length=20,
-        choices=ConservationState.choices,
-        default=ConservationState.GOOD
+        choices=choices.ConservationState.choices,
+        default=choices.ConservationState.GOOD
     )
     recorded_at = models.DateTimeField(auto_now_add=True)
 

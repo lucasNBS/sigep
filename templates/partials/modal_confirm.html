@@ -1,7 +1,7 @@
 {% load static %}
 <div class="modal" id="removeModal">
   <div class="modal-box">
-    <form id="form-remove" method="POST" action="">
+    <form id="form-remove" method="POST" action="{{ action }}">
       {% csrf_token %}
 
       <div class="modal-header">
@@ -28,4 +28,4 @@
     </form>
   </div>
 </div>
-<script src="{% static 'js/modal_remove.js' %}"></script>
+<script src="{% static 'js/modal_confirm.js' %}"></script>

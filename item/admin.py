@@ -8,3 +8,6 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ("name", "serial", "invoice_key", "notes")
     readonly_fields = ("created_at", "updated_at")
     ordering = ("-created_at",)
+
+    def get_queryset(self, request):
+        return Item.all_objects.all()
