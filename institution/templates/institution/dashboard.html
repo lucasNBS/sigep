@@ -1,0 +1,19 @@
+{% extends 'base-dashboard.html' %}
+{% load static %}
+
+{% block main %}
+<section class="main-content-container">
+  <div class="actions-container">
+    <button class="action" data-open-institution-create-modal>
+      <img src="{% static 'icons/Clipboard.svg' %}" alt="Criar Instituição">
+      Criar Instituição
+    </button>
+  </div>
+  <div class="institutions-grid">
+    {% for institution in institutions %}
+      {% include 'institution/institution.html' with company_name=institution.name role=institution.permissions.first.role items_total=institution.items.count users_total=institution.permissions.count %}
+    {% endfor %}
+  </div>
+</section>
+{% include 'partials/modal_create.html' %}
+{% endblock %}
