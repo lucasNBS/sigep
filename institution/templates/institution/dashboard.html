@@ -11,9 +11,9 @@
   </div>
   <div class="institutions-grid">
     {% for institution in institutions %}
-      {% include 'institution/institution.html' with company_name=institution.name role=institution.permissions.first.role items_total=institution.items.count users_total=institution.permissions.count %}
+      {% include 'institution/institution.html' with company_name=institution.name role=institution.permissions.first.role items_total=institution.items.count users_total=institution.permissions.count logo=institution.logo_url%}
     {% endfor %}
   </div>
 </section>
-{% include 'partials/modal_create.html' %}
+{% include 'institution/modal_create.html' %}
 {% endblock %}
