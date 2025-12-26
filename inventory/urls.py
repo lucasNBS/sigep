@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import inventory_form, inventory, inventory_detail
+from .views import CreateInvetoryView, ListInventoryView, DetailInventoryView
 
 urlpatterns = [
-    path('', inventory, name='inventory'),
-    path('criar/', inventory_form, name='inventory-create'),
-    path('<int:id>/', inventory_detail, name='inventory-detail'),
+    path('', ListInventoryView.as_view(), name='inventory'),
+    path('criar/', CreateInvetoryView.as_view(), name='inventory-create'),
+    path('<int:id>/', DetailInventoryView.as_view(), name='inventory-detail'),
 ]

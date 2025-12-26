@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'inventory',
     'item',
     'registration',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
