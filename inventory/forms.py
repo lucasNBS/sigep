@@ -5,14 +5,11 @@ from institution import models as institution_models
 class InventoryForm(forms.ModelForm):
     class Meta:
         model = models.Inventory
-        fields = ["title","institution", "leader_consultor", "consultors", "rooms"]
+        fields = ["title", "leader_consultor", "consultors", "rooms"]
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "form-field-input",
                 "placeholder": "Inventário Anual 2025",
-            }),
-            "institution": forms.Select(attrs={
-                "class": "form-field-input",
             }),
             "leader_consultor": forms.Select(attrs={
                 "class": "form-field-input",
@@ -25,10 +22,4 @@ class InventoryForm(forms.ModelForm):
             }),
         }
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop("user", None)
-        super().__init__(*args, **kwargs)
-
-        if user:
-            self.fields["institution"].queryset = institution_models.Institution.objects.filter(permissions__user=user)
             

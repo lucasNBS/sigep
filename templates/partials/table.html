@@ -125,7 +125,7 @@
         {% for inventory in inventories  %}
           <tr class="table-row">
             <td class="table-cell">
-              <a href="{% url 'inventory-detail' inventory.id %}">
+              <a href="{% url 'inventory-detail' institution inventory.id %}">
                 {{ inventory.title }}
               </a>
             </td>

@@ -5,11 +5,10 @@ from core.views import home, profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='dashboard'),
+    path('dashboard/', include('institution.urls')),
     path('', include('user.urls')),
     path('patrimonio/', include('item.urls')),
     path('perfil/', profile, name='profile'),
-    path('inventario/', include('inventory.urls')),
-    path('instituicao/', include('institution.urls')),
+    path('dashboard/<int:institution_id>/inventario/', include('inventory.urls')),
     path('registro/', include('registration.urls')),
 ]
