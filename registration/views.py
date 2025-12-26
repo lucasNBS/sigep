@@ -25,7 +25,7 @@ class ListRecordsView(ListView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
-    # context["institution"] = self.kwargs["institution_id"]
+    context["institution"] = self.kwargs["institution_id"]
     #context["filter"] = self.filterset
     return context
 
