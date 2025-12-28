@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
   {% endblock %}
   <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
 </head>
+
 <body>
   <main class="main">
     <div class="main-top-content-container">
@@ -21,19 +23,13 @@
         <p class="institution-text">Olá 👋🏻</p>
       </div>
       <div class="user-container" id="btn-user-menu">
-        <img
-          class="user-profile-image"
-          src="{% static 'icons/User.svg' %}"
-          alt="Foto de perfil do usuário"
-        />
+        <img class="user-profile-image" src="{% static 'icons/User.svg' %}" alt="Foto de perfil do usuário" />
         <div class="user-content-container">
-          <p class="user-name">Ciro Daniel Gurgel Moura</p>
+          <p class="user-name">
+            {{ request.user.get_full_name|default:request.user.username }}
+          </p>
         </div>
-        <img
-          class="user-arrow"
-          src="{% static 'icons/Arrow.svg' %}"
-          alt="Abrir detalhes do perfil"
-        />
+        <img class="user-arrow" src="{% static 'icons/Arrow.svg' %}" alt="Abrir detalhes do perfil" />
         {% include 'partials/dropdown_user.html' %}
       </div>
     </div>
@@ -41,4 +37,5 @@
     {% endblock %}
   </main>
 </body>
+
 </html>

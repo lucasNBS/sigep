@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
@@ -16,22 +17,38 @@ User = get_user_model()
 
 def login(request):
     if request.method == "POST":
-        username = request.POST.get("username", "").strip()
+        email = request.POST.get("username", "").strip().lower()
         password = request.POST.get("password", "")
 
-        user = authenticate(request, username=username, password=password)
+        try:
+            user_obj = User.objects.get(email__iexact=email)
+            user = authenticate(request, username=user_obj.username, password=password)
+        except User.DoesNotExist:
+            user = None
 
         if user is not None:
             auth_login(request, user)
 
-            next_url = request.POST.get("next") or request.GET.get("next")
-            return redirect(next_url or reverse("users"))
+            perm = Permission.objects.filter(user=user).order_by("created_at").first()
+            if perm:
+                request.session["role"] = perm.role
+            else:
+                request.session.pop("role", None)
 
-        messages.error(request, "Usuário ou senha inválidos.")
+            next_url = request.POST.get("next") or request.GET.get("next")
+            return redirect(next_url or reverse("dashboard"))
+
+        messages.error(request, "E-mail ou senha inválidos.")
 
     next_url = request.GET.get("next", "")
     return render(request, "pages/signin.html", {"next": next_url})
+    
 
+def logout(request):
+    auth_logout(request)
+
+    request.session.flush()
+    return redirect(reverse("signin"))
 
 def signup(request):
     return render(request, "pages/signup.html", {})
