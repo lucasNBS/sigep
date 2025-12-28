@@ -5,8 +5,8 @@ from enum import Enum
 
 class Role(Enum):
     ADMIN = ("admin", "Administrador")
-    MANAGER = ("manager", "Gerente")
-    USER = ("user", "Usuário")
+    MANAGER = ("manager", "Gerente de Patrimônio")
+    USER = ("user", "Consultor de Patrimônio")
 
     def __init__(self, value, label):
         self._value_ = value
@@ -47,7 +47,7 @@ class Permission(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("user", "institution", "role")
+        unique_together = ("user", "institution")
         verbose_name = "Permission"
         verbose_name_plural = "Permissions"
 
