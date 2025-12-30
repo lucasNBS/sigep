@@ -1,36 +1,46 @@
 {% load static %}
 <div class="modal" id="editProfileModal" data-close-profile-modal>
-    <div class="modal-box">
-        <form method="get">
-        <div class="modal-header bottom-header">
+  <div class="modal-box">
 
-            <p class="modal-title">Editar Perfil</p>
+    <form method="post" action="{% url 'profile' %}">
+      {% csrf_token %}
 
-            <button class="close-button" type="button">
-                <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar" data-close-profile-modal>
-            </button>
-        </div >           
+      <div class="modal-header bottom-header">
+        <p class="modal-title">Editar Perfil</p>
 
-        <div class="modal-body profile-modal-body">
-            <label class="label">Foto</label>
-            <label class="dropzone attachment" for="logo-input">
-            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-            <span id="logo-filename">Selecione uma imagem…</span>
-            </label>
+        <button class="close-button" type="button" data-close-profile-modal>
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
 
-            <label class="label profile-name" for="edit-nome">Nome</label>
-            <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" placeholder="Lucas Nunes Barreto Sampaio">
+      <div class="modal-body profile-modal-body">
+        <label class="label">Foto</label>
+
+        <div class="dropzone attachment attachment--disabled">
+          <span id="logo-filename">Selecione uma imagem…</span>
         </div>
+      </div>
 
-        <div class="modal-footer buttons-row" >
-            <button class="filter-button cancel-button" data-close-profile-modal type="button">
-                Cancelar
-            </button>
-            <button class="filter-button apply-button"> 
-                <img src="{% static 'icons/EditSave.svg'%}" alt="Aplicar"> Salvar
-            </button>
-        </div>
-        </form>
-    </div>
+      <div class="modal-body profile-modal-body">
+        <label class="label profile-name" for="{{ form.full_name.id_for_label }}">
+          Nome
+        </label>
+
+        {{ form.full_name }}
+      </div>
+
+      <div class="modal-footer buttons-row">
+        <button class="filter-button cancel-button" data-close-profile-modal type="button">
+          Cancelar
+        </button>
+
+        <button class="filter-button apply-button" type="submit">
+          <img src="{% static 'icons/EditSave.svg' %}" alt="Aplicar"> Salvar
+        </button>
+      </div>
+
+    </form>
+
+  </div>
 </div>
 <script src="{% static 'js/edit-profile.js' %}"></script>

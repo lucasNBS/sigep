@@ -18,14 +18,16 @@
     </div>
 
     <div class="profile__info">
-      <h2 class="profile__name">Lucas Nunes Barreto Sampaio</h2>
+      <h2 class="profile__name">
+        {{ user_obj.get_full_name|default:user_obj.username }}
+      </h2>
 
       <ul class="profile__meta">
-        <li><strong>E-mail:</strong> lucasnunesbarretosampaio@email.com</li>
-        <li><strong>Total de Itens Cadastrados:</strong> 325</li>
-        <li><strong>Total de Registros:</strong> 107</li>
-        <li><strong>Total de Inventários Abertos:</strong> 21</li>
-        <li><strong>Total de Itens sob sua Responsabilidade:</strong> 44</li>
+        <li><strong>E-mail:</strong> {{ user_obj.email|default:"—" }}</li>
+        <li><strong>Total de Itens Cadastrados:</strong></li>
+        <li><strong>Total de Registros:</strong></li>
+        <li><strong>Total de Inventários Abertos:</strong></li>
+        <li><strong>Total de Itens sob sua Responsabilidade:</strong></li>
       </ul>
     </div>
   </section>
@@ -45,8 +47,7 @@
   </section>
 
   <section class="p-cards">
-    {% include 'partials/institution.html' with company_name='Amazon' role='Gerente de Patrimônios' items_total='868' users_total='200' %}
-    {% include 'partials/institution.html' with company_name='Amazon' role='Cosultor de Patrimônios' items_total='868' users_total='200' %}
+      <p>Você ainda não possui vínculo com nenhuma instituição.</p>
   </section>
 
   {% include 'partials/profile-modal.html' %}
