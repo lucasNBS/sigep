@@ -1,19 +1,18 @@
 from django.urls import path
 from .views import (
-    SigninView, LogoutView, SignupView,
-    UserListView, UserDetailView, UserCreateView,
-    UserUpdateView, UserDeleteView, ProfileUpdateView
+    SigninView, LogoutView, SignupView, DashboardView, SelectInstitutionView,
+    UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, ProfileUpdateView,
+    forgot_password, reset_password, new_password,
 )
-
-from .views import forgot_password, reset_password, new_password
 
 urlpatterns = [
     path("login/", SigninView.as_view(), name="signin"),
     path("logout/", LogoutView.as_view(), name="logout"),
-
     path("criar-conta/", SignupView.as_view(), name="signup"),
-    
-    
+
+    path("dashboard/", DashboardView.as_view(), name="dashboard"),
+    path("instituicao/selecionar/<int:institution_id>/", SelectInstitutionView.as_view(), name="select-institution"),
+
     path("esqueceu-senha/", forgot_password, name="forgot-password"),
     path("redefinir-senha/", reset_password, name="reset-password"),
     path("nova-senha/", new_password, name="new-password"),
@@ -23,5 +22,6 @@ urlpatterns = [
     path("usuario/<int:id>/", UserDetailView.as_view(), name="users-detail"),
     path("usuario/<int:id>/editar/", UserUpdateView.as_view(), name="users-update"),
     path("usuario/<int:id>/deletar/", UserDeleteView.as_view(), name="users-delete"),
+
     path("perfil/", ProfileUpdateView.as_view(), name="profile"),
 ]
