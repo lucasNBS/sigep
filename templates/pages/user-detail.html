@@ -13,9 +13,9 @@
     <section class="p-profile">
       <div class="profile__photo">
         {% if user_obj.photo_url %}
-          <img src="{{ user_obj.photo_url }}" alt="Foto do usuário">
+        <img src="{{ user_obj.photo_url }}" alt="Foto do usuário">
         {% else %}
-          <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
+        <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
         {% endif %}
       </div>
 
@@ -29,9 +29,7 @@
 
           <li><strong>Cargo:</strong>
             {% if permission %}
-              {{ permission.get_role_display }}
-            {% else %}
-              —
+            {{ permission.get_role_display }}
             {% endif %}
           </li>
 
@@ -67,6 +65,6 @@
   </div>
 
   {% include "partials/profile-modal.html" %}
-  {% include "partials/modal_remove.html" with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" %}
+  {% include "partials/modal_remove.html" with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" action_url=remove_action_url%}
 </section>
 {% endblock %}

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from enum import Enum
+from django.utils import timezone
+
 
 class Role(Enum):
     ADMIN = ("admin", "Administrador")
@@ -45,11 +47,28 @@ class Permission(models.Model):
         default=Role.USER.value,
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    is_active = models.BooleanField(default=True, db_index=True)
+    revoked_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         unique_together = ("user", "institution")
         verbose_name = "Permission"
         verbose_name_plural = "Permissions"
+        
+    def revoke(self):
+        if not self.is_active:
+            return
+        self.is_active = False
+        self.revoked_at = timezone.now()
+        self.save(update_fields=["is_active", "revoked_at"])
+        
+    def reactivate(self):
+        if self.is_active:
+            return
+        self.is_active = True
+        self.revoked_at = None
+        self.save(update_fields=["is_active", "revoked_at"])
 
     def __str__(self):
         return f"{self.user} — {self.institution} — {self.role}"

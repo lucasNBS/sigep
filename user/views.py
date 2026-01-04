@@ -46,8 +46,7 @@ class SigninView(View):
         request.session.pop("next_after_institution", None)
 
         perms = (
-            Permission.objects
-            .filter(user=user)
+            Permission.objects.filter(user=user, is_active=True)
             .select_related("institution")
             .order_by("institution__name")
         )
@@ -121,8 +120,6 @@ def new_password(request):
     return render(request, "pages/new-password.html", {})
 
 
-
-
 class DashboardView(LoginRequiredMixin, View):
     login_url = "signin"
     redirect_field_name = "next"
@@ -131,10 +128,11 @@ class DashboardView(LoginRequiredMixin, View):
     def get(self, request):
         perms = (
             Permission.objects
-            .filter(user=request.user)
+            .filter(user=request.user, is_active=True)
             .select_related("institution")
             .order_by("institution__name")
         )
+
 
         role_map = dict(Role.choices())
 
@@ -159,21 +157,23 @@ class SelectInstitutionView(LoginRequiredMixin, View):
         perm = get_object_or_404(
             Permission,
             user=request.user,
-            institution_id=institution_id
+            institution_id=institution_id,
+            is_active=True,
         )
+
 
         request.session["institution_id"] = perm.institution_id
         request.session["role"] = perm.role
 
         next_url = request.session.pop("next_after_institution", None)
         return redirect(next_url or "institution")
-    redirect_field_name = "next"
 
     def post(self, request, institution_id):
         perm = get_object_or_404(
             Permission,
             user=request.user,
-            institution_id=institution_id
+            institution_id=institution_id, 
+            is_active=True,
         )
 
         request.session["institution_id"] = perm.institution_id
@@ -191,8 +191,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
     def _get_institutions(self, user):
         perms = (
-            Permission.objects
-            .filter(user=user)
+            Permission.objects.filter(user=user, is_active=True)
             .select_related("institution")
             .order_by("institution__name")
         )
@@ -236,8 +235,6 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
-
-
 class UserListView(LoginRequiredMixin, ListView):
     login_url = "signin"
     redirect_field_name = "next"
@@ -248,11 +245,23 @@ class UserListView(LoginRequiredMixin, ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        institution_id = self.request.session.get("institution_id")
+
+        if not institution_id:
+            return Permission.objects.none()
+
         return (
             Permission.objects
             .select_related("user", "institution")
+            .filter(institution_id=institution_id, is_active=True)
             .order_by("user__first_name", "user__username")
         )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["institution_id"] = self.request.session.get("institution_id")
+        return context
+
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -266,13 +275,26 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["permission"] = (
-            Permission.objects
-            .select_related("institution")
-            .filter(user=self.object)
-            .first()
+
+        institution_id = self.request.session.get("institution_id")
+        if institution_id:
+            permission = (
+                Permission.objects
+                .select_related("institution")
+                .filter(user=self.object, institution_id=institution_id, is_active=True)
+                .first()
+            )
+        else:
+            permission = None
+
+        context["permission"] = permission
+        context["remove_action_url"] = (
+            reverse("permission_remove", kwargs={"pk": permission.pk})
+            if permission else ""
         )
+
         return context
+
 
 
 class UserCreateView(LoginRequiredMixin, View):
@@ -335,15 +357,16 @@ class UserUpdateView(LoginRequiredMixin, View):
         )
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
-    login_url = "signin"
-    redirect_field_name = "next"
 
-    model = User
-    template_name = "pages/user-delete.html"
-    pk_url_kwarg = "id"
-    success_url = reverse_lazy("users")
+class PermissionRevokeView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        institution_id = request.session.get("institution_id")
+        perm = get_object_or_404(
+            Permission,
+            pk=pk,
+            institution_id=institution_id,
+            is_active=True,
+        )
+        perm.revoke()
+        return redirect("users")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, "Usuário removido com sucesso!")
-        return super().delete(request, *args, **kwargs)
