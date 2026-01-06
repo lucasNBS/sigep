@@ -1,34 +1,36 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
-from . import models, forms
+from .models import Institution
+from .forms import InstitutionForm
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from user.models import Permission, Role
 
 
 class ListInstitutionsView(ListView):
-  model = models.Institution
+  model = Institution
   template_name = "institution/dashboard.html"
   context_object_name = "institutions"
+  form_class = InstitutionForm
 
   def get_queryset(self):
     user = self.request.user
 
-    user_institutions = models.Institution.objects.filter(permissions__user=user)
+    user_institutions = Institution.objects.filter(permissions__user=user)
 
     return user_institutions.distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context["form"] = forms.InstitutionForm()
+    context["form"] = InstitutionForm()
     return context
 
 
 class CreateInstitutionView(CreateView):
-  model = models.Institution
+  model = Institution
   success_url = reverse_lazy("dashboard")
-  form_class = forms.InstitutionForm
+  form_class = InstitutionForm
 
   def form_valid(self, form):
     user = self.request.user
@@ -50,19 +52,19 @@ class CreateInstitutionView(CreateView):
 
 
 class DeleteInstitutionView(DeleteView):
-  model = models.Institution
+  model = Institution
   pk_url_kwarg = "id"
   success_url = reverse_lazy("dashboard")
 
 
 class UpdateInstitutionView(UpdateView):
-  model = models.Institution
+  model = Institution
   success_url = reverse_lazy("dashboard")
-  form_class = forms.InstitutionForm
+  form_class = InstitutionForm
   pk_url_kwarg = "id"
 
 
 class DetailInstitutionView(DetailView):
-  model = models.Institution
+  model = Institution
   template_name = "institution/panel.html"
   pk_url_kwarg = "id"

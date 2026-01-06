@@ -1,9 +1,9 @@
 from django import forms
-from . import models
+from .models import Institution
 
 class InstitutionForm(forms.ModelForm):
   class Meta:
-        model = models.Institution
+        model = Institution
         fields = ["name", "logo_url"]
         widgets = {
             "name": forms.TextInput(attrs={
