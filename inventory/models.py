@@ -2,22 +2,8 @@ from django.db import models
 from django.conf import settings
 from institution.models import Institution
 from item.models import Item
-from enum import Enum
+from .choices import Status
 
-class Status(Enum):
-    OPEN = ("Aberto","aberto")
-    CLOSED = ("Encerrado", "encerrado")
-    IMPORTED = ("Importação Finalizada", "importado")
-    CONCILIATED= ("Conciliado", "conciliado")
-
-
-    def __init__(self, value, label):
-        self._value_ = value
-        self.label = label
-
-    @classmethod
-    def choices(cls):
-        return [(status.value, status.label) for status in cls]
         
 
 class Room(models.Model):
@@ -73,8 +59,8 @@ class Inventory(models.Model):
 
     status = models.CharField(
         max_length=30,
-        choices=Status.choices(),
-        default=Status.OPEN.value,
+        choices=Status.choices,
+        default=Status.OPEN,
     )
 
     rooms = models.ManyToManyField(
