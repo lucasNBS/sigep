@@ -1,5 +1,7 @@
+import django_filters
+from core import widgets
 from django import forms
-from . import models
+from . import models, choices  
 from institution import models as institution_models
 from django.contrib.auth import get_user_model
 
@@ -26,60 +28,54 @@ class InventoryForm(forms.ModelForm):
         }
 
 
-
-class InventoryFilterForm(forms.Form):
-    title = forms.CharField(
-        required=False,
-        label="Título",
-        widget=forms.TextInput(attrs={
-            "class": "filter-input two-thirds-input",
-            "placeholder": "Título do inventário"
-        })
-    )
-    responsible = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        required=False,
-        label="Aberto por",
-        widget=forms.Select(attrs={
-            "class": "filter-input three-line-input custom-arrow"
-        })
-    )
-    leader_consultor = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        required=False,
-        label="Consultor líder",
-        widget=forms.Select(attrs={
-            "class": "filter-input two-line-input custom-arrow"
-        })
-    )
-    consultor = forms.ModelChoiceField(
-        queryset=User.objects.all(),
-        required=False,
-        label="Consultor",
-        widget=forms.Select(attrs={
-            "class": "filter-input two-line-input custom-arrow"
-        })
-    )
-    status = forms.ChoiceField(
-        choices=[("", "---------")] + list(models.Inventory._meta.get_field("status").choices),
-        required=False,
-        widget=forms.Select(attrs={
-            "class": "filter-input three-line-input custom-arrow"
-        })
-    )
-    date_start = forms.DateField(
-        required=False,
-        widget=forms.DateInput(attrs={
-            "type": "date",
-            "class": "date-input filter-input three-line-input custom-date"
-        })
-    )
-    date_end = forms.DateField(
-        required=False,
-        widget=forms.DateInput(attrs={
-            "type": "date",
-            "class": "date-input filter-input three-line-input custom-date"
-        })
-    )
-
             
+class InventoryFilter(django_filters.FilterSet):
+
+    title = django_filters.CharFilter(
+        lookup_expr = 'icontains',
+        widget = widgets.InputField(label="Título", type="text", 
+        label_class="label-text", input_class="filter-input two-thirds-input")
+    )
+    responsible = django_filters.ModelChoiceFilter(
+        queryset=User.objects.all(),
+        widget=widgets.Select(label="Criado por", 
+        label_class="label-text", input_class="filter-input three-line-input custom-arrow")
+    )
+    leader_consultor = django_filters.ModelChoiceFilter(
+        queryset=User.objects.all(),
+        widget=widgets.Select(label="Consultor líder", 
+        label_class="label-text", input_class="filter-input two-line-input custom-arrow")
+    )
+    consultors = django_filters.ModelChoiceFilter(
+        queryset=User.objects.all(),
+        widget=widgets.Select(label="Consultor", 
+        label_class="label-text", input_class="filter-input two-line-input custom-arrow")
+    )
+    status = django_filters.ChoiceFilter(
+        choices=choices.Status.choices,
+        widget=widgets.Select(label="Status", label_class="label-text", input_class="filter-input three-line-input custom-arrow")
+    )
+    date_start = django_filters.CharFilter(
+        field_name="created_at",
+        lookup_expr="gte",
+        widget=widgets.InputField(label="Data de Cadastro (Início)", type="date",
+        label_class="label-text", input_class="date-input filter-input three-line-input custom-date"),
+    )
+    date_end = django_filters.CharFilter(
+        field_name="created_at",
+        lookup_expr="lte",
+        widget=widgets.InputField(label="Data de Cadastro (Fim)", type="date",
+        label_class="label-text", input_class="date-input filter-input three-line-input custom-date"),
+    )
+
+    class Meta:
+        model = models.Inventory
+        fields = [
+            "title",
+            "responsible",
+            "leader_consultor",
+            "consultors",
+            "date_start",
+            "date_end",
+            "status",
+        ]

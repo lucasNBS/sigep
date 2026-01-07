@@ -19,43 +19,18 @@ class ListInventoryView(ListView):
     return 10
 
   def get_queryset(self):
-    qs = models.Inventory.objects.select_related(
+    queryset = models.Inventory.objects.select_related(
       "institution", "responsible", "leader_consultor"
     ).prefetch_related("consultors")
 
-    self.form = forms.InventoryFilterForm(self.request.GET or None)
-
-    if self.form.is_valid():
-      form_data = self.form.cleaned_data
-
-      if form_data.get("title"):
-        qs = qs.filter(title__icontains=form_data["title"])
-
-      if form_data.get("responsible"):
-        qs = qs.filter(responsible=form_data["responsible"])
-
-      if form_data.get("leader_consultor"):
-        qs = qs.filter(leader_consultor=form_data["leader_consultor"])
-
-      if form_data.get("consultor"):
-        qs = qs.filter(consultors=form_data["consultor"])
-
-      if form_data.get("status"):
-        qs = qs.filter(status=form_data["status"])
-
-      if form_data.get("date_start"):
-        qs = qs.filter(start_date__date__gte=form_data["date_start"])
-
-      if form_data.get("date_end"):
-        qs = qs.filter(start_date__date__lte=form_data["date_end"])
-
-    return qs.distinct()
+    self.filterset = forms.InventoryFilter(self.request.GET, queryset=queryset)
+    return self.filterset.qs.distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
     context["institution"] = self.kwargs["institution_id"]
-    context["filter_form"] = self.form
+    context["filter"] = self.filterset
     return context
 
   

@@ -1,0 +1,23 @@
+<label class="{{ widget.label_class }}">{{ widget.label }}</label>
+<div
+  class="autocomplete-container"
+  data-autocomplete="{{ widget.autocomplete }}"
+  data-autocomplete-editable="{{ widget.editable }}"
+>
+  <div class="relative">
+    <input placeholder="{{ placeholder }}" class="{{ widget.input_class }}" data-autocomplete-input />
+    <div class="autocomplete-suggestions" data-autocomplete-suggestions></div>
+    {% for value in widget.optgroups %}
+      {% if value.1.0.value and value.1.0.selected %}
+        <span
+          data-autocomplete-unselect
+          data-value="{{ value.1.0.value }}"
+          data-label="{{ value.1.0.label }}"
+          class="autocomplete-unselect"
+        >
+          &times;
+        </span>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
