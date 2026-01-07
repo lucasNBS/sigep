@@ -79,7 +79,7 @@ class UserSelfUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("full_name",)
+        fields = ("full_name", "photo_url",)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

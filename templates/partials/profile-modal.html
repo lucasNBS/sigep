@@ -2,7 +2,7 @@
 <div class="modal" id="editProfileModal" data-close-profile-modal>
   <div class="modal-box">
 
-    <form method="post" action="{% url 'profile' %}">
+    <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="modal-header bottom-header">
@@ -16,9 +16,29 @@
       <div class="modal-body profile-modal-body">
         <label class="label">Foto</label>
 
-        <div class="dropzone attachment attachment--disabled">
-          <span id="logo-filename">Selecione uma imagem…</span>
+        <input type="file" name="{{ form.photo_url.name }}" id="{{ form.photo_url.id_for_label }}" accept="image/*"
+          style="display:none;">
+
+        <div class="dropzone attachment" id="photo-dropzone" role="button" tabindex="0">
+          <span id="logo-filename">
+            {% if request.user.photo_url %}
+            Alterar imagem...
+            {% else %}
+            Selecione uma imagem...
+            {% endif %}
+          </span>
         </div>
+
+        {% if form.photo_url.errors %}
+        <div class="error">
+          {{ form.photo_url.errors }}
+        </div>
+        {% endif %}
+
+        {% if request.user.photo_url %}
+        <img src="{{ request.user.photo_url.url }}" alt="Foto atual" style="max-width: 180px; margin-top: 10px;">
+        {% endif %}
+
       </div>
 
       <div class="modal-body profile-modal-body">
@@ -27,6 +47,12 @@
         </label>
 
         {{ form.full_name }}
+
+        {% if form.full_name.errors %}
+        <div class="error">
+          {{ form.full_name.errors }}
+        </div>
+        {% endif %}
       </div>
 
       <div class="modal-footer buttons-row">

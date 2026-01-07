@@ -323,7 +323,7 @@ class UserCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, {"form": form, "formset": formset})
 
 
-class UserUpdateView(LoginRequiredMixin, View):
+class PermissionUpdateView(LoginRequiredMixin, View):
     login_url = "signin"
     redirect_field_name = "next"
     template_name = "pages/user-form.html"

@@ -23,7 +23,12 @@
         <p class="institution-text">Olá 👋🏻</p>
       </div>
       <div class="user-container" id="btn-user-menu">
+        {% if request.user.photo_url %}
+        <img class="user-profile-image" src="{{ request.user.photo_url.url }}" alt="Foto de perfil do usuário" />
+        {% else %}
         <img class="user-profile-image" src="{% static 'icons/User.svg' %}" alt="Foto de perfil do usuário" />
+        {% endif %}
+
         <div class="user-content-container">
           <p class="user-name">
             {{ request.user.get_full_name|default:request.user.username }}

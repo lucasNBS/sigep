@@ -10,10 +10,10 @@
 <section class="main-content-container">
   <section class="p-profile">
     <div class="profile__photo">
-      {% if user_photo %}
-        <img src="{{ user_photo }}" alt="Foto do usuário">
+      {% if user_obj.photo_url %}
+      <img src="{{ user_obj.photo_url.url }}" alt="Foto do usuário">
       {% else %}
-        <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
+      <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
       {% endif %}
     </div>
 
@@ -47,7 +47,7 @@
   </section>
 
   <section class="p-cards">
-      <p>Você ainda não possui vínculo com nenhuma instituição.</p>
+    <p>Você ainda não possui vínculo com nenhuma instituição.</p>
   </section>
 
   {% include 'partials/profile-modal.html' %}

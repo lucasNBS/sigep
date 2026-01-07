@@ -20,7 +20,7 @@ class Role(Enum):
 
 
 class User(AbstractUser):
-    photo_url = models.URLField(max_length=500, blank=True, null=True)
+    photo_url = models.ImageField(upload_to="user/photos/", blank=True, null=True)
 
     class Meta:
         verbose_name = "User"
