@@ -55,7 +55,7 @@
           Remover Permissão
         </button>
 
-        <button type="button" class="btn btn--primary" data-open-profile-modal>
+        <button type="button" class="btn btn--primary" data-open-user-role-modal>
           <img src="{% static 'icons/Edit.svg' %}" alt="Editar Permissão" width="20" height="20">
           Editar Permissão
         </button>
@@ -64,7 +64,7 @@
 
   </div>
 
-  {% include "partials/profile-modal.html" %}
+  {% include "partials/modal_user_role.html" %}
   {% include "partials/modal_remove.html" with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" action_url=remove_action_url%}
 </section>
 {% endblock %}

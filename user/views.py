@@ -7,7 +7,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import ListView, DetailView, DeleteView
+from django.views.generic import ListView, DetailView
 
 from .forms import UserForm, PermissionFormSet, SignupForm, UserSelfUpdateForm
 from .models import Permission, Role
@@ -263,7 +263,6 @@ class UserListView(LoginRequiredMixin, ListView):
         return context
 
 
-
 class UserDetailView(LoginRequiredMixin, DetailView):
     login_url = "signin"
     redirect_field_name = "next"
@@ -296,66 +295,21 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-
-class UserCreateView(LoginRequiredMixin, View):
-    login_url = "signin"
-    redirect_field_name = "next"
-
-    template_name = "pages/user-form.html"
-
-    def get(self, request):
-        form = UserForm()
-        formset = PermissionFormSet()
-        return render(request, self.template_name, {"form": form, "formset": formset})
-
-    @transaction.atomic
-    def post(self, request):
-        form = UserForm(request.POST, request.FILES)
-        formset = PermissionFormSet(request.POST)
-
-        if form.is_valid() and formset.is_valid():
-            user = form.save()
-            formset.instance = user
-            formset.save()
-            messages.success(request, "Usuário cadastrado com sucesso!")
-            return redirect("users-detail", id=user.pk)
-
-        return render(request, self.template_name, {"form": form, "formset": formset})
-
-
 class PermissionUpdateView(LoginRequiredMixin, View):
-    login_url = "signin"
-    redirect_field_name = "next"
-    template_name = "pages/user-form.html"
+    def post(self, request, pk):
+        institution_id = request.session.get("institution_id")
 
-    def get(self, request, id):
-        user = get_object_or_404(User, pk=id)
-        form = UserForm(instance=user)
-        formset = PermissionFormSet(instance=user)
-        return render(
-            request,
-            self.template_name,
-            {"form": form, "formset": formset, "user_obj": user},
+        perm = get_object_or_404(
+            Permission,
+            pk=pk,
+            institution_id=institution_id,
+            is_active=True,
         )
 
-    @transaction.atomic
-    def post(self, request, id):
-        user = get_object_or_404(User, pk=id)
-        form = UserForm(request.POST, request.FILES, instance=user)
-        formset = PermissionFormSet(request.POST, instance=user)
+        perm.role = request.POST.get("role")
+        perm.save(update_fields=["role"])
 
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            formset.save()
-            messages.success(request, "Usuário atualizado com sucesso!")
-            return redirect("users-detail", id=user.pk)
-
-        return render(
-            request,
-            self.template_name,
-            {"form": form, "formset": formset, "user_obj": user},
-        )
-
+        return redirect("users")
 
 
 class PermissionRevokeView(LoginRequiredMixin, View):
