@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import records, records_scan
+from .views import ListRecordsView, records_scan
 
 urlpatterns = [
-    path('registro/', records, name='records'),
-    path('registro/escanear/', records_scan, name='records-scan'),
+    path('', ListRecordsView.as_view(), name='records'),
+    path('escanear/', records_scan, name='records-scan'),
 ]

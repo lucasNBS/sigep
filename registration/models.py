@@ -21,7 +21,7 @@ class Record(models.Model):
     )
     notes = models.TextField(blank=True, null=True)
     conservation_state = models.CharField(
-        max_length=20,
+        max_length=30,
         choices=ConservationState.choices,
         default=ConservationState.GOOD
     )
