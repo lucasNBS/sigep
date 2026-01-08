@@ -160,10 +160,8 @@
         <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
         <img class="institution-image" src="{% static 'img/amazon.png' %}" alt="Logo da empresa" />
         <p class="institution-text">
-          {% if active_institution %}
-          {{ active_institution.name }}
-          {% else %}
-          Nenhuma Instituição Selecionada
+          {% if request.session.institution_name %}
+          {{ request.session.institution_name }}
           {% endif %}
         </p>
       </div>

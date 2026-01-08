@@ -5,14 +5,19 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
+from django.utils import timezone
+from datetime import timedelta
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from .forms import UserForm, PermissionFormSet, SignupForm, UserSelfUpdateForm
-from .models import Permission, Role
+from .forms import SignupForm, UserSelfUpdateForm
+from .models import Permission, Role, PasswordResetCode
 
 User = get_user_model()
+
+MAX_ATTEMPTS = 5
+
 
 class SigninView(View):
     template_name = "pages/signin.html"
@@ -108,16 +113,169 @@ class SignupView(View):
         return render(request, self.template_name, {"form": form})
 
 
-def forgot_password(request):
-    return render(request, "pages/forgot-password.html")
+class ForgotPasswordView(View):
+    template_name = "pages/forgot-password.html"
+    code_ttl_minutes = 10
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        email = (request.POST.get("email") or "").strip().lower()
+
+        messages.success(
+            request,
+            "Se este e-mail estiver cadastrado, enviaremos um código de verificação.",
+        )
+
+        user = User.objects.filter(email__iexact=email).first()
+        if user:
+            PasswordResetCode.objects.filter(
+                user=user,
+                used_at__isnull=True,
+            ).update(used_at=timezone.now())
+
+            raw_code = PasswordResetCode.generate_code(5)
+            PasswordResetCode.objects.create(
+                user=user,
+                code_hash=PasswordResetCode.hash_code(raw_code),
+                expires_at=timezone.now() + timedelta(minutes=self.code_ttl_minutes),
+            )
+
+            print(f"[DEV] Código de redefinição para {email}: {raw_code}")
+
+        request.session["pwreset_email"] = email
+        return redirect("reset-password")
 
 
-def reset_password(request):
-    return render(request, "pages/reset-password.html", {})
+class ResetPasswordView(View):
+    template_name = "pages/reset-password.html"
+
+    def get(self, request):
+        email = request.session.get("pwreset_email", "") or request.GET.get("email", "")
+        next_url = request.session.get("pwreset_next", "") or request.GET.get("next", "")
+        return render(request, self.template_name, {"email": email, "next": next_url})
+
+    def post(self, request):
+        print("[DEV] reset-password POST:", dict(request.POST))
+        email = (request.POST.get("email") or "").strip().lower()
+        code = (request.POST.get("code") or "").strip()
+        print("[DEV] email:", repr(email), "code:", repr(code), "len(code):", len(code))
+        next_url = (request.POST.get("next") or "").strip()
+
+        if next_url:
+            request.session["pwreset_next"] = next_url
+
+        user = User.objects.filter(email__iexact=email).first()
+        if not user:
+            messages.error(request, "Código inválido ou expirado.")
+            return redirect("reset-password")
+
+        prc = (
+            PasswordResetCode.objects
+            .filter(user=user, used_at__isnull=True)
+            .order_by("-created_at")
+            .first()
+        )
+
+        if not prc or prc.is_expired():
+            messages.error(request, "Código inválido ou expirado.")
+            return redirect("reset-password")
+
+        if prc.attempts >= MAX_ATTEMPTS:
+            messages.error(request, "Você excedeu o número de tentativas. Solicite um novo código.")
+            return redirect("forgot-password")
+
+        prc.attempts += 1
+        prc.save(update_fields=["attempts"])
+
+        if prc.code_hash != PasswordResetCode.hash_code(code):
+            messages.error(request, "Código inválido ou expirado.")
+            return redirect("reset-password")
+
+        request.session["pwreset_email"] = email
+        request.session["pwreset_code"] = code
+        request.session["pwreset_ok"] = True
+        request.session["pwreset_verified_at"] = timezone.now().isoformat()
+
+        return redirect("new-password")
 
 
-def new_password(request):
-    return render(request, "pages/new-password.html", {})
+class NewPasswordView(View):
+    template_name = "pages/new-password.html"
+
+    def get(self, request):
+        email = (request.session.get("pwreset_email") or "").strip().lower()
+        code = (request.session.get("pwreset_code") or "").strip()
+        ok = request.session.get("pwreset_ok", False)
+
+        if not ok or not email or not code:
+            messages.error(request, "Sessão de redefinição inválida. Solicite um novo código.")
+            return redirect("forgot-password")
+
+        next_url = request.session.get("pwreset_next", "") or request.GET.get("next", "")
+        return render(request, self.template_name, {"email": email, "next": next_url})
+
+    def post(self, request):
+        email = (request.session.get("pwreset_email") or "").strip().lower()
+        code = (request.session.get("pwreset_code") or "").strip()
+        ok = request.session.get("pwreset_ok", False)
+
+        if not ok or not email or not code:
+            messages.error(request, "Sessão de redefinição inválida. Solicite um novo código.")
+            return redirect("forgot-password")
+
+        next_url = (request.POST.get("next") or "").strip()
+        if next_url:
+            request.session["pwreset_next"] = next_url
+
+        p1 = request.POST.get("new_password1") or ""
+        p2 = request.POST.get("new_password2") or ""
+
+        if p1 != p2:
+            messages.error(request, "As senhas não conferem.")
+            return redirect("new-password")
+
+        if len(p1) < 8:
+            messages.error(request, "A senha deve ter pelo menos 8 caracteres.")
+            return redirect("new-password")
+
+        user = User.objects.filter(email__iexact=email).first()
+        if not user:
+            messages.error(request, "Não foi possível redefinir a senha.")
+            return redirect("forgot-password")
+
+        prc = (
+            PasswordResetCode.objects
+            .filter(user=user, used_at__isnull=True)
+            .order_by("-created_at")
+            .first()
+        )
+
+        if not prc or prc.is_expired():
+            messages.error(request, "Código inválido ou expirado. Solicite um novo código.")
+            return redirect("forgot-password")
+
+        if prc.code_hash != PasswordResetCode.hash_code(code):
+            messages.error(request, "Código inválido ou expirado. Solicite um novo código.")
+            return redirect("reset-password")
+
+        user.set_password(p1)
+        user.save(update_fields=["password"])
+
+        prc.used_at = timezone.now()
+        prc.save(update_fields=["used_at"])
+
+        for k in ["pwreset_email", "pwreset_code", "pwreset_ok", "pwreset_verified_at"]:
+            request.session.pop(k, None)
+
+        messages.success(request, "Senha redefinida com sucesso. Você já pode entrar com a nova senha.")
+
+        next_to = request.session.pop("pwreset_next", "") or ""
+        if next_to:
+            return redirect(next_to)
+
+        return redirect("signin")
 
 
 class DashboardView(LoginRequiredMixin, View):
@@ -164,6 +322,7 @@ class SelectInstitutionView(LoginRequiredMixin, View):
 
         request.session["institution_id"] = perm.institution_id
         request.session["role"] = perm.role
+        request.session["institution_name"] = perm.institution.name
 
         next_url = request.session.pop("next_after_institution", None)
         return redirect(next_url or "institution")
@@ -178,6 +337,7 @@ class SelectInstitutionView(LoginRequiredMixin, View):
 
         request.session["institution_id"] = perm.institution_id
         request.session["role"] = perm.role
+        request.session["institution_name"] = perm.institution.name
 
         next_url = request.session.pop("next_after_institution", None)
         return redirect(next_url or "institution")

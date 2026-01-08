@@ -55,7 +55,7 @@
     </div>
 
     <div class="login-form-footer">
-      <a class="forgot-password-link" href="{% url 'forgot-password' %}">
+      <a class="forgot-password-link" href="{% url 'forgot-password' %}{% if next %}?next={{ next|urlencode }}{% endif %}">
         Esqueceu a senha?
       </a>
 

@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from enum import Enum
 from django.utils import timezone
+import hashlib
+import secrets
 
 
 class Role(Enum):
@@ -72,3 +74,34 @@ class Permission(models.Model):
 
     def __str__(self):
         return f"{self.user} — {self.institution} — {self.role}"
+    
+class PasswordResetCode(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="password_reset_codes",
+    )
+
+    code_hash = models.CharField(max_length=64)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    used_at = models.DateTimeField(null=True, blank=True)
+
+    attempts = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def is_expired(self):
+        return timezone.now() >= self.expires_at
+
+    def is_used(self):
+        return self.used_at is not None
+
+    @staticmethod
+    def generate_code(length=6):
+        return "".join(str(secrets.randbelow(10)) for _ in range(length))
+
+    @staticmethod
+    def hash_code(raw_code: str) -> str:
+        return hashlib.sha256(raw_code.encode()).hexdigest()
