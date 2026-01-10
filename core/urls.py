@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-
-from core.views import home, profile
+from django.conf import settings
+from django.conf.urls.static import static
+from core.views import profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -11,4 +12,4 @@ urlpatterns = [
     path('perfil/', profile, name='profile'),
     path('dashboard/<int:institution_id>/inventario/', include('inventory.urls')),
     path('registro/', include('registration.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
