@@ -1,6 +1,29 @@
 version: "3"
 
 services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    volumes:
+      - static_volume:/home/app/staticfiles
+      - media_volume:/home/app/media
+    command: /entrypoint.sh
+    depends_on:
+      - postgresql
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    volumes:
+      - static_volume:/home/app/staticfiles
+      - media_volume:/home/app/media
+    ports:
+      - 80:80
+    depends_on:
+      - django
+
   postgresql:
     image: postgres:16-bullseye
     ports:
@@ -13,4 +36,6 @@ services:
       - POSTGRES_DB=${DB_NAME}
 
 volumes:
-  data:
+  static_volume: {}
+  media_volume: {}
+  data: {}
