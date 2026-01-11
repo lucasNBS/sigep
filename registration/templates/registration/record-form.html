@@ -7,16 +7,16 @@
 
 {% block main %}
 <div class="main-container">
-  <h2 class="main-title">Monitor</h2>
+  <h2 class="main-title">{{ item.name }}</h2>
   <div class="description-container">
     <div class="description">
-      <p class="detail"><span class="title">Serial:</span> E300FH29</p>
+      <p class="detail"><span class="title">Serial:</span> {{ item.serial }}</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Categoria:</span> Equipamento</p>
+      <p class="detail"><span class="title">Categoria:</span> {{ item.category }}</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Sala:</span> Sala 75</p>
+      <p class="detail"><span class="title">Sala:</span> {{ item.room }}</p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">Responsável:</span> Lucas Nunes</p>
@@ -28,7 +28,7 @@
       <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Data de Cadastro:</span> 22/03/2022</p>
+      <p class="detail"><span class="title">Data de Cadastro:</span> {{ item.created_at|date:"rd/m/y" }}</p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">Cadastrado Por:</span> Thiago Morais</p>
@@ -39,12 +39,12 @@
 
     <div class="description column">
       <span class="title">Descrição:</span>
-      <p class="text">Monitor LED 24'' Full HD Samsung – modelo S24F350, tela antirreflexo, conexão HDMI e VGA, base ajustável</p>
+      <p class="text">{{ item.description }}</p>
     </div>
 
     <div class="description column">
       <span class="title">Observações:</span>
-      <p class="text">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</p>
+      <p class="text">{{ item.notes }}</p>
     </div>
   </div>
 
@@ -57,26 +57,25 @@
         <input class="form-field-input" type="text" placeholder="Sala">
       </div>
       <div class="form-field">
-        <label class="form-field-label">Estado de Conservação</label>
-        <input class="form-field-input" type="text" placeholder="Bom">
+        {{ form.conservation_state }}
       </div>
     </div>
     <div class="form-line">
       <div class="form-field flex-2">
-        <label class="form-field-label">Descrição</label>
-        <textarea class="form-field-textarea" type="text" placeholder="Informe as características principais do equipamento"></textarea>
+          {{ form.notes }}
       </div>
     </div>
-  </form>
+  
 
   <div class="actions-container">
     <a class="action remove" href="{% url 'patrimony' %}">
       Cancelar
     </a>
-    <div class="action edit">
+    <button class="action edit">
       <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Registrar">
       Registrar
-    </div>
+    </button>
   </div>
+</form>
 </div>
 {% endblock %}

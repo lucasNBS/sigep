@@ -12,5 +12,3 @@ def patrimony_edit(request, id):
 def patrimony_detail(request, id):
   return render(request, "pages/patrimony-detail.html", {})
 
-def record_form(request, id):
-  return render(request, "pages/record-form.html", {})

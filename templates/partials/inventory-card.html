@@ -6,7 +6,7 @@
     <p class="inventory-data">Registrados: <span>{{ registered }}</span></p>
     <p class="inventory-data">Pendentes: <span>{{ pending }}</span></p>
   </div>
-  <a class="inventory-link" href="{% url 'inventory-detail' 1 %}">
+  <a class="inventory-link" href="{% url 'inventory-detail' institution 1 %}">
     <img class="inventory-link-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Acessar inventário">
     <p class="inventory-link-text">
       Acessar Inventário

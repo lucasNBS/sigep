@@ -1,7 +1,7 @@
 {% load static %}
 <div class="modal" id="registerItemModal">
   <div class="modal-box">
-    <form id="form-register-item" method="POST">
+    <form id="form-register-item" method="POST" action="{% url 'register-serial' institution inventory_id %}">
       {% csrf_token %}
 
       <div class="modal-header">
@@ -20,14 +20,7 @@
 
         <label class="label" for="serial-input">Serial</label>
 
-        <input
-          type="text"
-          id="serial-input"
-          name="serial"
-          class="input"
-          placeholder="E3HFG900"
-          required
-        />
+        {{ form.serial }}
       </div>
 
       <div class="modal-footer">
@@ -35,9 +28,9 @@
           Cancelar
         </button>
 
-        <a type="submit" class="filter-button apply-button" href="{% url 'patrimony-register' 1 %}">
+        <button type="submit" class="filter-button apply-button">
           Registrar
-        </a>
+        </button>
       </div>
 
     </form>

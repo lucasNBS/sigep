@@ -1,6 +1,11 @@
-from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.utils import timezone
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
 from .models import Record
+from .forms import RecordForm
+from item.models import Item
+from inventory.models import Inventory
 
 class ListRecordsView(ListView):
   model = Record
@@ -31,3 +36,49 @@ class ListRecordsView(ListView):
 
 def records_scan(request):
   return render(request, "pages/record-scan.html", {})
+
+class RegisterSerialView(View):
+  def post(self, request, *args, **kwargs):
+    serial = request.POST.get("serial")
+
+    if not serial:
+      return redirect(request.META.get("HTTP_REFERER", "/"))
+
+    return redirect(
+      "create-record",
+      institution_id=kwargs["institution_id"],
+      inventory_id=kwargs["inventory_id"],
+      serial=serial
+    )
+
+class CreateRecordView(CreateView):
+  model = Record
+  template_name = "registration/record-form.html"
+  form_class = RecordForm
+  slug_field = "serial"
+  slug_url_kwarg = "serial"
+
+  def get_success_url(self):
+    return reverse_lazy(
+      "inventory-detail",
+      kwargs={"institution_id": self.kwargs["institution_id"], "inventory_id": self.kwargs["inventory_id"]}
+    )
+ 
+  def form_valid(self, form):
+    form.instance.inventory = get_object_or_404(Inventory, id = self.kwargs["inventory_id"])
+    form.instance.item = get_object_or_404(Item, serial=self.kwargs["serial"], institution_id=self.kwargs["institution_id"])
+    record = form.save()
+    record.recorded_at = timezone.now()
+    
+    record.user = self.request.user
+    
+    record.save() 
+
+    return super().form_valid(form)
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["institution"] = self.kwargs["institution_id"]
+    context["item"] = get_object_or_404(Item, serial=self.kwargs["serial"], institution_id=self.kwargs["institution_id"],)
+    return context
+

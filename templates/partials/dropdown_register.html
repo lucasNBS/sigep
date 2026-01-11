@@ -1,7 +1,7 @@
 {% load static %}
 
 <div class="dropdown-menu" id="dropdown-scan">
-  <a class="dropdown-item" href="{% url 'records-scan' %}">
+  <a class="dropdown-item" href="{% url 'records-scan' institution inventory_id %}">
     <img src="{% static 'icons/Scan.svg' %}" alt="" class="dropdown-item__icon">
     <span>Escanear</span>
   </a>
