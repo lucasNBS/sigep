@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 
 
 class Institution(models.Model):
-    name = models.CharField(max_length=100)
-    logo_url = models.URLField(max_length=500, blank=True, null=True)
+    name = models.CharField(max_length=200)
+    logo_url = models.ImageField(upload_to="institution/logos/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
