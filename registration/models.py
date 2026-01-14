@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from item.models import Item
 
-from . import choices
+from .choices import ConservationState
 
 class Record(models.Model):
     inventory = models.ForeignKey(
@@ -17,8 +17,8 @@ class Record(models.Model):
     notes = models.TextField(blank=True, null=True)
     conservation_state = models.CharField(
         max_length=20,
-        choices=choices.ConservationState.choices,
-        default=choices.ConservationState.GOOD
+        choices=ConservationState.choices,
+        default=ConservationState.GOOD
     )
     recorded_at = models.DateTimeField(auto_now_add=True)
 

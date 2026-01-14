@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
 
-from . import models, forms
+from .models import Item
+from .forms import ItemForm, ItemFilter
 
 class ListItemView(ListView):
-  model = models.Item
-  queryset = models.Item.all_objects
+  model = Item
+  queryset = Item.all_objects
   template_name = "item/patrimony.html"
 
   def get_paginate_by(self, queryset):
@@ -17,7 +18,7 @@ class ListItemView(ListView):
 
   def get_queryset(self):
     queryset = super().get_queryset()
-    self.filterset = forms.ItemFilter(self.request.GET, queryset=queryset)
+    self.filterset = ItemFilter(self.request.GET, queryset=queryset)
     return self.filterset.qs.distinct()
 
   def get_context_data(self, **kwargs):
@@ -27,10 +28,10 @@ class ListItemView(ListView):
     return context
 
 class CreateItemView(CreateView):
-  model = models.Item
+  model = Item
   template_name = "item/patrimony-form.html"
   success_url = reverse_lazy("dashboard")
-  form_class = forms.ItemForm
+  form_class = ItemForm
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -38,12 +39,12 @@ class CreateItemView(CreateView):
     return context
   
 class UpdateItemView(UpdateView):
-  model = models.Item
+  model = Item
   pk_url_kwarg = "id"
-  queryset = models.Item.all_objects
+  queryset = Item.all_objects
   template_name = "item/patrimony-form.html"
   success_url = reverse_lazy("dashboard")
-  form_class = forms.ItemForm
+  form_class = ItemForm
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -51,9 +52,9 @@ class UpdateItemView(UpdateView):
     return context
 
 class DetailItemView(DetailView):
-  model = models.Item
+  model = Item
   pk_url_kwarg = "id"
-  queryset = models.Item.all_objects
+  queryset = Item.all_objects
   template_name = "item/patrimony-detail.html"
 
   def get_context_data(self, **kwargs):
@@ -62,13 +63,13 @@ class DetailItemView(DetailView):
     return context
 
 class DeleteItemView(DeleteView):
-  model = models.Item
+  model = Item
   pk_url_kwarg = "id"
   template_name = "item/confirm-delete.html"
   success_url = reverse_lazy("dashboard")
 
 def restore_item_view(request, id):
-  item = models.Item.all_objects.get(id=id)
+  item = Item.all_objects.get(id=id)
   item.restore()
   return redirect("dashboard")
 
