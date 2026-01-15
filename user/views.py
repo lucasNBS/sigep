@@ -283,7 +283,7 @@ class DashboardView(LoginRequiredMixin, View):
     template_name = "pages/dashboard.html"
 
     def get(self, request):
-        perms = (
+        permission_list = (
             Permission.objects
             .filter(user=request.user, revoked_at__isnull=True)
             .select_related("institution")
@@ -295,12 +295,12 @@ class DashboardView(LoginRequiredMixin, View):
 
         institutions = [
             {
-                "id": p.institution.id,
-                "name": p.institution.name,
-                "role_value": p.role,
-                "role_label": role_map.get(p.role, p.role),
+                "id": perms.institution.id,
+                "name": perms.institution.name,
+                "role_value": perms.role,
+                "role_label": role_map.get(perms.role, perms.role),
             }
-            for p in perms
+            for perms in permission_list
         ]
 
         return render(request, self.template_name, {"institutions": institutions})
@@ -349,7 +349,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     template_name = "pages/profile.html"
 
     def _get_institutions(self, user):
-        perms = (
+        permission_list = (
             Permission.objects.filter(user=user, revoked_at__isnull=True)
             .select_related("institution")
             .order_by("institution__name")
@@ -358,13 +358,13 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
         return [
             {
-                "id": p.institution_id,
-                "name": p.institution.name,
-                "role_label": role_map.get(p.role, p.role),
+                "id": perms.institution_id,
+                "name": perms.institution.name,
+                "role_label": role_map.get(perms.role, perms.role),
                 "items_total": None,
                 "users_total": None,
             }
-            for p in perms
+            for perms in permission_list
         ]
 
     def get(self, request):
