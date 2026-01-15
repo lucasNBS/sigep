@@ -20,6 +20,17 @@ class RegisterSerialForm(forms.ModelForm):
         }
 
 class RecordForm(forms.ModelForm):
+
+    room = forms.ModelChoiceField(
+        queryset=Room.objects.all(),
+        required=False,
+        widget=widgets.Select(
+            label="Sala",
+            label_class="form-field-label",
+            input_class="form-field-input",
+        ),
+    )
+
     class Meta:
         model = Record
         fields = ["notes","conservation_state"]
@@ -37,6 +48,13 @@ class RecordForm(forms.ModelForm):
             ),
         }
 
+    def __init__(self, *args, institution=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if institution:
+            self.fields["room"].queryset = Room.objects.filter(
+                institution=institution
+            )
 
 class RecordFilter(django_filters.FilterSet):
 

@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, ListView, D
 from .models import Record
 from .forms import RecordForm, RecordFilter
 from item.models import Item
+from institution.models import Institution
 from inventory.models import Inventory
 
 class ListRecordsView(ListView):
@@ -52,9 +53,14 @@ class RegisterSerialView(View):
 class CreateRecordView(CreateView):
   model = Record
   template_name = "registration/record-form.html"
-  form_class = RecordForm
   slug_field = "serial"
   slug_url_kwarg = "serial"
+  form_class = RecordForm
+  
+  def get_form_kwargs(self):
+    kwargs = super().get_form_kwargs()
+    kwargs["institution"] = get_object_or_404(Institution, id=self.kwargs["institution_id"])
+    return kwargs
 
   def get_success_url(self):
     return reverse_lazy(
@@ -71,6 +77,12 @@ class CreateRecordView(CreateView):
     record.user = self.request.user
     
     record.save() 
+
+    room = form.cleaned_data.get("room")
+    if room:
+      item = record.item
+      item.room = room
+      item.save(update_fields=["room"])
 
     return super().form_valid(form)
 
