@@ -2,13 +2,11 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
-from .models import Institution
+from .models import Institution, Category
 from .forms import InstitutionForm
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from user.models import Permission, Role
-
-from . import models
 
 
 class ListInstitutionsView(ListView):
@@ -81,7 +79,7 @@ def autocomplete_categories_view(request):
   search = request.GET.get("search")
   limit = 20
 
-  found_categories = models.Category.objects.filter(name__icontains=search)
+  found_categories = Category.objects.filter(name__icontains=search)
 
   response = [
     {"name": categorie.name, "id": categorie.id} for categorie in found_categories
