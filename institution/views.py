@@ -1,4 +1,14 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
+from .models import Institution
+from .forms import InstitutionForm
+from inventory.models import Inventory
+from item.models import Item
+from registration.models import Record
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from user.models import Permission, Role
 
 
 class ListInstitutionsView(ListView):
@@ -63,6 +73,19 @@ class DetailInstitutionView(DetailView):
   pk_url_kwarg = "id"
 
   def get_context_data(self, **kwargs):
+
+    institution_id = self.kwargs["id"]
+    inventories = Inventory.objects.filter(institution__id=institution_id)
+
+    items_total = Item.objects.filter(institution__id=institution_id).count()
+
     context = super().get_context_data(**kwargs)
+<<<<<<< HEAD
     context["institution"] = self.kwargs["id"]
     return context
+=======
+    context["items_total"] = items_total
+    context["inventories"] = inventories
+    context["institution"] = institution_id
+    return context
+>>>>>>> 3228e00 (feat: add inventories and itens to institution detail)

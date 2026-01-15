@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <section class="section-container">
+    <h2 class="section-title">Dados Gerais</h2>
+    <div class="cards-container">
+      {% include 'partials/card.html' with title='Total de itens' type='cube' total=items_total data='Itens cadastrados' %}
+      {% include 'partials/card.html' with title='Itens usáveis' type='usable' total='348' data='Itens em bom estado' %}
+      {% include 'partials/card.html' with title='Itens perdidos' type='lost' total='84' data='Itens não localizados' %}
+      {% include 'partials/card.html' with title='Total de inventários' type='inventory' total=inventories.count data='Inventários realizados' %}
+    </div>
+  </section>
+  <section class="section-container">
+    <h2 class="section-title">Inventários</h2>
+    <div class="inventory-container">
+      {% for inventory in inventories %}
+        {% include 'partials/inventory-card.html' with title=inventory.title total=inventory.records.count status=inventory.status %}
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}

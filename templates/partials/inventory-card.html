@@ -2,11 +2,10 @@
 <article class="inventory-card-container">
   <p class="inventory-card-title">{{ title }}</p>
   <div class="inventory-data-container">
-    <p class="inventory-data">Total de itens: <span>{{ total }}</span></p>
-    <p class="inventory-data">Registrados: <span>{{ registered }}</span></p>
-    <p class="inventory-data">Pendentes: <span>{{ pending }}</span></p>
+    <p class="inventory-data">Total de itens registrados: <span>{{ total }}</span></p>
+    <p class="inventory-data">Status: <span>{{ status }}</span></p>
   </div>
-  <a class="inventory-link" href="{% url 'inventory-detail' institution 1 %}">
+  <a class="inventory-link" href="{% url 'inventory-detail' institution inventory.id %}">
     <img class="inventory-link-icon" src="{% static 'icons/FileAdd.svg' %}" alt="Acessar inventário">
     <p class="inventory-link-text">
       Acessar Inventário
