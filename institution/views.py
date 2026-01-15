@@ -1,7 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
-from .models import Institution
+from .models import Institution, Category
 from .forms import InstitutionForm
 from django.contrib.auth import get_user_model
 from django.db import transaction
@@ -68,3 +69,20 @@ class DetailInstitutionView(DetailView):
   model = Institution
   template_name = "institution/panel.html"
   pk_url_kwarg = "id"
+
+
+def institution(request):
+  return render(request, "pages/panel.html", {})
+
+
+def autocomplete_categories_view(request):
+  search = request.GET.get("search")
+  limit = 20
+
+  found_categories = Category.objects.filter(name__icontains=search)
+
+  response = [
+    {"name": categorie.name, "id": categorie.id} for categorie in found_categories
+  ][:limit]
+
+  return JsonResponse(response, safe=False)

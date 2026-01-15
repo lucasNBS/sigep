@@ -34,7 +34,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,6 +49,7 @@ INSTALLED_APPS = [
     'inventory',
     'item',
     'registration',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +135,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+USE_L10N = True
+
+LANGUAGE_CODE = 'pt-br'
+
+LANGUAGES = [
+    ('pt-br', 'Português'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'UTC'
 
