@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
 from .models import Record
-from .forms import RecordForm
+from .forms import RecordForm, RecordFilter
 from item.models import Item
 from inventory.models import Inventory
 
@@ -19,19 +19,17 @@ class ListRecordsView(ListView):
       return page_size
     return 10
 
-  # def get_queryset(self):
-  #   queryset = models.Inventory.objects.select_related(
-  #     "institution", "responsible", "leader_consultor"
-  #   ).prefetch_related("consultors")
+  def get_queryset(self):
+    queryset = Record.objects.select_related("item", "user").prefetch_related("item__room")
 
-  #   self.filterset = forms.InventoryFilter(self.request.GET, queryset=queryset)
-  #   return self.filterset.qs.distinct()
+    self.filterset = RecordFilter(self.request.GET, queryset=queryset)
+    return self.filterset.qs.distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
     context["institution"] = self.kwargs["institution_id"]
-    #context["filter"] = self.filterset
+    context["filter"] = self.filterset
     return context
 
 def records_scan(request):

@@ -6,7 +6,7 @@ from . import models, forms
 from user import models as user_models
 from institution import models as inst_models
 from registration.models import Record
-from registration.forms import RegisterSerialForm
+from registration.forms import RegisterSerialForm, RecordFilter
 
 def inventory_form(request):
   return render(request, "pages/inventory-form.html", {})
@@ -14,10 +14,6 @@ def inventory_form(request):
 def inventory(request):
   return render(request, "pages/inventory.html", {})
 
-<<<<<<< HEAD
-def inventory_detail(request, id):
-  return render(request, "pages/inventory-detail.html", {})
-=======
   def get_queryset(self):
     queryset = models.Inventory.objects.select_related(
       "institution", "responsible", "leader_consultor"
@@ -72,11 +68,17 @@ class DetailInventoryView(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    institution = context["inventory"].institution
+    institution = get_object_or_404(inst_models.Institution, id = self.kwargs["institution_id"])
+
+    inventory = self.object
+    records_qs = Record.objects.filter(inventory=inventory)
+    filterset = RecordFilter(self.request.GET, queryset=records_qs)
+
     context["rooms"] = models.Room.objects.filter(inventories__institution=institution).distinct()
     context["institution"] = self.kwargs["institution_id"]
     context["inventory_id"] = self.kwargs["inventory_id"]
-    context["records"] = Record.objects.filter(inventory_id = self.kwargs["inventory_id"])
+    context["records"] = filterset.qs.distinct
     context["form"] = RegisterSerialForm()
+    context["filter"] = filterset
     return context
->>>>>>> 0e8b43f (feat: add itens registration and inventory ID in URL)
+
