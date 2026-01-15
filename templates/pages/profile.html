@@ -47,7 +47,11 @@
   </section>
 
   <section class="p-cards">
-    <p>Você ainda não possui vínculo com nenhuma instituição.</p>
+    {% for inst in institutions %}
+    {% include "partials/institution.html" with institution_id=inst.id company_name=inst.name role=inst.role_label items_total=inst.items_total users_total=inst.users_total %}
+    {% empty %}
+    <p>Você não possui instituições vinculadas.</p>
+    {% endfor %}
   </section>
 
   {% include 'partials/profile-modal.html' %}

@@ -1,15 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("RESET PASSWORD JS CARREGADO");
 
   const inputs = document.querySelectorAll(".input-field-reset");
   const hiddenCode = document.getElementById("otp-code");
   const form = document.querySelector("form.login-form");
-
-  console.log("DEBUG:", {
-    inputs: inputs.length,
-    hidden: !!hiddenCode,
-    form: !!form,
-  });
 
   if (!inputs.length || !hiddenCode || !form) return;
 
@@ -71,6 +64,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", () => {
     syncHiddenCode();
-    console.log("SUBMIT OTP:", hiddenCode.value);
   });
 });

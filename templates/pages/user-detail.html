@@ -12,8 +12,10 @@
 
     <section class="p-profile">
       <div class="profile__photo">
-        {% if user_obj.photo_url.url %}
+        {% if user_obj.photo_url %}
         <img src="{{ user_obj.photo_url.url }}" alt="Foto do usuário">
+        {% else %}
+        <img src="{% static 'icons/UserProfile.svg' %}" alt="Sem foto">
         {% endif %}
       </div>
 

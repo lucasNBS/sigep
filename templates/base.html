@@ -28,8 +28,8 @@
       </h1>
       <nav class="aside-content-container">
         <ul class="navbar-container">
-          {% with r=request.session.role|default_if_none:'' %}
-          {% if r == "admin" %}
+          {% with role=request.session.role|default_if_none:'' %}
+          {% if role == "admin" %}
 
           <a href="{% url 'institution' %}">
             <li
@@ -79,7 +79,7 @@
                 class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
             </li>
           </a>
-          {% elif r == "manager" %}
+          {% elif role == "manager" %}
 
           <a href="{% url 'institution' %}">
             <li
@@ -121,7 +121,7 @@
             </li>
           </a>
 
-          {% elif r == "user" %}
+          {% elif role == "user" %}
 
           <a href="{% url 'patrimony' %}">
             <li
@@ -177,12 +177,12 @@
             {{ request.user.get_full_name|default:request.user.username }}
           </p>
           <p class="user-role">
-            {% with r=request.session.role|default_if_none:'' %}
-            {% if r == "admin" %}
+            {% with role=request.session.role|default_if_none:'' %}
+            {% if role == "admin" %}
             Administrador
-            {% elif r == "manager" %}
+            {% elif role == "manager" %}
             Gerente de Patrimônio
-            {% elif r == "user" %}
+            {% elif role == "user" %}
             Consultor de Patrimônio
             {% endif %}
             {% endwith %}

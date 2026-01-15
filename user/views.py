@@ -51,15 +51,14 @@ class SigninView(View):
         request.session.pop("next_after_institution", None)
 
         perms = (
-            Permission.objects.filter(user=user, is_active=True)
+            Permission.objects.filter(user=user, revoked_at__isnull=True)
             .select_related("institution")
             .order_by("institution__name")
         )
 
         if not perms.exists():
-            auth_logout(request)
             messages.error(request, "Seu usuário não possui instituições vinculadas.")
-            return redirect("signin")
+            return redirect("dashboard")
 
         if perms.count() == 1:
             perm = perms.first()
@@ -286,7 +285,7 @@ class DashboardView(LoginRequiredMixin, View):
     def get(self, request):
         perms = (
             Permission.objects
-            .filter(user=request.user, is_active=True)
+            .filter(user=request.user, revoked_at__isnull=True)
             .select_related("institution")
             .order_by("institution__name")
         )
@@ -316,7 +315,7 @@ class SelectInstitutionView(LoginRequiredMixin, View):
             Permission,
             user=request.user,
             institution_id=institution_id,
-            is_active=True,
+            revoked_at__isnull=True,
         )
 
 
@@ -332,7 +331,7 @@ class SelectInstitutionView(LoginRequiredMixin, View):
             Permission,
             user=request.user,
             institution_id=institution_id, 
-            is_active=True,
+            revoked_at__isnull=True,
         )
 
         request.session["institution_id"] = perm.institution_id
@@ -351,7 +350,7 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
     def _get_institutions(self, user):
         perms = (
-            Permission.objects.filter(user=user, is_active=True)
+            Permission.objects.filter(user=user, revoked_at__isnull=True)
             .select_related("institution")
             .order_by("institution__name")
         )
@@ -359,8 +358,9 @@ class ProfileUpdateView(LoginRequiredMixin, View):
 
         return [
             {
-                "company_name": p.institution.name,
-                "role": role_map.get(p.role, p.role),
+                "id": p.institution_id,
+                "name": p.institution.name,
+                "role_label": role_map.get(p.role, p.role),
                 "items_total": None,
                 "users_total": None,
             }
@@ -413,7 +413,8 @@ class UserListView(LoginRequiredMixin, ListView):
         return (
             Permission.objects
             .select_related("user", "institution")
-            .filter(institution_id=institution_id, is_active=True)
+            .filter(institution_id=institution_id, revoked_at__isnull=True)
+            .exclude(user=self.request.user)
             .order_by("user__first_name", "user__username")
         )
 
@@ -440,7 +441,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
             permission = (
                 Permission.objects
                 .select_related("institution")
-                .filter(user=self.object, institution_id=institution_id, is_active=True)
+                .filter(user=self.object, institution_id=institution_id, revoked_at__isnull=True)
                 .first()
             )
         else:
@@ -463,7 +464,7 @@ class PermissionUpdateView(LoginRequiredMixin, View):
             Permission,
             pk=pk,
             institution_id=institution_id,
-            is_active=True,
+            revoked_at__isnull=True,
         )
 
         perm.role = request.POST.get("role")
@@ -479,7 +480,7 @@ class PermissionRevokeView(LoginRequiredMixin, View):
             Permission,
             pk=pk,
             institution_id=institution_id,
-            is_active=True,
+            revoked_at__isnull=True,
         )
         perm.revoke()
         return redirect("users")

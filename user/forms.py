@@ -1,8 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
-from django.utils.text import slugify
+import re
 
 from .models import Permission
 
@@ -34,7 +33,7 @@ class SignupForm(UserCreationForm):
         user.first_name = parts[0]
         user.last_name = parts[1] if len(parts) > 1 else ""
 
-        base_username = slugify(full_name).replace("-", "") or "user"
+        base_username = re.sub(r"[^a-z0-9]", "", full_name.lower()) or "user"
         username = base_username
         i = 1
         while User.objects.filter(username=username).exists():

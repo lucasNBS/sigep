@@ -50,7 +50,6 @@ class Permission(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     
-    is_active = models.BooleanField(default=True, db_index=True)
     revoked_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -59,18 +58,16 @@ class Permission(models.Model):
         verbose_name_plural = "Permissions"
         
     def revoke(self):
-        if not self.is_active:
+        if self.revoked_at is not None:
             return
-        self.is_active = False
         self.revoked_at = timezone.now()
-        self.save(update_fields=["is_active", "revoked_at"])
-        
+        self.save(update_fields=["revoked_at"])
+
     def reactivate(self):
-        if self.is_active:
+        if self.revoked_at is None:
             return
-        self.is_active = True
         self.revoked_at = None
-        self.save(update_fields=["is_active", "revoked_at"])
+        self.save(update_fields=["revoked_at"]) 
 
     def __str__(self):
         return f"{self.user} — {self.institution} — {self.role}"
