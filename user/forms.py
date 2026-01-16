@@ -84,3 +84,35 @@ class UserSelfUpdateForm(forms.ModelForm):
             user.save()
 
         return user
+    
+class UserFilterForm(forms.Form):
+    name = forms.CharField(
+        required=False,
+        label="Nome",
+        widget=forms.TextInput(attrs={
+            "class": "filter-input one-line-input",
+            "placeholder": "Nome do usuário"
+        })
+    )
+
+    role = forms.ChoiceField(
+        required=False,
+        label="Cargo",
+        choices=[("", "Todos")] + [
+            choice
+            for choice in Permission._meta.get_field("role").choices
+            if choice[0] != "admin"
+        ],
+        widget=forms.Select(attrs={
+            "class": "filter-input three-line-input custom-arrow"
+        })
+    )
+
+    email = forms.CharField(
+        required=False,
+        label="E-mail",
+        widget=forms.TextInput(attrs={
+            "class": "filter-input two-thirds-input",
+            "placeholder": "exemplo@gmail.com"
+        })
+    )

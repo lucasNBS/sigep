@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -11,7 +12,7 @@ from datetime import timedelta
 from django.views import View
 from django.views.generic import ListView, DetailView
 
-from .forms import SignupForm, UserSelfUpdateForm
+from .forms import SignupForm, UserSelfUpdateForm, UserFilterForm
 from .models import Permission, Role, PasswordResetCode
 
 User = get_user_model()
@@ -342,7 +343,6 @@ class SelectInstitutionView(LoginRequiredMixin, View):
         return redirect(next_url or "institution")
 
 
-
 class ProfileUpdateView(LoginRequiredMixin, View):
     login_url = "signin"
     redirect_field_name = "next"
@@ -410,17 +410,44 @@ class UserListView(LoginRequiredMixin, ListView):
         if not institution_id:
             return Permission.objects.none()
 
-        return (
+        qs = (
             Permission.objects
             .select_related("user", "institution")
             .filter(institution_id=institution_id, revoked_at__isnull=True)
             .exclude(user=self.request.user)
-            .order_by("user__first_name", "user__username")
         )
+
+        filter_form = UserFilterForm(self.request.GET or None)
+        if filter_form.is_valid():
+            name = (filter_form.cleaned_data.get("name") or "").strip()
+            email = (filter_form.cleaned_data.get("email") or "").strip()
+            role = filter_form.cleaned_data.get("role") or ""
+
+            if name:
+                terms = [t for t in name.split() if t.strip()]
+                for term in terms:
+                    qs = qs.filter(
+                    Q(user__first_name__icontains=term) |
+                    Q(user__last_name__icontains=term) |
+                    Q(user__username__icontains=term)
+                )
+
+            if email:
+                qs = qs.filter(
+                    Q(user__email__icontains=email) |
+                    Q(user__username__icontains=email)
+                )
+
+            if role and role != "admin":
+                qs = qs.filter(role=role)
+
+        return qs.order_by("user__first_name", "user__username")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["institution_id"] = self.request.session.get("institution_id")
+        context["filter_form"] = UserFilterForm(self.request.GET or None)
+        context["querystring"] = self.request.GET.urlencode()
         return context
 
 
