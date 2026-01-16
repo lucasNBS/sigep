@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ValidationError
+
 from institution.models import Institution
 from item.models import Item
 from .choices import Status
@@ -10,13 +12,15 @@ class Room(models.Model):
     institution = models.ForeignKey(
         Institution, on_delete=models.CASCADE, related_name="rooms"
     )
-    name = models.CharField(max_length=150)
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=50)
 
     class Meta:
         verbose_name = "Room"
         verbose_name_plural = "Rooms"
-        unique_together = ("institution", "name")
+
+    def clean(self):
+        if Room.objects.filter(name=self.name, institution=self.institution).exclude(id=self.id).exists():
+            raise ValidationError("Sala com este nome já existe")
 
     def __str__(self):
         return f"{self.name} — {self.institution.name}"

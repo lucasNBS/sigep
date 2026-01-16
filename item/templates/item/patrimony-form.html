@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'item/css/patrimony-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">{{ title }}</h2>
+  {% include 'partials/errors.html' %}
+  <form class="form-container" method="post">
+    {% csrf_token %}
+    <div class="form-line">
+      <div class="form-field">
+        {{ form.name }}
+      </div>
+      <div class="form-field">
+        {{ form.serial }}
+      </div>
+      <div class="form-field">
+        {{ form.invoice_key }}
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field">
+        {{ form.category }}
+        {{ form.category_name.as_hidden }}
+      </div>
+      <div class="form-field">
+        {{ form.room }}
+        {{ form.room_name.as_hidden }}
+      </div>
+    </div>
+    <div class="form-line break">
+      <div class="form-field tablet-100 flex-2">
+        {{ form.description }}
+      </div>
+      <div class="form-field tablet-100 flex-1">
+        {{ form.notes }}
+      </div>
+    </div>
+    <div class="actions-container">
+      <a class="action cancel" href="{% url 'patrimony' %}">
+        Cancelar
+      </a>
+      <button class="action confirm">
+        <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -8,14 +8,16 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('inventory', '0001_initial'),
-        ('item', '0001_initial'),
+        ("inventory", "0001_initial"),
+        ("item", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='inventory',
-            name='items',
-            field=models.ManyToManyField(blank=True, related_name='inventories', to='item.item'),
+            model_name="inventory",
+            name="items",
+            field=models.ManyToManyField(
+                blank=True, related_name="inventories", to="item.item"
+            ),
         ),
     ]
