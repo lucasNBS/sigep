@@ -1,27 +1,57 @@
 from django.db import models
 
+from . import managers, choices
+
 class Item(models.Model):
     institution = models.ForeignKey(
-        "institution.Institution", on_delete=models.CASCADE, related_name="items"
+        "institution.Institution",
+        verbose_name="Instituição",
+        on_delete=models.CASCADE,
+        related_name="items",
     )
-    name = models.CharField(max_length=250)
-    description = models.TextField(blank=True, null=True)
-    serial = models.CharField(max_length=200, blank=True, null=True)
-    invoice_key = models.CharField(max_length=200, blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
+    name = models.CharField(verbose_name="Nome", max_length=250)
+    description = models.TextField(verbose_name="Descrição", blank=True, null=True)
+    serial = models.CharField(verbose_name="Serial", max_length=200, default=0)
+    invoice_key = models.CharField(verbose_name="Nota Fiscal", max_length=44, default=0)
+    notes = models.TextField(verbose_name="Observações", blank=True, null=True)
     category = models.ForeignKey(
-        "institution.Category", on_delete=models.SET_NULL, null=True, blank=True, related_name="items"
+        "institution.Category",
+        on_delete=models.SET_NULL,
+        verbose_name="Categoria",
+        null=True,
+        blank=True,
+        related_name="items",
     )
     room = models.ForeignKey(
-        "inventory.Room", on_delete=models.SET_NULL, null=True, blank=True, related_name="items"
+        "inventory.Room",
+        on_delete=models.SET_NULL,
+        verbose_name="Sala",
+        null=True,
+        blank=True,
+        related_name="items",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)
+    status = models.CharField(
+        choices=choices.Status.choices,
+        default=choices.Status.FOUND,
+    )
+
+    objects = managers.SoftDeleteManager()
+    all_objects = models.Manager()
 
     class Meta:
         verbose_name = "Item"
         verbose_name_plural = "Items"
-        unique_together = (("institution", "name", "serial"),)
 
     def __str__(self):
-        return f"{self.name} ({self.institution.name})"
+        return f"{self.name}"
+    
+    def delete(self):
+        self.is_deleted = True
+        self.save()
+    
+    def restore(self):
+        self.is_deleted = False
+        self.save()

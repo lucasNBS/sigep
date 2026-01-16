@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/panel.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <section class="section-container">
+    <h2 class="section-title">Dados Gerais</h2>
+    <div class="cards-container">
+      {% include 'partials/card.html' with title='Total de itens' type='cube' total='534' data='Itens cadastrados' %}
+      {% include 'partials/card.html' with title='Itens usáveis' type='usable' total='348' data='Itens em bom estado' %}
+      {% include 'partials/card.html' with title='Itens perdidos' type='lost' total='84' data='Itens não localizados' %}
+      {% include 'partials/card.html' with title='Total de inventários' type='inventory' total='23' data='Inventários realizados' %}
+    </div>
+  </section>
+  <section class="section-container">
+    <h2 class="section-title">Inventários</h2>
+    <div class="inventory-container">
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+      {% include 'partials/inventory-card.html' with title='Inventário Anual 2024 - 22/03/2024' total='534' registered='342' pending='122' %}
+    </div>
+  </section>
+</div>
+{% endblock %}

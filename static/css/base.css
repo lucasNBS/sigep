@@ -220,6 +220,25 @@
   transition: background-color 200ms ease-in;
 }
 
+.errors-container {
+  background-color: #fff5c2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 16px;
+  gap: 8px;
+}
+
+.error-text {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  color: var(--dark-100);
+}
+
+.error-text span {
+  font-family: var(--font-primary-bold);
+}
+
 @media screen and (max-width: 1200px) {
   .aside-space {
     display: none;

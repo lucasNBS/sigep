@@ -2,14 +2,9 @@ from django.db import models
 from django.conf import settings
 from item.models import Item
 
-class Record(models.Model):
-    class ConservationState(models.TextChoices):
-        NEW = "new", "New"
-        GOOD = "good", "Good"
-        FAIR = "fair", "Fair"
-        POOR = "poor", "Poor"
-        UNUSABLE = "unusable", "Unusable"
+from .choices import ConservationState
 
+class Record(models.Model):
     inventory = models.ForeignKey(
         "inventory.Inventory", on_delete=models.CASCADE, related_name="records"
     )
