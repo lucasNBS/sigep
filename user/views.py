@@ -410,7 +410,7 @@ class UserListView(LoginRequiredMixin, ListView):
         if not institution_id:
             return Permission.objects.none()
 
-        qs = (
+        permissions_qs = (
             Permission.objects
             .select_related("user", "institution")
             .filter(institution_id=institution_id, revoked_at__isnull=True)
@@ -424,24 +424,24 @@ class UserListView(LoginRequiredMixin, ListView):
             role = filter_form.cleaned_data.get("role") or ""
 
             if name:
-                terms = [t for t in name.split() if t.strip()]
+                terms = [term for term in name.split() if term.strip()]
                 for term in terms:
-                    qs = qs.filter(
+                    permissions_qs = permissions_qs.filter(
                     Q(user__first_name__icontains=term) |
                     Q(user__last_name__icontains=term) |
                     Q(user__username__icontains=term)
                 )
 
             if email:
-                qs = qs.filter(
+                permissions_qs = permissions_qs.filter(
                     Q(user__email__icontains=email) |
                     Q(user__username__icontains=email)
                 )
 
             if role and role != "admin":
-                qs = qs.filter(role=role)
+                permissions_qs = permissions_qs.filter(role=role)
 
-        return qs.order_by("user__first_name", "user__username")
+        return permissions_qs.order_by("user__first_name", "user__username")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
