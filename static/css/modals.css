@@ -6,8 +6,8 @@
   --gray: #a2a1a8;
   --import-download: rgba(0, 110, 196, 0.2);
 
-  --font-body: "Lexend", system-ui, -apple-system, Segoe UI, Roboto, Arial,
-    sans-serif;
+  --font-body:
+    "Lexend", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --font-primary-light: "Lexend Light";
 
   --radius-10: 10px;
@@ -283,10 +283,9 @@ body {
   background-position: left 23px center;
   background-size: 25px;
   color: var(--dark-500);
-  width: 180px;
-  display: flex;
-  justify-content: center;
-  padding-left: 42px;
+  width: 200px;
+  padding-left: 50px;
+  text-align: left;
 }
 
 /* Anim */

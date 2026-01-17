@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ListItemView, UpdateItemView, DetailItemView, CreateItemView, DeleteItemView, restore_item_view, record_form
+from .views import ListItemView, UpdateItemView, DetailItemView, CreateItemView, DeleteItemView, restore_item_view, record_form, DownloadItemSpreadSheetView
 
 urlpatterns = [
     path('', ListItemView.as_view(), name='patrimony'),
@@ -9,4 +9,9 @@ urlpatterns = [
     path('<int:id>/remover/', DeleteItemView.as_view(), name='patrimony-remove'),
     path('<int:id>/restaurar/', restore_item_view, name='patrimony-restore'),
     path('<int:id>/registrar/', record_form, name='patrimony-register'),
+    path(
+      'planilha/download/',
+      DownloadItemSpreadSheetView.as_view(),
+      name='patrimony-spreadsheet-download'
+    ),
 ]
