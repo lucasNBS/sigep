@@ -31,7 +31,7 @@
       this.url = element.dataset.autocomplete;
       this.input = element.querySelector("[data-autocomplete-input]");
       this.suggestionsContainer = element.querySelector(
-        "[data-autocomplete-suggestions]"
+        "[data-autocomplete-suggestions]",
       );
       this.unselect = element.querySelector("[data-autocomplete-unselect]");
       this.nameInput = element.parentNode.querySelector("[type='hidden']");
@@ -86,7 +86,7 @@
       }
 
       const results = await fetch(
-        `http://localhost:8000/${this.url}/autocomplete/?search=${input.value}`
+        `https://localhost:8000/${this.url}/autocomplete/?search=${input.value}`,
       ).then((res) => res.json());
 
       results.forEach((option) => {
@@ -147,7 +147,7 @@
   autocompletes.forEach((autocomplete) => {
     new Autocomplete(
       autocomplete,
-      autocomplete.dataset["autocomplete-editable"]
+      autocomplete.dataset["autocompleteEditable"],
     );
   });
 }
