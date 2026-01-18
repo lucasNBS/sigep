@@ -1,7 +1,7 @@
 {% load static %}
 <div class="modal" id="removeModal">
   <div class="modal-box">
-    <form id="form-remove" method="POST" action="{{ action }}">
+    <form id="form-remove" method="POST" action="{{ action_url|default:'' }}">
       {% csrf_token %}
 
       <div class="modal-header">
@@ -21,11 +21,12 @@
         <button type="button" class="filter-button cancel-button" id="removeModalCancelBtn">
           Cancelar
         </button>
-        <button type="submit" class="filter-button apply-button">
+
+        <button type="submit" class="filter-button apply-button" {% if not action_url %}disabled{% endif %}>
           Confirmar
         </button>
       </div>
     </form>
   </div>
 </div>
-<script src="{% static 'js/modal_confirm.js' %}"></script>
+<script src="{% static 'js/modal_remove.js' %}"></script>

@@ -1,5 +1,9 @@
 {% load static %}
 
+<form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
+  {% csrf_token %}
+</form>
+
 <div class="dropdown-menu" id="dropdown-user">
   <a class="dropdown-item" id="open-profile" href="{% url 'profile' %}">
     <img src="{% static 'icons/UserProfile.svg' %}" alt="Ícone de perfil" class="dropdown-item__icon">
@@ -8,8 +12,6 @@
 
   <button type="submit" form="logout-form" class="dropdown-item dropdown-item--button">
     <img src="{% static 'icons/Logout.svg' %}" alt="Ícone de sair" class="dropdown-item__icon">
-    <a href="{% url 'signin' %}">
-      <span>Sair</span>
-    </a>
+    <span>Sair</span>
   </button>
 </div>
