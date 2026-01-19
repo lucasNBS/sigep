@@ -104,7 +104,7 @@ class ItemForm(forms.ModelForm):
 
     old_instance = None
     if instance.id:
-      old_instance = models.Item.objects.get(id=instance.id)
+      old_instance = models.Item.objects.filter(id=instance.id).first()
 
     self.instance.institution = Institution.objects.get(id=1)
 

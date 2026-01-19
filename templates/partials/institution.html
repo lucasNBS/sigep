@@ -1,7 +1,7 @@
 {% load static %}
 <article class="card">
   <div class="card-header {% if role == 'Administrador' %}is-admin{% endif %}">
-    <a href="{% url 'institution' %}">
+    <a href="{% url 'select-institution' institution_id %}">
       <p class="card-title">{{ company_name }}</p>
     </a>
 
