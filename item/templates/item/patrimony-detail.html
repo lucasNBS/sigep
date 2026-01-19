@@ -32,7 +32,9 @@
       <p class="detail"><span class="title">Data de Cadastro:</span> {{ object.created_at }}</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">QR code:</span> Visualizar</p>
+      <p class="detail"><span class="title">QR code:</span>
+        <a href="/media/qrcodes/{{ object.id }}.png">Visualizar</a>
+      </p>
     </div>
 
     <div class="description column">

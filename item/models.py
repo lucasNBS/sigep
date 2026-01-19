@@ -1,8 +1,12 @@
+import uuid
 from django.db import models
 
 from . import managers, choices
 
 class Item(models.Model):
+    id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False
+    )
     institution = models.ForeignKey(
         "institution.Institution",
         verbose_name="Instituição",
@@ -37,6 +41,7 @@ class Item(models.Model):
         choices=choices.Status.choices,
         default=choices.Status.FOUND,
     )
+    qrcode = models.ImageField(upload_to="qrcodes/", blank=True, null=True)
 
     objects = managers.SoftDeleteManager()
     all_objects = models.Manager()

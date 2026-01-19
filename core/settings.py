@@ -33,7 +33,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.7"]
 
 # Application definition
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'item',
     'registration',
     'django_filters',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -172,6 +173,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user.User"
 
 MAX_ERRORS = 10
+
+SITE_URL = "http://localhost:8000"
 
 LOGIN_URL = "signin"
 LOGIN_REDIRECT_URL = "dashboard"
