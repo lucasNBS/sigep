@@ -9,12 +9,11 @@ from inventory.views import autocomplete_rooms_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('instituicao/', include('institution.urls')),
-    path('', home, name='dashboard'),
+    path('dashboard/', include('institution.urls')),
     path('', include('user.urls')),
     path('patrimonio/', include('item.urls')),
     path('perfil/', profile, name='profile'),
-    path('inventario/', include('inventory.urls')),
+    path('dashboard/<int:institution_id>/inventario/', include('inventory.urls')),
     path('registro/', include('registration.urls')),
     path('salas/autocomplete/', autocomplete_rooms_view, name='rooms-autocomplete'),
     path('categorias/autocomplete/', autocomplete_categories_view, name='categories-autocomplete'),

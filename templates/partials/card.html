@@ -10,6 +10,12 @@
       <img class="card-icon" src="{% static 'icons/BoxNotFound.svg' %}" alt="{{ title }}">
     {% elif type == 'inventory' %}
       <img class="card-icon" src="{% static 'icons/Inventory.svg' %}" alt="{{ title }}">
+    {% elif type == 'register' %}
+      <img class="card-icon" src="{% static 'icons/Check.svg' %}" alt="{{ title }}">
+    {% elif type == 'pendent' %}
+      <img class="card-icon" src="{% static 'icons/Late.svg' %}" alt="{{ title }}">
+    {% elif type == 'progress' %}
+      <img class="card-icon" src="{% static 'icons/Graphic.svg' %}" alt="{{ title }}">
     {% endif %}
   </div>
   <p class="card-data">

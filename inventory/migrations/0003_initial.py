@@ -17,23 +17,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name="inventory",
-            name="responsible",
-            field=models.ForeignKey(
-                blank=True,
-                null=True,
-                on_delete=django.db.models.deletion.SET_NULL,
-                related_name="inventories",
-                to=settings.AUTH_USER_MODEL,
-            ),
+            model_name='inventory',
+            name='responsible',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='inventories', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
-            model_name="room",
-            name="institution",
-            field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE,
-                related_name="rooms",
-                to="institution.institution",
-            ),
+            model_name='room',
+            name='institution',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='rooms', to='institution.institution'),
+        ),
+        migrations.AlterUniqueTogether(
+            name='room',
+            unique_together={('institution', 'name')},
         ),
     ]
