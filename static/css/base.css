@@ -171,6 +171,9 @@
 .user-profile-image {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .user-content-container {
@@ -268,6 +271,10 @@
 }
 
 @media screen and (max-width: 550px) {
+  .background {
+    flex-direction: column;
+  }
+
   .institution-text {
     display: none;
   }
