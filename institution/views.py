@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
+from django.db.models import Count, F
+
 from .models import Institution
 from .forms import InstitutionForm
 from inventory.models import Inventory
@@ -10,6 +12,8 @@ from registration.models import Record
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from user.models import Permission, Role
+from registration.choices import ConservationState
+from item.choices import Status
 
 
 class ListInstitutionsView(ListView):
@@ -75,16 +79,24 @@ class DetailInstitutionView(DetailView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context["institution"] = self.kwargs["id"]
-    return context
 
     institution_id = self.kwargs["id"]
     inventories = Inventory.objects.filter(institution__id=institution_id)
 
+    inventories = Inventory.objects.annotate(
+      total_items=Count("rooms__items",distinct=True),
+      recorded_items=Count("records__item",distinct=True),
+    ).annotate( pending_items=F("total_items") - F("recorded_items"))
+
     items_total = Item.objects.filter(institution__id=institution_id).count()
 
-    context = super().get_context_data(**kwargs)
+    records = Record.objects.filter(inventory__institution_id = institution_id, conservation_state__gt=ConservationState.POOR).count
 
+    items_lost = Item.objects.filter(institution__id=institution_id, status=Status.LOST).count()
+
+    context = super().get_context_data(**kwargs)
+    context["records"] = records
+    context["items_lost"] = items_lost
     context["items_total"] = items_total
     context["inventories"] = inventories
     context["institution"] = institution_id

@@ -16,8 +16,7 @@ class Record(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="records"
     )
     notes = models.TextField(blank=True, null=True)
-    conservation_state = models.CharField(
-        max_length=30,
+    conservation_state = models.IntegerField(
         choices=ConservationState.choices,
         default=ConservationState.GOOD
     )

@@ -6,6 +6,7 @@ from core.views import profile, home
 
 from institution.views import autocomplete_categories_view
 from inventory.views import autocomplete_rooms_view
+from registration.views import ListRecordsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
