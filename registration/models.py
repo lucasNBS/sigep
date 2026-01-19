@@ -3,6 +3,8 @@ from django.conf import settings
 from item.models import Item
 from .choices import ConservationState
 
+from .choices import ConservationState
+
 class Record(models.Model):
     inventory = models.ForeignKey(
         "inventory.Inventory", on_delete=models.CASCADE, related_name="records"

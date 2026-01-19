@@ -9,21 +9,30 @@
 {% block main %}
 <section class="main-content-container">
   <div class="profile-spacer">
+
     <section class="p-profile">
       <div class="profile__photo">
-        {% if user_photo %}
-          <img src="{{ user_photo }}" alt="Foto do usuário">
+        {% if user_obj.photo_url %}
+        <img src="{{ user_obj.photo_url.url }}" alt="Foto do usuário">
         {% else %}
-          <img src="{% static 'img/profile.jpg' %}" alt="Foto do usuário">
+        <img src="{% static 'icons/UserProfile.svg' %}" alt="Sem foto">
         {% endif %}
       </div>
-  
+
       <div class="profile__info">
-        <h2 class="profile__name">Lucas Nunes Barreto Sampaio</h2>
-  
+        <h2 class="profile__name">
+          {{ user_obj.get_full_name|default:user_obj.username }}
+        </h2>
+
         <ul class="profile__meta">
-          <li><strong>E-mail:</strong> lucasnunesbarretosampaio@email.com</li>
-          <li><strong>Cargo:</strong> Consultor de Patrimônio</li>
+          <li><strong>E-mail:</strong> {{ user_obj.email|default:"—" }}</li>
+
+          <li><strong>Cargo:</strong>
+            {% if permission %}
+            {{ permission.get_role_display }}
+            {% endif %}
+          </li>
+
           <li><strong>Total de Itens Cadastrados:</strong> 325</li>
           <li><strong>Total de Registros:</strong> 107</li>
           <li><strong>Total de Inventários Abertos:</strong> 21</li>
@@ -31,7 +40,7 @@
         </ul>
       </div>
     </section>
-  
+
     <section class="p-actions">
       <a class="btn btn--ghost" href="{% url 'users' %}">
         <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -39,21 +48,23 @@
         </svg>
         Voltar
       </a>
-  
+
       <div class="actions-container">
         <button type="button" class="btn btn--primary" data-open-institution-remove-modal>
           <img src="{% static 'icons/UserRemove.svg' %}" alt="Remover Permissão" width="24" height="24">
           Remover Permissão
         </button>
-        <button type="button" class="btn btn--primary" data-open-profile-modal>
+
+        <button type="button" class="btn btn--primary" data-open-user-role-modal>
           <img src="{% static 'icons/Edit.svg' %}" alt="Editar Permissão" width="20" height="20">
           Editar Permissão
         </button>
       </div>
     </section>
+
   </div>
 
-  {% include 'partials/profile-modal.html' %}
-  {% include 'partials/modal_remove.html' with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" %}
+  {% include "partials/modal_user_role.html" %}
+  {% include "partials/modal_remove.html" with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" action_url=remove_action_url%}
 </section>
 {% endblock %}

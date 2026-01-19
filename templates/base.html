@@ -1,129 +1,201 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/global.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/table.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/modals.css' %}">
-    <link rel="stylesheet" href="{% static 'css/filter.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
-    <script src="{% static 'js/aside.js' %}" defer></script>
-    <script src="{% static 'js/dropdown.js' %}" defer></script>
-    {% block head %} {% endblock %}
-    <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
-  </head>
-  <body class="background">
-    <div class="aside-background"></div>
-    <div class="aside-space"></div>
-    <aside class="aside">
-      <header class="aside-content">
-        <h1 class="logo-container">
-          <img
-            class="logo-image"
-            src="{% static 'icons/Logo.svg' %}"
-            alt="Logo da SIGEP"
-          />
-          <p class="logo-text">SIGEP</p>
-        </h1>
-        <nav class="aside-content-container">
-          <ul class="navbar-container">
-            <a href="{% url 'detalhar_instituicao' institution %}">
-              <li class="navbar-item-container selected">
-                <img
-                  class="navbar-item-image selected"
-                  src="{% static 'icons/Panel.svg' %}"
-                  alt="Painel"
-                />
-                <span class="navbar-item-text selected">Painel</sp>
-              </li>
-            </a>
-            <a href="{% url 'patrimony' %}">
-              <li class="navbar-item-container">
-                <img
-                  class="navbar-item-image"
-                  src="{% static 'icons/OpenBox.svg' %}"
-                  alt="Patrimônio"
-                />
-                <span class="navbar-item-text">Patrimônio</span>
-              </li>
-            </a>
-            <a href="{% url 'inventory' %}">
-              <li class="navbar-item-container">
-                <img
-                  class="navbar-item-image"
-                  src="{% static 'icons/Inventory.svg' %}"
-                  alt="Inventários"
-                />
-                <span class="navbar-item-text">Inventários</span>
-              </li>
-            </a>
-            <a href="{% url 'users' %}">
-              <li class="navbar-item-container">
-                <img
-                  class="navbar-item-image"
-                  src="{% static 'icons/Users.svg' %}"
-                  alt="Usuários"
-                />
-                <span class="navbar-item-text">Usuários</span>
-              </li>
-            </a>
-            <a href="{% url 'records' institution %}">
-              <li class="navbar-item-container">
-                <img
-                  class="navbar-item-image"
-                  src="{% static 'icons/Register.svg' %}"
-                  alt="Registros"
-                />
-                <span class="navbar-item-text">Registros</span>
-              </li>
-            </a>
-          </ul>
-        </nav>
-        <a class="navbar-item-container" href="{% url 'dashboard' %}">
-          <img
-            class="navbar-item-image"
-            src="{% static 'icons/Logout.svg' %}"
-            alt="Sair da Insituição"
-          />
-          <p class="navbar-item-text">Voltar ao Dashboard</p>
-        </a>
-      </header>
-    </aside>
-    <main class="main">
-      <div class="main-top-content-container">
-        <div class="institution-container">
-          <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
-          <img
-            class="institution-image"
-            src="{% static 'img/amazon.png' %}"
-            alt="Logo da empresa"
-          />
-          <p class="institution-text">Amazon</p>
-        </div>
-        <div class="user-container" id="btn-user-menu">
-          <img
-            class="user-profile-image"
-            src="{% static 'icons/User.svg' %}"
-            alt="Foto de perfil do usuário"
-          />
-          <div class="user-content-container">
-            <p class="user-name">Ciro Daniel Gurgel Moura</p>
-            <p class="user-role">Consultor de Patrimônio</p>
-          </div>
-          <img
-            class="user-arrow"
-            src="{% static 'icons/Arrow.svg' %}"
-            alt="Abrir detalhes do perfil"
-          />
-          {% include 'partials/dropdown_user.html' %}
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/global.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/table.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/modals.css' %}">
+  <link rel="stylesheet" href="{% static 'css/filter.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dropdown.css' %}">
+  <script src="{% static 'js/aside.js' %}" defer></script>
+  <script src="{% static 'js/dropdown.js' %}" defer></script>
+  {% block head %} {% endblock %}
+  <title>SIGEP - Sistema de Gerenciamento de Estoque e Patrimônio</title>
+</head>
+
+<body class="background">
+  <div class="aside-background"></div>
+  <div class="aside-space"></div>
+  <aside class="aside">
+    <header class="aside-content">
+      <h1 class="logo-container">
+        <img class="logo-image" src="{% static 'icons/Logo.svg' %}" alt="Logo da SIGEP" />
+        <p class="logo-text">SIGEP</p>
+      </h1>
+      <nav class="aside-content-container">
+        <ul class="navbar-container">
+          {% with role=request.session.role|default_if_none:'' %}
+          {% if role == "admin" %}
+
+          <a href="{% url 'institution' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">
+              <img
+                class="navbar-item-image {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}"
+                src="{% static 'icons/Panel.svg' %}" alt="Painel" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">Painel</span>
+            </li>
+          </a>
+
+          <a href="{% url 'patrimony' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
+                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
+            </li>
+          </a>
+
+          <a href="{% url 'inventory' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}"
+                src="{% static 'icons/Inventory.svg' %}" alt="Inventários" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">Inventários</span>
+            </li>
+          </a>
+
+          <a href="{% url 'users' %}">
+            <li class="navbar-item-container {% if request.resolver_match.url_name == 'users' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'users' %}selected{% endif %}"
+                src="{% static 'icons/Users.svg' %}" alt="Usuários" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'users' %}selected{% endif %}">Usuários</span>
+            </li>
+          </a>
+
+          <a href="{% url 'records' %}">
+            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
+                src="{% static 'icons/Register.svg' %}" alt="Registros" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
+            </li>
+          </a>
+          {% elif role == "manager" %}
+
+          <a href="{% url 'institution' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">
+              <img
+                class="navbar-item-image {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}"
+                src="{% static 'icons/Panel.svg' %}" alt="Painel" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">Painel</span>
+            </li>
+          </a>
+
+          <a href="{% url 'patrimony' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
+                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
+            </li>
+          </a>
+
+          <a href="{% url 'inventory' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}"
+                src="{% static 'icons/Inventory.svg' %}" alt="Inventários" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">Inventários</span>
+            </li>
+          </a>
+
+          <a href="{% url 'records' %}">
+            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
+                src="{% static 'icons/Register.svg' %}" alt="Registros" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
+            </li>
+          </a>
+
+          {% elif role == "user" %}
+
+          <a href="{% url 'patrimony' %}">
+            <li
+              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
+                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
+            </li>
+          </a>
+
+          <a href="{% url 'records' %}">
+            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
+              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
+                src="{% static 'icons/Register.svg' %}" alt="Registros" />
+              <span
+                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
+            </li>
+          </a>
+
+          {% endif %}
+
+          {% endwith %}
+        </ul>
+
+      </nav>
+      <a class="navbar-item-container" href="{% url 'dashboard' %}">
+        <img class="navbar-item-image" src="{% static 'icons/Logout.svg' %}" alt="Sair da Insituição" />
+        <p class="navbar-item-text">Voltar ao Dashboard</p>
+      </a>
+    </header>
+  </aside>
+  <main class="main">
+    <div class="main-top-content-container">
+      <div class="institution-container">
+        <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
+        <img class="institution-image" src="{% static 'img/amazon.png' %}" alt="Logo da empresa" />
+        <p class="institution-text">
+          {% if request.session.institution_name %}
+          {{ request.session.institution_name }}
+          {% endif %}
+        </p>
       </div>
-      <section class="main-content-container">
-        {% block main %} {% endblock %}
-      </section>
-    </main>
-  </body>
+      <div class="user-container" id="btn-user-menu">
+        {% if request.user.photo_url %}
+        <img class="user-profile-image" src="{{ request.user.photo_url.url }}" alt="Foto de perfil do usuário" />
+        {% else %}
+        <img class="user-profile-image" src="{% static 'icons/User.svg' %}" alt="Foto de perfil do usuário" />
+        {% endif %}
+
+        <div class="user-content-container">
+          <p class="user-name">
+            {{ request.user.get_full_name|default:request.user.username }}
+          </p>
+          <p class="user-role">
+            {% with role=request.session.role|default_if_none:'' %}
+            {% if role == "admin" %}
+            Administrador
+            {% elif role == "manager" %}
+            Gerente de Patrimônio
+            {% elif role == "user" %}
+            Consultor de Patrimônio
+            {% endif %}
+            {% endwith %}
+          </p>
+        </div>
+        <img class="user-arrow" src="{% static 'icons/Arrow.svg' %}" alt="Abrir detalhes do perfil" />
+        {% include 'partials/dropdown_user.html' %}
+      </div>
+    </div>
+    <section class="main-content-container">
+      {% block main %} {% endblock %}
+    </section>
+  </main>
+</body>
+
 </html>

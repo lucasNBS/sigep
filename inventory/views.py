@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -7,6 +8,12 @@ from user import models as user_models
 from institution import models as inst_models
 from registration.models import Record
 from registration.forms import RegisterSerialForm, RecordFilter
+=======
+from django.http import JsonResponse
+from django.shortcuts import render
+>>>>>>> 3bc282dd34f67ea5347134174ec9450c932443be
+
+from . import models
 
 def inventory_form(request):
   return render(request, "pages/inventory-form.html", {})
@@ -14,6 +21,7 @@ def inventory_form(request):
 def inventory(request):
   return render(request, "pages/inventory.html", {})
 
+<<<<<<< HEAD
   def get_queryset(self):
     queryset = models.Inventory.objects.select_related(
       "institution", "responsible", "leader_consultor"
@@ -82,3 +90,19 @@ class DetailInventoryView(DetailView):
     context["filter"] = filterset
     return context
 
+=======
+def inventory_detail(request, id):
+  return render(request, "pages/inventory-detail.html", {})
+
+def autocomplete_rooms_view(request):
+  search = request.GET.get("search")
+  limit = 20
+
+  found_rooms = models.Room.objects.filter(name__icontains=search)
+
+  response = [
+    {"name": room.name, "id": room.id} for room in found_rooms
+  ][:limit]
+
+  return JsonResponse(response, safe=False)
+>>>>>>> 3bc282dd34f67ea5347134174ec9450c932443be

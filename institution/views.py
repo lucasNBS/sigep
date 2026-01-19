@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView
@@ -80,12 +81,21 @@ class DetailInstitutionView(DetailView):
     items_total = Item.objects.filter(institution__id=institution_id).count()
 
     context = super().get_context_data(**kwargs)
-<<<<<<< HEAD
-    context["institution"] = self.kwargs["id"]
-    return context
-=======
+
     context["items_total"] = items_total
     context["inventories"] = inventories
     context["institution"] = institution_id
     return context
->>>>>>> 3228e00 (feat: add inventories and itens to institution detail)
+
+
+def autocomplete_categories_view(request):
+  search = request.GET.get("search")
+  limit = 20
+
+  found_categories = Category.objects.filter(name__icontains=search)
+
+  response = [
+    {"name": categorie.name, "id": categorie.id} for categorie in found_categories
+  ][:limit]
+
+  return JsonResponse(response, safe=False)

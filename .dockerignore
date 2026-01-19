@@ -1,0 +1,10 @@
+db.sqlite3
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+Dockerfile
+docker-compose.yml
+.dockerignore
+.git/
+README.md

@@ -56,6 +56,11 @@
   );
 
   for (const button of openInstitutionEditButtons) {
-    button.addEventListener("click", open);
+    button.addEventListener("click", () => {
+      const url = button.dataset.url;
+
+      form.action = url;
+      open();
+    });
   }
 })();

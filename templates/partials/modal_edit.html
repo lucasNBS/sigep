@@ -1,7 +1,7 @@
 {% load static %}
 <div class="modal" id="editModal">
   <div class="modal-box">
-    <form id="form-edit" method="POST" enctype="multipart/form-data" action="">
+    <form id="form-edit" method="POST" enctype="multipart/form-data"  >
       {% csrf_token %}
 
       <div class="modal-header">
@@ -15,14 +15,13 @@
         <div>
           <label class="label">Logo</label>
           <label class="dropzone" for="logo-input">
-            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-            <span id="logo-filename">Selecione uma imagem…</span>
+            {{ form.logo_url }}
           </label>
         </div>
 
         <div>
-          <label class="label" for="edit-nome">Nome</label>
-          <input type="text" id="edit-nome" name="nome" class="input" value="{{company_name}}" required>
+          <label class="label" for="create-nome">Nome</label>
+          {{ form.name }}
         </div>
       </div>
 

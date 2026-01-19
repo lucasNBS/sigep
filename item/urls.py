@@ -1,9 +1,12 @@
 from django.urls import path
-from .views import patrimony, patrimony_create, patrimony_edit, patrimony_detail
+from .views import ListItemView, UpdateItemView, DetailItemView, CreateItemView, DeleteItemView, restore_item_view, record_form
 
 urlpatterns = [
-    path('', patrimony, name='patrimony'),
-    path('criar/', patrimony_create, name='patrimony-create'),
-    path('<int:id>/editar/', patrimony_edit, name='patrimony-edit'),
-    path('<int:id>/', patrimony_detail, name='patrimony-detail'),
+    path('', ListItemView.as_view(), name='patrimony'),
+    path('criar/', CreateItemView.as_view(), name='patrimony-create'),
+    path('<str:id>/editar/', UpdateItemView.as_view(), name='patrimony-edit'),
+    path('<str:id>/', DetailItemView.as_view(), name='patrimony-detail'),
+    path('<str:id>/remover/', DeleteItemView.as_view(), name='patrimony-remove'),
+    path('<str:id>/restaurar/', restore_item_view, name='patrimony-restore'),
+    path('<str:id>/registrar/', record_form, name='patrimony-register'),
 ]
