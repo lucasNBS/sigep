@@ -1,7 +1,8 @@
 import django_filters
 from core import widgets
 from django import forms
-from . import models, choices  
+from .models import Inventory  
+from .choices import Status
 from institution import models as institution_models
 from django.contrib.auth import get_user_model
 
@@ -9,7 +10,7 @@ User = get_user_model()
 
 class InventoryForm(forms.ModelForm):
     class Meta:
-        model = models.Inventory
+        model = Inventory
         fields = ["title", "leader_consultor", "consultors", "rooms"]
         widgets = {
             "title": forms.TextInput(attrs={
@@ -52,7 +53,7 @@ class InventoryFilter(django_filters.FilterSet):
         label_class="label-text", input_class="filter-input two-line-input custom-arrow")
     )
     status = django_filters.ChoiceFilter(
-        choices=choices.Status.choices,
+        choices=Status.choices,
         widget=widgets.Select(label="Status", label_class="label-text", input_class="filter-input three-line-input custom-arrow")
     )
     date_start = django_filters.CharFilter(
@@ -69,7 +70,7 @@ class InventoryFilter(django_filters.FilterSet):
     )
 
     class Meta:
-        model = models.Inventory
+        model = Inventory
         fields = [
             "title",
             "responsible",

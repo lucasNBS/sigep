@@ -70,6 +70,10 @@ class DetailInstitutionView(DetailView):
   template_name = "institution/panel.html"
   pk_url_kwarg = "id"
 
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["institution"] = self.kwargs["id"]
+    return context
 
 def institution(request):
   return render(request, "pages/panel.html", {})
