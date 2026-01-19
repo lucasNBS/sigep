@@ -2,14 +2,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import profile
+from core.views import profile, home
 
 from institution.views import autocomplete_categories_view
 from inventory.views import autocomplete_rooms_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('institution.urls')),
+    path('instituicao/', include('institution.urls')),
+    path('', home, name='dashboard'),
     path('', include('user.urls')),
     path('patrimonio/', include('item.urls')),
     path('perfil/', profile, name='profile'),

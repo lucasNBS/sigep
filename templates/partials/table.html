@@ -135,60 +135,25 @@
         </tr>
       </thead>
       <tbody class="table-body">
+        {% for perm in items %}
         <tr class="table-row">
           <td class="table-cell">
-            <a href="{% url 'users-detail' 1 %}">
-              Lucas Nunes Barreto Sampaio
+            <a href="{% url 'users-detail' perm.user.id %}">
+              {{ perm.user.get_full_name|default:perm.user.username }}
             </a>
           </td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
+          <td class="table-cell">
+            {{ perm.user.email|default:"—" }}
+          </td>
+          <td class="table-cell">
+            {{ perm.get_role_display }}
+          </td>
         </tr>
+        {% empty %}
         <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
+          <td class="table-cell" colspan="3">Nenhum usuário encontrado.</td>
         </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Lucas Nunes Barreto Sampaio</td>
-          <td class="table-cell">lucasnunesbarretosampaio@email.com</td>
-          <td class="table-cell">Gerente de Patrimônio</td>
-        </tr>
+        {% endfor %}
       </tbody>
       {% elif type == 'records' %}
       <thead class="table-header">
