@@ -1,5 +1,5 @@
-<label class="form-field-label" for="{{ widget.attrs.id }}">{{ widget.label }}</label>
-<select class="form-field-select" id="{{ widget.attrs.id }}" name="{{ widget.name }}">
+<label class="{{ widget.label_class }}" for="{{ widget.attrs.id }}">{{ widget.label }}</label>
+<select class="{{ widget.input_class }}" id="{{ widget.attrs.id }}" name="{{ widget.name }}">
   {% for group_name, group_choices, group_index in widget.optgroups %}
     {% for option in group_choices %}
       <option value="{{ option.value|stringformat:'s' }}">{{ option.label }}</option>

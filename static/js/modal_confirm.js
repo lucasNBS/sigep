@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  document.querySelectorAll('#conclude').forEach(button => {
+    button.addEventListener('click', () => {
+      const url = button.dataset.url;
+
+      form.action = url;
+      modal.classList.add('active');
+    });
+  });
+
   document.getElementById('removeModalCloseBtn').onclick = () => {
     modal.classList.remove('active');
   };
