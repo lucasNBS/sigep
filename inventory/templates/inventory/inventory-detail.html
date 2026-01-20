@@ -29,7 +29,7 @@
           <span>Salas:</span>
           <span class="line">
             {% for room in rooms %}
-              {{ room.name }}
+              {{ room.name }}{% if not forloop.last %}, {% endif %}
             {% empty %}
               Nenhuma
             {% endfor %}

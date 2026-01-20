@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.urls import reverse_lazy
@@ -10,6 +11,8 @@ from user.models import User, Permission
 from institution.models import Institution
 from item.models import Item
 from registration.models import Record
+from registration.forms import RecordFilter, RegisterSerialForm
+
 
 class ListInventoryView(ListView):
   model = Inventory
@@ -29,6 +32,7 @@ class ListInventoryView(ListView):
     ).prefetch_related("consultors")
 
     self.filterset = InventoryFilter(self.request.GET, queryset=queryset)
+
     return self.filterset.qs.distinct()
 
   def get_context_data(self, **kwargs):
@@ -69,12 +73,13 @@ class CreateInvetoryView(CreateView):
 class DetailInventoryView(DetailView):
   model = Inventory
   template_name = "inventory/inventory-detail.html"
-  pk_url_kwarg = "id"
+  pk_url_kwarg = "inventory_id"
   context_object_name = "inventory"
 
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
+
     user = self.request.user
 
     inventory = context["inventory"]
@@ -87,17 +92,27 @@ class DetailInventoryView(DetailView):
         inventory=inventory
     ).values("item").distinct().count()
 
-
+    records_qs = Record.objects.filter(inventory=inventory)
+    filterset = RecordFilter(self.request.GET, queryset=records_qs)
 
     institution = inventory.institution
+    
+    if items == 0 :
+      percentage_calc = "0%"
+    else :
+      percentage_calc = f"{items_records/items:.0%}"
+
+    context["records"] = filterset.qs.distinct
+    context["form"] = RegisterSerialForm()
+    context["filter"] = filterset
     context["total_items"] = items
     context["items_records"] = items_records
     context["items_pendent"] = items - items_records
-    context["percentage"] = f"{items_records/items:.0%}"
+    context["percentage"] = percentage_calc
     context["role"] = get_object_or_404(Permission, institution=institution, user = user).role
     context["rooms"] = Room.objects.filter(inventories__institution=institution).distinct()
     context["institution"] = self.kwargs["institution_id"]
-    context["inventory_id"] = self.kwargs["id"]
+    context["inventory_id"] = self.kwargs["inventory_id"]
     return context
 
 class UpdateInventoryView(UpdateView):
@@ -145,5 +160,6 @@ def autocomplete_rooms_view(request):
   response = [
     {"name": room.name, "id": room.id} for room in found_rooms
   ][:limit]
+
 
   return JsonResponse(response, safe=False)

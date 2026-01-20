@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from item.models import Item
+from .choices import ConservationState
 
 from .choices import ConservationState
 
@@ -15,8 +16,7 @@ class Record(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="records"
     )
     notes = models.TextField(blank=True, null=True)
-    conservation_state = models.CharField(
-        max_length=20,
+    conservation_state = models.IntegerField(
         choices=ConservationState.choices,
         default=ConservationState.GOOD
     )

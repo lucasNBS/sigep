@@ -1,8 +1,8 @@
 from django.db import models
 
-class ConservationState(models.TextChoices):
-  NEW = "new", "Ótimo"
-  GOOD = "good", "Bom"
-  FAIR = "fair", "Usável"
-  POOR = "poor", "Ruim"
-  UNUSABLE = "unusable", "Inutilizável"
+class ConservationState(models.IntegerChoices):
+        NEW = 4,"Novo"
+        GOOD = 3,"Bom"
+        FAIR = 2,"Utilizável"
+        POOR = 1,"Ruim"
+        UNUSABLE = 0,"Inutilizável"

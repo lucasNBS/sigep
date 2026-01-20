@@ -6,6 +6,7 @@ from core.views import profile, home
 
 from institution.views import autocomplete_categories_view
 from inventory.views import autocomplete_rooms_view
+from registration.views import ListRecordsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,7 +15,7 @@ urlpatterns = [
     path('patrimonio/', include('item.urls')),
     path('perfil/', profile, name='profile'),
     path('dashboard/<int:institution_id>/inventario/', include('inventory.urls')),
-    path('registro/', include('registration.urls')),
+    path('dashboard/<int:institution_id>/registro/', ListRecordsView.as_view(), name='records'),
     path('salas/autocomplete/', autocomplete_rooms_view, name='rooms-autocomplete'),
     path('categorias/autocomplete/', autocomplete_categories_view, name='categories-autocomplete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
