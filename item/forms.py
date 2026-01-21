@@ -1,7 +1,8 @@
 import django_filters
 from django import forms
+from django.core.exceptions import ValidationError
 
-from core import widgets
+from core import widgets, utils
 from institution.models import Category, Institution
 from inventory.models import Room
 from registration.choices import ConservationState
@@ -57,29 +58,17 @@ class ItemForm(forms.ModelForm):
   def clean(self):
     clean_data = super().clean()
 
-    room = self._handle_selected_element(
+    room = utils.handle_selected_element(
       Room, self.data.get("room"), self.data.get("room_name")
     )
     clean_data["room"] = room
 
-    category = self._handle_selected_element(
+    category = utils.handle_selected_element(
       Category, self.data.get("category"), self.data.get("category_name")
     )
     clean_data["category"] = category
 
     return clean_data
-
-  def _handle_selected_element(self, model, element_id, element_name):
-    if (element_id):
-      element = model.objects.get(id=element_id)
-      element.name = element_name
-      element.save(update_fields=["name"])
-      element.refresh_from_db()
-    else:
-      element = model(name=element_name, institution=Institution.objects.get(id=1))
-      element.full_clean()
-      element.save()
-    return element
 
   def _handle_category_and_room_left(self, instance, old_instance):
     is_there_old_category_to_delete = False
@@ -177,3 +166,14 @@ class ItemFilter(django_filters.FilterSet):
       "conservation_state",
       "is_deleted",
     ]
+
+class ItemImport(forms.Form):
+  spreadsheet = forms.FileField(label="Arquivo")
+  ALLOWED_EXTENSIONS = ["xls", "xlsx", "csv", "ods"]
+
+  def clean_spreadsheet(self):
+    spreadsheet = self.cleaned_data["spreadsheet"]
+    if spreadsheet.name.split('.')[-1] not in self.ALLOWED_EXTENSIONS:
+      raise ValidationError("Tipo de arquivo inválido")
+    return spreadsheet
+

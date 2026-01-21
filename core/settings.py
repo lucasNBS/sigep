@@ -172,6 +172,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.User"
 
+MAX_ERRORS = 10
+
 SITE_URL = "http://localhost:8000"
 
 LOGIN_URL = "signin"
