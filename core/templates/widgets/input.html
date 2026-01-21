@@ -1,6 +1,6 @@
-<label class="form-field-label" for="{{ widget.attrs.id }}">{{ widget.label }}</label>
+<label class="{{ widget.label_class }}" for="{{ widget.attrs.id }}">{{ widget.label }}</label>
 <input
-  class="form-field-input"
+  class="{{ widget.input_class }}"
   id="{{ widget.attrs.id }}"
   type="{{ widget.type }}"
   name="{{ widget.name }}"

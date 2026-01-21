@@ -12,30 +12,35 @@ from . import models, choices
 class ItemForm(forms.ModelForm):
   name = forms.CharField(
     label="Nome",
-    widget=widgets.InputField(label="Nome", type="text")
+    widget=widgets.InputField(label="Nome", type="text", 
+    label_class="form-field-label", input_class="form-field-input")
   )
   description = forms.CharField(
     label="Descrição",
     required=False,
     widget=widgets.Textarea(
-      label="Descrição", placeholder="Características principais"
+      label="Descrição", placeholder="Características principais",
+      label_class="form-field-label", input_class="form-field-input"
     )
   )
   serial = forms.CharField(
     label="Serial",
-    widget=widgets.InputField(label="Serial", type="text")
+    widget=widgets.InputField(label="Serial", type="text",
+    label_class="form-field-label", input_class="form-field-input")
   )
   invoice_key = forms.CharField(
     label="Nota Fiscal",
     widget=widgets.InputField(
       label="Nota Fiscal",
       type="text",
+      label_class="form-field-label", input_class="form-field-input"
     )
   )
   notes = forms.CharField(
     label="Observações",
     required=False,
-    widget=widgets.Textarea(label="Observações", placeholder="Informações adicionais")
+    widget=widgets.Textarea(label="Observações", placeholder="Informações adicionais",
+    label_class="form-field-label", input_class="form-field-input")
   )
   category_name = forms.CharField(label="Categoria", widget=forms.HiddenInput())
   room_name = forms.CharField(label="Sala", widget=forms.HiddenInput())
@@ -44,8 +49,10 @@ class ItemForm(forms.ModelForm):
     model = models.Item
     fields = ["name", "description", "serial", "invoice_key", "notes", "category", "room"]
     widgets = {
-      "category": widgets.Autocomplete(label="Categoria", autocomplete="categorias", editable=True),
-      "room": widgets.Autocomplete(label="Sala", autocomplete="salas", editable=True)
+      "category": widgets.Autocomplete(label="Categoria", autocomplete="categorias", editable=True,
+                                    label_class="form-field-label", input_class="form-field-input"),
+      "room": widgets.Autocomplete(label="Sala", autocomplete="salas", editable=True,
+                                    label_class="form-field-label", input_class="form-field-input")
     }
 
   def clean(self):
@@ -101,40 +108,49 @@ class ItemForm(forms.ModelForm):
 class ItemFilter(django_filters.FilterSet):
   name = django_filters.CharFilter(
     lookup_expr="icontains",
-    widget=widgets.InputField(label="Nome", type="text"),
+    widget=widgets.InputField(label="Nome", type="text",
+    label_class="label-text", input_class=""),
   )
   serial = django_filters.CharFilter(
     lookup_expr="exact",
-    widget=widgets.InputField(label="Serial", type="text"),
+    widget=widgets.InputField(label="Serial", type="text",
+    label_class="label-text", input_class="form-field-input"),
   )
   category = django_filters.ModelChoiceFilter(
     queryset=Category.objects.all(),
-    widget=widgets.Autocomplete(label="Categoria", autocomplete="categorias"),
+    widget=widgets.Autocomplete(label="Categoria", autocomplete="categorias",
+    label_class="label-text", input_class="form-field-input"),
   )
   room = django_filters.ModelChoiceFilter(
     queryset=Room.objects.all(),
-    widget=widgets.Autocomplete(label="Sala", autocomplete="salas"),
+    widget=widgets.Autocomplete(label="Sala", autocomplete="salas",
+    label_class="label-text", input_class="form-field-input"),
   )
   date_start = django_filters.CharFilter(
     field_name="created_at",
     lookup_expr="gte",
-    widget=widgets.InputField(label="Data de Cadastro (Início)", type="date"),
+    widget=widgets.InputField(label="Data de Cadastro (Início)", type="date",
+    label_class="label-text", input_class="form-field-input"),
   )
   date_end = django_filters.CharFilter(
     field_name="created_at",
     lookup_expr="lte",
-    widget=widgets.InputField(label="Data de Cadastro (Fim)", type="date"),
+    widget=widgets.InputField(label="Data de Cadastro (Fim)", type="date",
+    label_class="label-text", input_class="form-field-input"),
   )
   status = django_filters.ChoiceFilter(
     choices=choices.Status,
-    widget=widgets.Select(label="Status"),
+    widget=widgets.Select(label="Status",
+    label_class="label-text", input_class="form-field-input"),
   )
   conservation_state = django_filters.ChoiceFilter(
     choices=ConservationState,
-    widget=widgets.Select(label="Estado de Conservação"),
+    widget=widgets.Select(label="Estado de Conservação",
+    label_class="label-text", input_class="form-field-input"),
   )
   is_deleted = django_filters.BooleanFilter(
-    widget=widgets.Select(label="Estado de Ativação", choices=choices.ACTIVE_STATUS),
+    widget=widgets.Select(label="Estado de Ativação", choices=choices.ACTIVE_STATUS,
+    label_class="label-text", input_class="form-field-input"),
   )
 
   class Meta:

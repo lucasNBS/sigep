@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/record-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">{{ item.name }}</h2>
+  <div class="description-container">
+    <div class="description">
+      <p class="detail"><span class="title">Serial:</span> {{ item.serial }}</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Categoria:</span> {{ item.category }}</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Sala:</span> {{ item.room }}</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Responsável:</span> Lucas Nunes</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Nota Fiscal:</span> Monitor - E300FH29</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Data de Cadastro:</span> {{ item.created_at|date:"rd/m/y" }}</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">Cadastrado Por:</span> Thiago Morais</p>
+    </div>
+    <div class="description">
+      <p class="detail"><span class="title">QR code:</span> Visualizar</p>
+    </div>
+
+    <div class="description column">
+      <span class="title">Descrição:</span>
+      <p class="text">{{ item.description }}</p>
+    </div>
+
+    <div class="description column">
+      <span class="title">Observações:</span>
+      <p class="text">{{ item.notes }}</p>
+    </div>
+  </div>
+
+  <form class="record-form-container" method="post">
+    {% csrf_token %}
+    <h3 class="record-form-title">Registrar Item</h3>
+    <div class="form-line">
+      <div class="form-field">
+        {{ form.room }}
+      </div>
+      <div class="form-field">
+        {{ form.conservation_state }}
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field flex-2">
+          {{ form.notes }}
+      </div>
+    </div>
+  
+
+  <div class="actions-container">
+    <a class="action remove" href="{% url 'patrimony' %}">
+      Cancelar
+    </a>
+    <button class="action edit">
+      <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Registrar">
+      Registrar
+    </button>
+  </div>
+</form>
+</div>
+{% endblock %}
