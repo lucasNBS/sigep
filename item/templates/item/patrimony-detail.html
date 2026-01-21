@@ -33,7 +33,7 @@
     </div>
     <div class="description">
       <p class="detail"><span class="title">QR code:</span>
-        <a href="/media/qrcodes/{{ object.id }}.png">Visualizar</a>
+        <a href="/media/qrcodes/{{ object.id }}.png" target="_blank">Visualizar</a>
       </p>
     </div>
 
@@ -58,7 +58,7 @@
   {% include 'partials/table.html' with type='records-detail' %}
 
   <div class="actions-container">
-    <a class="action cancel" href="{% url 'patrimony' %}">
+    <a class="action cancel" href="{% url 'item-list' institution.id %}">
       <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
       Voltar
     </a>
@@ -73,7 +73,7 @@
           Desativar
         {% endif %}
       </div>
-      <a class="action edit" href="{% url 'patrimony-edit' object.id %}">
+      <a class="action edit" href="{% url 'item-edit' institution.id object.id %}">
         <img class="action-icon" src="{% static 'icons/Edit.svg' %}" alt="Editar">
         Editar
       </a>

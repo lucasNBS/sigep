@@ -1,12 +1,31 @@
-from django.urls import path
-from django.conf.urls.static import static
-from django.conf import settings
-from .views import ListInstitutionsView, CreateInstitutionView, DeleteInstitutionView, UpdateInstitutionView, DetailInstitutionView
+from django.urls import path, include
+
+from institution.views import AutocompleteCategoriesView
+from inventory.views import AutocompleteRoomsView
+from registration.views import ListRecordsView
+
+from .views import CreateInstitutionView, DeleteInstitutionView, UpdateInstitutionView, DetailInstitutionView
+
 
 urlpatterns = [
-    path('', ListInstitutionsView.as_view(), name='dashboard'),
-    path('instituicao/criar/', CreateInstitutionView.as_view(), name='criar_instituicao'),
-    path('instituicao/<int:id>/excluir/', DeleteInstitutionView.as_view(), name='excluir_instituicao'),
-    path('instituicao/<int:id>/editar/', UpdateInstitutionView.as_view(), name='editar_instituicao'),
-    path('institution/<int:id>/', DetailInstitutionView.as_view(), name='detalhar_instituicao'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('criar/', CreateInstitutionView.as_view(), name='institution-create'),
+    path(
+      '<int:institution_id>/excluir/', DeleteInstitutionView.as_view(), name='institution-delete'
+    ),
+    path('<int:institution_id>/editar/', UpdateInstitutionView.as_view(), name='institution-edit'),
+    path('<int:institution_id>/', DetailInstitutionView.as_view(), name='institution-detail'),
+    path('<int:institution_id>/patrimonio/', include('item.urls')),
+    path('<int:institution_id>/inventario/', include('inventory.urls')),
+    path('<int:institution_id>/permissao/', include('user.urls')),
+    path('<int:institution_id>/registro/', ListRecordsView.as_view(),name='registration-list'),
+    path(
+      '<int:institution_id>/sala/autocomplete/',
+      AutocompleteRoomsView.as_view(),
+      name='room-autocomplete'
+    ),
+    path(
+      '<int:institution_id>/categoria/autocomplete/',
+      AutocompleteCategoriesView.as_view(),
+      name='categorie-autocomplete'
+    ),
+] 

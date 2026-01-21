@@ -60,3 +60,6 @@ class Item(models.Model):
     def restore(self):
         self.is_deleted = False
         self.save()
+
+    def get_last_record(self):
+        self.records.latest("recorded_at")

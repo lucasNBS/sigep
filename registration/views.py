@@ -1,18 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
-from .models import Record
-from .forms import RecordForm, RecordFilter
+from django.views.generic import CreateView, ListView, View
+
+from core.views import BaseContextView, AccessMixin
 from item.models import Item
 from institution.models import Institution
 from inventory.models import Inventory
 
-class ListRecordsView(ListView):
+from .models import Record
+from .forms import RecordForm, RecordFilter
+
+
+class ListRecordsView(AccessMixin, BaseContextView, ListView):
   model = Record
   template_name = "registration/record.html"
   context_object_name = "records"
   pk_url_kwarg = "institution_id"
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    return super().dispatch(request, *args, **kwargs)
 
   def get_paginate_by(self, queryset):
     page_size = self.request.GET.get("size")
@@ -29,11 +37,10 @@ class ListRecordsView(ListView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
-    context["institution"] = self.kwargs["institution_id"]
     context["filter"] = self.filterset
     return context
 
-def records_scan(request):
+def records_scan(request, institution_id, inventory_id):
   return render(request, "pages/record-scan.html", {})
 
 class RegisterSerialView(View):
@@ -44,7 +51,7 @@ class RegisterSerialView(View):
       return redirect(request.META.get("HTTP_REFERER", "/"))
 
     return redirect(
-      "create-record",
+      "registration-create",
       institution_id=kwargs["institution_id"],
       inventory_id=kwargs["inventory_id"],
       serial=serial
@@ -65,7 +72,10 @@ class CreateRecordView(CreateView):
   def get_success_url(self):
     return reverse_lazy(
       "inventory-detail",
-      kwargs={"institution_id": self.kwargs["institution_id"], "inventory_id": self.kwargs["inventory_id"]}
+      kwargs={
+        "institution_id": self.kwargs["institution_id"],
+        "inventory_id": self.kwargs["inventory_id"]
+      }
     )
  
   def form_valid(self, form):

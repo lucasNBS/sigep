@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth import login as auth_login
@@ -8,9 +10,10 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
-from datetime import timedelta
 from django.views import View
 from django.views.generic import ListView, DetailView
+
+from core.views import BaseContextView, AccessMixin
 
 from .forms import SignupForm, UserSelfUpdateForm, UserFilterForm
 from .models import Permission, Role, PasswordResetCode
@@ -395,14 +398,23 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         }
         return render(request, self.template_name, context)
 
-class UserListView(LoginRequiredMixin, ListView):
+class UserListView(AccessMixin, BaseContextView, ListView):
     login_url = "signin"
     redirect_field_name = "next"
 
     model = Permission
     template_name = "pages/user.html"
     context_object_name = "permissions"
-    paginate_by = 20
+
+    def dispatch(self, request, *args, **kwargs):
+        self.check_has_admin_access()
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_paginate_by(self, queryset):
+        page_size = self.request.GET.get("size")
+        if page_size:
+            return page_size
+        return 10
 
     def get_queryset(self):
         institution_id = self.request.session.get("institution_id")
@@ -445,13 +457,13 @@ class UserListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["institution_id"] = self.request.session.get("institution_id")
+        context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
         context["filter_form"] = UserFilterForm(self.request.GET or None)
         context["querystring"] = self.request.GET.urlencode()
         return context
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(AccessMixin, DetailView):
     login_url = "signin"
     redirect_field_name = "next"
 
@@ -459,6 +471,10 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     template_name = "pages/user-detail.html"
     context_object_name = "user_obj"
     pk_url_kwarg = "id"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.check_has_admin_access()
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -483,7 +499,12 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class PermissionUpdateView(LoginRequiredMixin, View):
+class PermissionUpdateView(AccessMixin, View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.check_has_admin_access()
+        return super().dispatch(request, *args, **kwargs)
+    
     def post(self, request, pk):
         institution_id = request.session.get("institution_id")
 
@@ -500,7 +521,12 @@ class PermissionUpdateView(LoginRequiredMixin, View):
         return redirect("users")
 
 
-class PermissionRevokeView(LoginRequiredMixin, View):
+class PermissionRevokeView(AccessMixin, View):
+
+    def dispatch(self, request, *args, **kwargs):
+        self.check_has_admin_access()
+        return super().dispatch(request, *args, **kwargs)
+    
     def post(self, request, pk):
         institution_id = request.session.get("institution_id")
         perm = get_object_or_404(

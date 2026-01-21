@@ -86,7 +86,7 @@
       }
 
       const results = await fetch(
-        `https://localhost:8000/${this.url}/autocomplete/?search=${input.value}`,
+        `https://localhost:8000/instituicao/${this.url}/autocomplete/?search=${input.value}`,
       ).then((res) => res.json());
 
       results.forEach((option) => {

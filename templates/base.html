@@ -1,4 +1,5 @@
 {% load static %}
+{% load utils %}
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -28,123 +29,60 @@
       </h1>
       <nav class="aside-content-container">
         <ul class="navbar-container">
-          {% with role=request.session.role|default_if_none:'' %}
-          {% if role == "admin" %}
+          {% if permission.role == "admin" or permission.role == "manager" %}
+            <a href="{% url 'institution-detail' institution.id %}">
+              <li
+                class="navbar-item-container {% if request.resolver_match.url_name|starts_with:'institution' %}selected{% endif %}">
+                <img
+                  class="navbar-item-image {% if request.resolver_match.url_name|starts_with:'institution' %}selected{% endif %}"
+                  src="{% static 'icons/Panel.svg' %}" alt="Painel" />
+                <span
+                  class="navbar-item-text {% if request.resolver_match.url_name|starts_with:'institution' %}selected{% endif %}">Painel</span>
+              </li>
+            </a>
 
-          <a href="{% url 'institution' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">
-              <img
-                class="navbar-item-image {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}"
-                src="{% static 'icons/Panel.svg' %}" alt="Painel" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">Painel</span>
-            </li>
-          </a>
+            <a href="{% url 'item-list' institution.id %}">
+              <li
+                class="navbar-item-container {% if request.resolver_match.url_name|starts_with:'item' %}selected{% endif %}">
+                <img class="navbar-item-image {% if request.resolver_match.url_name|starts_with:'item' %}selected{% endif %}"
+                  src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
+                <span
+                  class="navbar-item-text {% if request.resolver_match.url_name|starts_with:'item' %}selected{% endif %}">Patrimônio</span>
+              </li>
+            </a>
 
-          <a href="{% url 'patrimony' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
-                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
-            </li>
-          </a>
-
-          <a href="{% url 'inventory' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}"
-                src="{% static 'icons/Inventory.svg' %}" alt="Inventários" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">Inventários</span>
-            </li>
-          </a>
-
-          <a href="{% url 'users' %}">
-            <li class="navbar-item-container {% if request.resolver_match.url_name == 'users' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'users' %}selected{% endif %}"
-                src="{% static 'icons/Users.svg' %}" alt="Usuários" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'users' %}selected{% endif %}">Usuários</span>
-            </li>
-          </a>
-
-          <a href="{% url 'records' %}">
-            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
-                src="{% static 'icons/Register.svg' %}" alt="Registros" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
-            </li>
-          </a>
-          {% elif role == "manager" %}
-
-          <a href="{% url 'institution' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">
-              <img
-                class="navbar-item-image {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}"
-                src="{% static 'icons/Panel.svg' %}" alt="Painel" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'institution' %}selected{% endif %}">Painel</span>
-            </li>
-          </a>
-
-          <a href="{% url 'patrimony' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
-                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
-            </li>
-          </a>
-
-          <a href="{% url 'inventory' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}"
-                src="{% static 'icons/Inventory.svg' %}" alt="Inventários" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'inventory' %}selected{% endif %}">Inventários</span>
-            </li>
-          </a>
-
-          <a href="{% url 'records' %}">
-            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
-                src="{% static 'icons/Register.svg' %}" alt="Registros" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
-            </li>
-          </a>
-
-          {% elif role == "user" %}
-
-          <a href="{% url 'patrimony' %}">
-            <li
-              class="navbar-item-container {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}"
-                src="{% static 'icons/OpenBox.svg' %}" alt="Patrimônio" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'patrimony' %}selected{% endif %}">Patrimônio</span>
-            </li>
-          </a>
-
-          <a href="{% url 'records' %}">
-            <li class="navbar-item-container {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">
-              <img class="navbar-item-image {% if request.resolver_match.url_name == 'records' %}selected{% endif %}"
-                src="{% static 'icons/Register.svg' %}" alt="Registros" />
-              <span
-                class="navbar-item-text {% if request.resolver_match.url_name == 'records' %}selected{% endif %}">Registros</span>
-            </li>
-          </a>
-
+            <a href="{% url 'inventory-list' institution.id %}">
+              <li
+                class="navbar-item-container {% if request.resolver_match.url_name|starts_with:'inventory' %}selected{% endif %}">
+                <img class="navbar-item-image {% if request.resolver_match.url_name|starts_with:'inventory' %}selected{% endif %}"
+                  src="{% static 'icons/Inventory.svg' %}" alt="Inventários" />
+                <span
+                  class="navbar-item-text {% if request.resolver_match.url_name|starts_with:'inventory' %}selected{% endif %}">Inventários</span>
+              </li>
+            </a>
           {% endif %}
 
-          {% endwith %}
+          {% if permission.role == "admin" %}
+            <a href="{% url 'permission-list' institution.id %}">
+              <li class="navbar-item-container {% if request.resolver_match.url_name|starts_with:'permission' %}selected{% endif %}">
+                <img class="navbar-item-image {% if request.resolver_match.url_name|starts_with:'permission' %}selected{% endif %}"
+                  src="{% static 'icons/Users.svg' %}" alt="Usuários" />
+                <span
+                  class="navbar-item-text {% if request.resolver_match.url_name|starts_with:'permission' %}selected{% endif %}">Usuários</span>
+              </li>
+            </a>
+          {% endif %}
+
+          {% if permission.role == "admin" or permission.role == "manager" or permission.role == "user" %}
+            <a href="{% url 'registration-list' institution.id %}">
+              <li class="navbar-item-container {% if request.resolver_match.url_name|starts_with:'registration' %}selected{% endif %}">
+                <img class="navbar-item-image {% if request.resolver_match.url_name|starts_with:'registration' %}selected{% endif %}"
+                  src="{% static 'icons/Register.svg' %}" alt="Registros" />
+                <span
+                  class="navbar-item-text {% if request.resolver_match.url_name|starts_with:'registration' %}selected{% endif %}">Registros</span>
+              </li>
+            </a>
+          {% endif %}
         </ul>
 
       </nav>
@@ -160,9 +98,7 @@
         <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
         <img class="institution-image" src="{% static 'img/amazon.png' %}" alt="Logo da empresa" />
         <p class="institution-text">
-          {% if request.session.institution_name %}
-          {{ request.session.institution_name }}
-          {% endif %}
+          {{ institution.name }}
         </p>
       </div>
       <div class="user-container" id="btn-user-menu">
@@ -177,15 +113,13 @@
             {{ request.user.get_full_name|default:request.user.username }}
           </p>
           <p class="user-role">
-            {% with role=request.session.role|default_if_none:'' %}
-            {% if role == "admin" %}
-            Administrador
-            {% elif role == "manager" %}
-            Gerente de Patrimônio
-            {% elif role == "user" %}
-            Consultor de Patrimônio
+            {% if permission.role == "admin" %}
+              Administrador
+            {% elif permission.role == "manager" %}
+              Gerente de Patrimônio
+            {% elif permission.role == "user" %}
+              Consultor de Patrimônio
             {% endif %}
-            {% endwith %}
           </p>
         </div>
         <img class="user-arrow" src="{% static 'icons/Arrow.svg' %}" alt="Abrir detalhes do perfil" />

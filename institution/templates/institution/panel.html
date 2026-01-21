@@ -20,7 +20,7 @@
     <h2 class="section-title">Inventários</h2>
     <div class="inventory-container">
       {% for inventory in inventories %}
-        {% include 'partials/inventory-card.html' with title=inventory.title total=inventory.total_items registered=inventory.recorded_items pending=inventory.pending_items %}
+        {% include 'partials/inventory-card.html' with title=inventory.title total=inventory.get_total_itens registered=inventory.get_total_itens_registered pending=inventory.get_total_itens_pending id=inventory.id %}
       {% endfor %}
     </div>
   </section>

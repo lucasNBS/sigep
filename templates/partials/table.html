@@ -17,7 +17,7 @@
         {% for object in object_list %}
           <tr class="table-row">
             <td class="table-cell">
-              <a href="{% url 'patrimony-detail' object.id %}">
+              <a href="{% url 'item-detail' institution.id object.id %}">
                 {{ object.serial }}
               </a>
             </td>
@@ -44,7 +44,7 @@
         {% for inventory in inventories  %}
           <tr class="table-row">
             <td class="table-cell">
-              <a href="{% url 'inventory-detail' institution inventory.id %}">
+              <a href="{% url 'inventory-detail' institution.id inventory.id %}">
                 {{ inventory.title }}
               </a>
             </td>
@@ -85,10 +85,6 @@
             {{ perm.get_role_display }}
           </td>
         </tr>
-        {% empty %}
-        <tr class="table-row">
-          <td class="table-cell" colspan="3">Nenhum usuário encontrado.</td>
-        </tr>
         {% endfor %}
       </tbody>
       {% elif type == 'records' %}
@@ -122,66 +118,14 @@
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
-        <tr class="table-row">
-          <td class="table-cell">Equipamento em bom estado, com leve risco na lateral. Cabo HDMI incluso</td>
-          <td class="table-cell">Bom</td>
-          <td class="table-cell">Thiago Morais</td>
-          <td class="table-cell">22/02/2023</td>
-        </tr>
+        {% for record in records %}
+          <tr class="table-row">
+            <td class="table-cell">{{ record.item.observations }}</td>
+            <td class="table-cell">{{ record.get_conservation_state_display }}</td>
+            <td class="table-cell">{{ record.user }}</td>
+            <td class="table-cell">{{ record.recorded_at|date:"d/m/y" }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
       {% endif %}
     </table>

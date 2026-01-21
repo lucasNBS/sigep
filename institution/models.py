@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 
 class Institution(models.Model):
@@ -15,6 +15,28 @@ class Institution(models.Model):
     def __str__(self):
         return self.name
     
+    def get_permission(self, user):
+        try:
+            return self.permissions.get(user=user)
+        except ObjectDoesNotExist:
+            return None
+        
+    def get_total_users(self):
+        return self.permissions.count()
+    
+    def get_total_itens(self):
+        return sum(room.total_itens() for room in self.rooms.all())
+    
+    def get_total_usable_itens(self):
+        return sum(room.total_usable_itens().count() for room in self.rooms.all())
+    
+    def get_total_lost_itens(self):
+        return sum(room.total_lost_itens() for room in self.rooms.all())
+    
+    def get_total_inventories(self):
+        return self.inventories.count()
+
+
 class Category(models.Model):
     institution = models.ForeignKey(
         Institution, on_delete=models.CASCADE, related_name="categories"

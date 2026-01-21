@@ -2,20 +2,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import profile, home
 
-from institution.views import autocomplete_categories_view
-from inventory.views import autocomplete_rooms_view
-from registration.views import ListRecordsView
+from core.views import profile
+from institution.views import ListInstitutionsView
+from user.views import SigninView, LogoutView, SignupView, ForgotPasswordView, ResetPasswordView, NewPasswordView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('dashboard/', include('institution.urls')),
+    
+    path("conta/login/", SigninView.as_view(), name="signin"),
+    path("conta/logout/", LogoutView.as_view(), name="logout"),
+    path("conta/criar/", SignupView.as_view(), name="signup"),
+    path("conta/esqueceu-senha/", ForgotPasswordView.as_view(), name="forgot-password"),
+    path("conta/redefinir-senha/", ResetPasswordView.as_view(), name="reset-password"),
+    path("conta/nova-senha/", NewPasswordView.as_view(), name="new-password"),
+
+    path('instituicao/', include('institution.urls')),
+    path('', ListInstitutionsView.as_view(), name='dashboard'),
     path('', include('user.urls')),
-    path('patrimonio/', include('item.urls')),
     path('perfil/', profile, name='profile'),
-    path('dashboard/<int:institution_id>/inventario/', include('inventory.urls')),
-    path('dashboard/<int:institution_id>/registro/', ListRecordsView.as_view(), name='records'),
-    path('salas/autocomplete/', autocomplete_rooms_view, name='rooms-autocomplete'),
-    path('categorias/autocomplete/', autocomplete_categories_view, name='categories-autocomplete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
