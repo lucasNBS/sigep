@@ -1,7 +1,12 @@
 {% load static %}
 <div class="modal" id="invitationModal" data-close-import-modal>
     <div class="modal-box">
-        <form method="get">
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'patrimony' %}"
+        >
+            {% csrf_token %}
         <div class="modal-header">
 
             <p class="modal-title" >{{ type }} Itens</p>
@@ -15,19 +20,28 @@
 
             <p class="secondary-text">{{ description }}</p>
 
-            <button class="import-download import-font" > 
+            <a
+                class="import-download import-font"
+                href="{% url 'item-spreadsheet-download' %}"
+            >
                 <img src="{% static 'icons/ExcelModel.svg'%}" alt="Aplicar"> Planilha Modelo
-            </button>
+            </a>
         
             <label class="dropzone import-select" for="logo-input">
-            <input id="logo-input" name="logo" type="file" accept="image/*" hidden>
-            <span id="logo-filename " class="file-select import-font">Escolher Arquivo</span>
+                <input id="logo-input" name="spreadsheet" type="file" hidden>
+                <span id="logo-filename" class="file-select import-font">Escolher Arquivo</span>
             </label>
         </div>
 
         <div class="modal-footer buttons-row" >
-            <button class=" filter-button cancel-button" type="button" data-close-import-modal>Cancelar</button>
-            <button class="filter-button apply-button" > 
+            <button
+                data-close-import-modal
+                class="filter-button cancel-button"
+                type="button"
+            >
+                Cancelar
+            </button>
+            <button class="filter-button apply-button" type="submit">
                 <img src="{% static 'icons/FileDownload.svg'%}" alt="Aplicar">{{ type }}
             </button>
         </div>
