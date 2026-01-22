@@ -98,7 +98,15 @@
     <div class="main-top-content-container">
       <div class="institution-container">
         <img class="menu-image" src="{% static 'icons/Menu.svg' %}" alt="Abrir menu">
-        <img class="institution-image" src="{% static 'img/amazon.png' %}" alt="Logo da empresa" />
+        {% if institution.logo_url %}
+          <img
+            class="institution-image" src="{{ institution.logo_url.url }}" alt="Logo da empresa"
+          />
+        {% else %}
+          <img
+            class="institution-image" src="{% static 'img/institution.png' %}" alt="Logo da empresa"
+          />
+        {% endif %}
         <p class="institution-text">
           {{ institution.name }}
         </p>

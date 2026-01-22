@@ -21,7 +21,11 @@
       {% endif %}
     </div>
 
-    <img src="{% static 'img/amazon.png' %}" alt="company_logo" class="company-logo">
+    {% if instance.item.logo_url %}
+      <img src="{{ instance.item.logo_url.url }}" alt="company_logo" class="company-logo">
+    {% else %}
+      <img src="{% static 'img/institution.png' %}" alt="company_logo" class="company-logo">
+    {% endif %}
 
     {% if permission.role == 'admin' %}
       <p class="admin-role">{{ permission.get_role_display }}</p>
