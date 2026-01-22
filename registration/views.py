@@ -1,11 +1,13 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, ListView, View
+from django.views.generic import CreateView, ListView, View, TemplateView
 
 from core.views import BaseContextView, AccessMixin
 from item.models import Item
 from institution.models import Institution
+from inventory.choices import Status
 from inventory.models import Inventory
 
 from .models import Record
@@ -40,29 +42,68 @@ class ListRecordsView(AccessMixin, BaseContextView, ListView):
     context["filter"] = self.filterset
     return context
 
-def records_scan(request, institution_id, inventory_id):
-  return render(request, "pages/record-scan.html", {})
+class ScanRecordView(AccessMixin, BaseContextView, TemplateView):
+  template_name = "pages/record-scan.html"
 
-class RegisterSerialView(View):
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    request.session["inventory_id"] = self.kwargs["inventory_id"]
+    return super().dispatch(request, *args, **kwargs)
+
+class RegisterSerialView(AccessMixin, View):
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    request.session["inventory_id"] = self.kwargs["inventory_id"]
+    return super().dispatch(request, *args, **kwargs)
+
   def post(self, request, *args, **kwargs):
     serial = request.POST.get("serial")
 
     if not serial:
       return redirect(request.META.get("HTTP_REFERER", "/"))
+    
+    item = get_object_or_404(Item, serial=serial, institution__id=kwargs["institution_id"])
 
     return redirect(
-      "registration-create",
+      "item-registration",
       institution_id=kwargs["institution_id"],
-      inventory_id=kwargs["inventory_id"],
-      serial=serial
+      item_id=item.id,
     )
 
-class CreateRecordView(CreateView):
+class CreateRecordView(AccessMixin, BaseContextView, CreateView):
   model = Record
   template_name = "registration/record-form.html"
-  slug_field = "serial"
-  slug_url_kwarg = "serial"
   form_class = RecordForm
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+
+    user_has_access_to_inventory = Inventory.objects.filter(
+      Q(leader_consultor=self.request.user) | Q(consultors=self.request.user),
+      id=self.request.session.get("inventory_id")
+    ).distinct().exists()
+
+    item = get_object_or_404(Item, id=self.kwargs["item_id"])
+
+    item_belongs_to_inventory = Inventory.objects.filter(
+      id=self.request.session.get("inventory_id"), rooms=item.room
+    ).exists()
+
+    invenvtory_is_open = Inventory.objects.filter(
+      id=self.request.session.get("inventory_id"), rooms=item.room, status=Status.OPEN
+    ).exists()
+
+    if not invenvtory_is_open:
+      raise PermissionError("Este inventário foi encerrado")
+
+    if not item_belongs_to_inventory:
+      raise PermissionError("Este item não faz parte deste inventário")
+
+    if not user_has_access_to_inventory:
+      raise PermissionError("Você não tem autorização para realizar esta ação")
+
+    return super().dispatch(request, *args, **kwargs)
   
   def get_form_kwargs(self):
     kwargs = super().get_form_kwargs()
@@ -74,18 +115,19 @@ class CreateRecordView(CreateView):
       "inventory-detail",
       kwargs={
         "institution_id": self.kwargs["institution_id"],
-        "inventory_id": self.kwargs["inventory_id"]
+        "inventory_id": self.request.session.get("inventory_id")
       }
     )
  
   def form_valid(self, form):
-    form.instance.inventory = get_object_or_404(Inventory, id = self.kwargs["inventory_id"])
-    form.instance.item = get_object_or_404(Item, serial=self.kwargs["serial"], institution_id=self.kwargs["institution_id"])
+    form.instance.inventory = get_object_or_404(
+      Inventory, id=self.request.session.get("inventory_id")
+    )
+    form.instance.item = get_object_or_404(Item, id=self.kwargs["item_id"])
     record = form.save()
     record.recorded_at = timezone.now()
-    
+
     record.user = self.request.user
-    
     record.save() 
 
     room = form.cleaned_data.get("room")
@@ -98,7 +140,5 @@ class CreateRecordView(CreateView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context["institution"] = self.kwargs["institution_id"]
-    context["item"] = get_object_or_404(Item, serial=self.kwargs["serial"], institution_id=self.kwargs["institution_id"],)
+    context["item"] = get_object_or_404(Item, id=self.kwargs["item_id"])
     return context
-

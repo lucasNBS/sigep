@@ -21,5 +21,4 @@ urlpatterns = [
     path('instituicao/', include('institution.urls')),
     path('', ListInstitutionsView.as_view(), name='dashboard'),
     path('', include('user.urls')),
-    path('perfil/', profile, name='profile'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

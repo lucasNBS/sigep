@@ -23,7 +23,10 @@ class ListItemView(AccessMixin, BaseContextView, FormMixin, ListView):
   queryset = Item.all_objects
   template_name = "item/patrimony.html"
   form_class = ItemImport
-  success_url = reverse_lazy("dashboard")
+  max_itens = 50
+
+  def get_success_url(self):
+    return reverse("item-list", kwargs={"institution_id": self.kwargs.get('institution_id')})
 
   def post(self, request, *args, **kwargs):
     self.object_list = self.get_queryset()
@@ -59,6 +62,10 @@ class ListItemView(AccessMixin, BaseContextView, FormMixin, ListView):
     columns = {
       "Nome", "Serial", "Nota Fiscal", "Categoria", "Sala", "Descrição", "Observações"
     }
+
+    if len(df) > self.max_itens:
+      errors.append(f"Planilha muito grande. O limite de itens por planilha é {self.max_itens}")
+      return errors
 
     if not columns.issubset(df.columns):
       errors.append("Colunas inválidas")

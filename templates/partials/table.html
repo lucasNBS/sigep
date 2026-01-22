@@ -1,4 +1,6 @@
 {% load static %}
+{% load utils %}
+
 <div class="table-content-container">
   <div class="table-responsive-container">
     <table class="table-container">
@@ -24,7 +26,9 @@
             <td class="table-cell">{{ object.name }}</td>
             <td class="table-cell">{{ object.category }}</td>
             <td class="table-cell">{{ object.room }}</td>
-            <td class="table-cell">Bom</td>
+            <td class="table-cell">
+              {{ object.get_last_record.get_conservation_state_display|default:"-" }}
+            </td>
             <td class="table-cell">{{ object.created_at|date:"j / M / Y" }}</td>
           </tr>
         {% endfor %}
@@ -141,7 +145,7 @@
     </div>
     <div class="table-pagination">
       {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">
+        <a href="?{% querystring page=page_obj.previous_page_number %}">
           <img class="table-pagination-previous" src="{% static 'icons/Arrow.svg' %}" alt="Página anterior">
         </a>
       {% else %}
@@ -149,19 +153,19 @@
       {% endif %}
       <div class="table-pagination-numbers">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}">
+          <a href="?{% querystring page=page_obj.previous_page_number %}">
             <span class="table-pagination-numbers-item">{{ page_obj.previous_page_number }}</span>
           </a>
         {% endif %}
         <span class="table-pagination-numbers-item selected">{{ page_obj.number }}</span>
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}">
+          <a href="?{% querystring page=page_obj.next_page_number %}">
             <span class="table-pagination-numbers-item">{{ page_obj.next_page_number }}</span>
           </a>
         {% endif %}
       </div>
       {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">
+        <a href="?{% querystring page=page_obj.next_page_number %}">
           <img class="table-pagination-next" src="{% static 'icons/Arrow.svg' %}" alt="Página seguinte">
         </a>
       {% else %}

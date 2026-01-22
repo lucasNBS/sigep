@@ -3,6 +3,9 @@
   class="autocomplete-container"
   data-autocomplete="{{ widget.autocomplete }}"
   data-autocomplete-editable="{{ widget.editable }}"
+  {% for attr, value in widget.attrs.items %}
+    {{ attr }}="{{ value }}"
+  {% endfor %}
 >
   <div class="relative">
     <input placeholder="{{ placeholder }}" class="{{ widget.input_class }}" data-autocomplete-input />

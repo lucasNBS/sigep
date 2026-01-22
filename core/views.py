@@ -31,22 +31,25 @@ class AccessMixin:
       return Permission.objects.get(user=self.request.user, institution=self.get_institution())
     except:
       raise PermissionDenied("Você não tem permissão para realizar esta ação")
-    
+
   def check_has_admin_access(self):
     role = self.get_permission().role
     if role not in [Role.ADMIN.value]:
       raise PermissionDenied("Você não tem autorização para realizar esta ação")
-  
+
   def check_has_manager_access(self):
     role = self.get_permission().role
     if role not in [Role.ADMIN.value, Role.MANAGER.value]:
       raise PermissionDenied("Você não tem autorização para realizar esta ação")
-  
+
   def check_has_user_access(self):
     role = self.get_permission().role
     if role not in [Role.ADMIN.value, Role.MANAGER.value, Role.USER.value]:
       raise PermissionDenied("Você não tem autorização para realizar esta ação")
 
+  def has_user_access(self):
+    role = self.get_permission().role
+    return role == Role.USER.value
 
 def profile(request):
   return render(request, "pages/profile.html", {})

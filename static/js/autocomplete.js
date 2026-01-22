@@ -1,7 +1,7 @@
 {
   const convert_type = {
-    categorias: "category",
-    salas: "room",
+    categoria: "category",
+    sala: "room",
   };
 
   function createDropdownElement(option) {
@@ -29,6 +29,7 @@
     constructor(element, editable) {
       this.element = element;
       this.url = element.dataset.autocomplete;
+      this.id = element.dataset.institutionId;
       this.input = element.querySelector("[data-autocomplete-input]");
       this.suggestionsContainer = element.querySelector(
         "[data-autocomplete-suggestions]",
@@ -86,7 +87,7 @@
       }
 
       const results = await fetch(
-        `https://localhost:8000/instituicao/${this.url}/autocomplete/?search=${input.value}`,
+        `https://localhost:8000/instituicao/${this.id}/${this.url}/autocomplete/?search=${input.value}`,
       ).then((res) => res.json());
 
       results.forEach((option) => {

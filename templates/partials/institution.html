@@ -24,9 +24,9 @@
     <img src="{% static 'img/amazon.png' %}" alt="company_logo" class="company-logo">
 
     {% if permission.role == 'admin' %}
-      <p class="admin-role">{{ permission.role }}</p>
+      <p class="admin-role">{{ permission.get_role_display }}</p>
     {% else %}
-      <p class="card-role">{{ permission.role }}</p>
+      <p class="card-role">{{ permission.get_role_display }}</p>
     {% endif %}
 
     <div class="card-stats">

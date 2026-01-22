@@ -88,7 +88,7 @@ class Inventory(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.title}"
     
     def get_total_itens(self):
         return sum(room.total_itens() for room in self.rooms.all())
@@ -105,3 +105,17 @@ class Inventory(models.Model):
             return "0%"
         else :
             return f"{self.get_total_itens_registered()/total:.0%}"
+        
+    def close_inventory(self):
+        for room in self.rooms.all():
+            for item in room.items.all():
+                if not item.records.filter(inventory=self).exists():
+                    item.status = ItemStatus.LOST
+                    item.save()
+
+    def unclose_inventory(self):
+        for room in self.rooms.all():
+            for item in room.items.all():
+                if not item.records.filter(inventory=self).exists():
+                    item.status = ItemStatus.FOUND
+                    item.save()

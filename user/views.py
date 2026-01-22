@@ -351,31 +351,11 @@ class ProfileUpdateView(LoginRequiredMixin, View):
     redirect_field_name = "next"
     template_name = "pages/profile.html"
 
-    def _get_institutions(self, user):
-        permission_list = (
-            Permission.objects.filter(user=user, revoked_at__isnull=True)
-            .select_related("institution")
-            .order_by("institution__name")
-        )
-        role_map = dict(Role.choices())
-
-        return [
-            {
-                "id": perms.institution_id,
-                "name": perms.institution.name,
-                "role_label": role_map.get(perms.role, perms.role),
-                "items_total": None,
-                "users_total": None,
-            }
-            for perms in permission_list
-        ]
-
     def get(self, request):
         user = request.user
         context = {
             "user_obj": user,
             "user_photo": user.photo_url,
-            "institutions": self._get_institutions(user),
             "form": UserSelfUpdateForm(instance=user),
         }
         return render(request, self.template_name, context)
@@ -393,7 +373,6 @@ class ProfileUpdateView(LoginRequiredMixin, View):
         context = {
             "user_obj": user,
             "user_photo": user.photo_url,
-            "institutions": self._get_institutions(user),
             "form": form,
         }
         return render(request, self.template_name, context)

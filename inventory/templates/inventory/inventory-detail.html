@@ -11,7 +11,7 @@
   <div class="inventory-data-container">
     <h2 class="main-title">{{ inventory.title }}</h2>
 
-    {% if permission.role == 'admin' or permission.role == 'manager' %}
+    {% if permission.role == 'admin' or permission.role == 'manager' or is_inventory_leader %}
       <div class="cards-container">
         {% include 'partials/card.html' with title='Total de itens' type='cube' total=inventory.get_total_itens data='Itens cadastrados' %}
         {% include 'partials/card.html' with title='Registrados' type='register' total=inventory.get_total_itens_registered data='Itens registrados' %}
@@ -71,14 +71,14 @@
     </div>
   </div>
   {% include 'partials/table.html' with type='records' %}
-  {% if permission.role != 'user' %}
-    <div class="top-container bottom-container">
-      <div>
-        <a class="back" href="{% url 'inventory-list' institution.id %}">
-          <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
-            <span class="back-button">Voltar</span>
-        </a>
-      </div>
+  <div class="top-container bottom-container">
+    <div>
+      <a class="back" href="{% url 'inventory-list' institution.id %}">
+        <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
+          <span class="back-button">Voltar</span>
+      </a>
+    </div>
+    {% if permission.role == 'admin' or permission.role == 'manager' or is_inventory_leader %}
       <div class="actions-container bottom-buttons">  
         <a href="{% url 'inventory-edit' institution.id inventory.id %}">
           <div class="action-button action" id="btn-scan">
@@ -98,10 +98,10 @@
         </button>
       </div>
     {% endif %}
-</div>
+  </div>
 {% include 'partials/filter-base.html' with type='register' %}
 {% include 'partials/modal_items_register.html' %}
 
 {% url 'inventory-close' institution.id inventory.id as close_url %}
-{% include 'partials/modal_confirm.html' with title='Concluir Inventário'  text='deseja realmente registrar este inventário como encerrado?' action_url=close_url %}
+{% include 'partials/modal_confirm.html' with title=view.title  text=view.text action_url=close_url %}
 {% endblock %}

@@ -91,6 +91,12 @@ class DetailInventoryView(AccessMixin, BaseContextView, DetailView):
 
   def dispatch(self, request, *args, **kwargs):
     self.check_has_user_access()
+    if self.get_object().status == Status.OPEN:
+      self.title = "Concluir Inventário"
+      self.text = f"Deseja encerrar este inventário? Esta ação marcará {self.get_object().get_total_itens_pending()} itens não registrados como perdidos"
+    else:
+      self.title = "Reabrir Inventário"
+      self.text = "Deseja reabrir este inventário?"
     return super().dispatch(request, *args, **kwargs)
 
   def get_queryset(self, *args, **kwargs):
@@ -108,6 +114,9 @@ class DetailInventoryView(AccessMixin, BaseContextView, DetailView):
     page_number = self.request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    context["is_inventory_leader"] = Inventory.objects.filter(
+      leader_consultor=self.request.user, id=self.object.id
+    ).exists()
     context["page_obj"] = page_obj
     context["records"] = page_obj.object_list
     context["form"] = RegisterSerialForm()
@@ -155,8 +164,10 @@ class ConcludeInventoryView(AccessMixin, View):
     )
 
     if inventory.status == Status.OPEN:
+      inventory.close_inventory()
       inventory.status = Status.CLOSED
     elif inventory.status == Status.CLOSED:
+      inventory.unclose_inventory()
       inventory.status = Status.OPEN
 
     inventory.save()

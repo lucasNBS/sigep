@@ -1,4 +1,7 @@
 from django.urls import path
+
+from registration.views import CreateRecordView
+
 from .views import ListItemView, UpdateItemView, DetailItemView, CreateItemView, DeleteItemView, RestoreItemView, DownloadItemSpreadSheetView
 
 urlpatterns = [
@@ -8,6 +11,7 @@ urlpatterns = [
     path('<str:item_id>/', DetailItemView.as_view(), name='item-detail'),
     path('<str:item_id>/excluir/', DeleteItemView.as_view(), name='item-delete'),
     path('<str:item_id>/restaurar/', RestoreItemView.as_view(), name='item-restore'),
+    path('<str:item_id>/registrar/', CreateRecordView.as_view(), name='item-registration'),
     path(
       'planilha/download/',
       DownloadItemSpreadSheetView.as_view(),

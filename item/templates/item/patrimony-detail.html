@@ -26,7 +26,9 @@
       <p class="detail"><span class="title">Nota Fiscal:</span> {{ object.invoice_key }}</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
+      <p class="detail"><span class="title">Estado de Conservação:</span>
+        {{ object.get_last_record.get_conservation_state_display|default:"-" }}
+      </p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">Data de Cadastro:</span> {{ object.created_at }}</p>

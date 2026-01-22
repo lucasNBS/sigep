@@ -1,6 +1,7 @@
 from django.db import transaction
 from django.http import JsonResponse
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
 from django.db.models import Count, F
 
@@ -90,6 +91,10 @@ class DetailInstitutionView(AccessMixin, BaseContextView, DetailView):
 
   def dispatch(self, request, *args, **kwargs):
     self.check_has_manager_access()
+    if self.has_user_access():
+      return redirect(reverse(
+        'registration-list', kwargs={'institution_id': self.kwargs["institution_id"]}
+      ))
     return super().dispatch(request, *args, **kwargs)
 
   def get_context_data(self, **kwargs):
