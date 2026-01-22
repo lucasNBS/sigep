@@ -26,14 +26,16 @@
       <p class="detail"><span class="title">Nota Fiscal:</span> {{ object.invoice_key }}</p>
     </div>
     <div class="description">
-      <p class="detail"><span class="title">Estado de Conservação:</span> Bom</p>
+      <p class="detail"><span class="title">Estado de Conservação:</span>
+        {{ object.get_last_record.get_conservation_state_display|default:"-" }}
+      </p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">Data de Cadastro:</span> {{ object.created_at }}</p>
     </div>
     <div class="description">
       <p class="detail"><span class="title">QR code:</span>
-        <a href="/media/qrcodes/{{ object.id }}.png">Visualizar</a>
+        <a href="/media/qrcodes/{{ object.id }}.png" target="_blank">Visualizar</a>
       </p>
     </div>
 
@@ -58,7 +60,7 @@
   {% include 'partials/table.html' with type='records-detail' %}
 
   <div class="actions-container">
-    <a class="action cancel" href="{% url 'patrimony' %}">
+    <a class="action cancel" href="{% url 'item-list' institution.id %}">
       <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
       Voltar
     </a>
@@ -73,7 +75,7 @@
           Desativar
         {% endif %}
       </div>
-      <a class="action edit" href="{% url 'patrimony-edit' object.id %}">
+      <a class="action edit" href="{% url 'item-edit' institution.id object.id %}">
         <img class="action-icon" src="{% static 'icons/Edit.svg' %}" alt="Editar">
         Editar
       </a>

@@ -1,14 +1,17 @@
 <article class="content">
 
-    <div class="two-input-inline">
-        <div>
-            {{ filter.form.item__name }}
-        </div>
+    {% if specific_item %}
+    {% else %}
+        <div class="two-input-inline">
+            <div>
+                {{ filter.form.item__name }}
+            </div>
 
-        <div>
-            {{ filter.form.item__serial }}
+            <div>
+                {{ filter.form.item__serial }}
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="two-input-inline">
         <div>

@@ -174,7 +174,7 @@ AUTH_USER_MODEL = "user.User"
 
 MAX_ERRORS = 10
 
-SITE_URL = "http://localhost:8000"
+SITE_URL = "https://192.168.0.7:8000"
 
 LOGIN_URL = "signin"
 LOGIN_REDIRECT_URL = "dashboard"

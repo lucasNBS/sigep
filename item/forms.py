@@ -1,11 +1,14 @@
 import django_filters
+
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db.models import OuterRef, Subquery
 
 from core import widgets, utils
 from institution.models import Category, Institution
 from inventory.models import Room
 from registration.choices import ConservationState
+from registration.models import Record
 
 from . import models, choices
 
@@ -49,11 +52,29 @@ class ItemForm(forms.ModelForm):
     model = models.Item
     fields = ["name", "description", "serial", "invoice_key", "notes", "category", "room"]
     widgets = {
-      "category": widgets.Autocomplete(label="Categoria", autocomplete="categorias", editable=True,
-                                    label_class="form-field-label", input_class="form-field-input"),
-      "room": widgets.Autocomplete(label="Sala", autocomplete="salas", editable=True,
-                                    label_class="form-field-label", input_class="form-field-input")
+      "category": widgets.Autocomplete(
+        label="Categoria",
+        autocomplete="categoria",
+        editable=True,
+        label_class="form-field-label",
+        input_class="form-field-input",
+        data_institution_id=None
+      ),
+      "room": widgets.Autocomplete(
+        label="Sala",
+        autocomplete="sala",
+        editable=True,
+        label_class="form-field-label",
+        input_class="form-field-input",
+        data_institution_id=None
+      )
     }
+
+  def __init__(self, *args, **kwargs):
+    self.institution_id = kwargs.pop('institution_id')
+    super().__init__(*args, **kwargs)
+    self.fields['category'].widget.data_institution_id = self.institution_id
+    self.fields['room'].widget.data_institution_id = self.institution_id
 
   def clean(self):
     clean_data = super().clean()
@@ -95,7 +116,7 @@ class ItemForm(forms.ModelForm):
     if instance.id:
       old_instance = models.Item.objects.filter(id=instance.id).first()
 
-    self.instance.institution = Institution.objects.get(id=1)
+    self.instance.institution = Institution.objects.get(id=self.institution_id)
 
     if old_instance:
       self._handle_category_and_room_left(instance, old_instance)
@@ -109,48 +130,51 @@ class ItemFilter(django_filters.FilterSet):
   name = django_filters.CharFilter(
     lookup_expr="icontains",
     widget=widgets.InputField(label="Nome", type="text",
-    label_class="label-text", input_class=""),
+    label_class="label-text", input_class="filter-input"),
   )
   serial = django_filters.CharFilter(
     lookup_expr="exact",
     widget=widgets.InputField(label="Serial", type="text",
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
-  category = django_filters.ModelChoiceFilter(
-    queryset=Category.objects.all(),
-    widget=widgets.Autocomplete(label="Categoria", autocomplete="categorias",
-    label_class="label-text", input_class="form-field-input"),
+  category = django_filters.CharFilter(
+    lookup_expr="name__icontains",
+    widget=widgets.InputField(
+      label="Categoria", type="text", label_class="label-text", input_class="filter-input"
+    )
   )
-  room = django_filters.ModelChoiceFilter(
-    queryset=Room.objects.all(),
-    widget=widgets.Autocomplete(label="Sala", autocomplete="salas",
-    label_class="label-text", input_class="form-field-input"),
+  room = django_filters.CharFilter(
+    lookup_expr="name__icontains",
+    widget=widgets.InputField(
+      label="Sala", type="text", label_class="label-text", input_class="filter-input"
+    )
   )
   date_start = django_filters.CharFilter(
     field_name="created_at",
     lookup_expr="gte",
     widget=widgets.InputField(label="Data de Cadastro (Início)", type="date",
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
   date_end = django_filters.CharFilter(
     field_name="created_at",
     lookup_expr="lte",
     widget=widgets.InputField(label="Data de Cadastro (Fim)", type="date",
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
   status = django_filters.ChoiceFilter(
     choices=choices.Status,
     widget=widgets.Select(label="Status",
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
   conservation_state = django_filters.ChoiceFilter(
     choices=ConservationState,
+    method="filter_conservation_state",
     widget=widgets.Select(label="Estado de Conservação",
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
   is_deleted = django_filters.BooleanFilter(
     widget=widgets.Select(label="Estado de Ativação", choices=choices.ACTIVE_STATUS,
-    label_class="label-text", input_class="form-field-input"),
+    label_class="label-text", input_class="filter-input"),
   )
 
   class Meta:
@@ -166,6 +190,16 @@ class ItemFilter(django_filters.FilterSet):
       "conservation_state",
       "is_deleted",
     ]
+
+  def filter_conservation_state(self, queryset, name, value):
+    latest_state = Record.objects.filter(item=OuterRef("pk")).order_by("-recorded_at").values(
+      "conservation_state"
+    )[:1]
+
+    return queryset.annotate(latest_conservation_state=Subquery(latest_state)).filter(
+      latest_conservation_state=value
+    )
+
 
 class ItemImport(forms.Form):
   spreadsheet = forms.FileField(label="Arquivo")

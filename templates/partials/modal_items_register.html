@@ -1,7 +1,11 @@
 {% load static %}
 <div class="modal" id="registerItemModal">
   <div class="modal-box">
-    <form id="form-register-item" method="POST" action="{% url 'register-serial' institution inventory_id %}">
+    <form
+      method="POST"
+      id="form-register-item"
+      action="{% url 'registration-serial' institution.id inventory.id %}"
+    >
       {% csrf_token %}
 
       <div class="modal-header">

@@ -1,24 +1,30 @@
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
+from django.views.generic import CreateView, UpdateView, DetailView, ListView, View
+
+from core.views import BaseContextView, AccessMixin
+from institution.models import Institution
+from registration.forms import RecordFilter, RegisterSerialForm
+from registration.models import Record
+
 from .models import Inventory, Room
 from .forms import  InventoryForm, InventoryFilter
 from .choices import Status
-from user.models import User, Permission
-from institution.models import Institution
-from item.models import Item
-from registration.models import Record
-from registration.forms import RecordFilter, RegisterSerialForm
 
 
-class ListInventoryView(ListView):
+class ListInventoryView(AccessMixin, BaseContextView, ListView):
   model = Inventory
   template_name = "inventory/inventory.html"
   context_object_name = "inventories"
   pk_url_kwarg = "institution_id"
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    return super().dispatch(request, *args, **kwargs)
 
   def get_paginate_by(self, queryset):
     page_size = self.request.GET.get("size")
@@ -27,9 +33,11 @@ class ListInventoryView(ListView):
     return 10
 
   def get_queryset(self):
-    queryset = Inventory.objects.select_related(
-      "institution", "responsible", "leader_consultor"
-    ).prefetch_related("consultors")
+    queryset = Inventory.objects.filter(
+      Q(leader_consultor=self.request.user) | Q(consultors=self.request.user)
+    ).distinct().select_related("institution", "responsible", "leader_consultor").prefetch_related(
+      "consultors"
+    )
 
     self.filterset = InventoryFilter(self.request.GET, queryset=queryset)
 
@@ -38,21 +46,32 @@ class ListInventoryView(ListView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
-    context["institution"] = self.kwargs["institution_id"]
     context["filter"] = self.filterset
     return context
 
   
-class CreateInvetoryView(CreateView):
+class CreateInvetoryView(AccessMixin, BaseContextView, CreateView):
   model = Inventory
   template_name = "inventory/inventory-form.html"
   form_class = InventoryForm
+  title = "Abrir Processo de Inventário"
+  button = "Abrir Inventário"
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_manager_access()
+    return super().dispatch(request, *args, **kwargs)
 
   def get_success_url(self):
-    return reverse_lazy(
-      "inventory",
+    return reverse(
+      "inventory-list",
       kwargs={"institution_id": self.kwargs["institution_id"]}
     )
+
+  def get_form_kwargs(self):
+    form_kwargs = super().get_form_kwargs()
+    form_kwargs["institution_id"] = self.kwargs.get('institution_id')
+    form_kwargs["user_id"] = self.request.user.id
+    return form_kwargs
 
   def form_valid(self, form):
     form.instance.start_date = timezone.now()
@@ -62,104 +81,119 @@ class CreateInvetoryView(CreateView):
     
     inventory.save()
     return super().form_valid(form)
-  
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context["form"] = InventoryForm()
-    context["institution"] = self.kwargs["institution_id"]
-    return context
 
 
-class DetailInventoryView(DetailView):
+class DetailInventoryView(AccessMixin, BaseContextView, DetailView):
   model = Inventory
   template_name = "inventory/inventory-detail.html"
   pk_url_kwarg = "inventory_id"
   context_object_name = "inventory"
 
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    if self.get_object().status == Status.OPEN:
+      self.title = "Concluir Inventário"
+      self.text = f"Deseja encerrar este inventário? Esta ação marcará {self.get_object().get_total_itens_pending()} itens não registrados como perdidos"
+    else:
+      self.title = "Reabrir Inventário"
+      self.text = "Deseja reabrir este inventário?"
+    return super().dispatch(request, *args, **kwargs)
+
+  def get_queryset(self, *args, **kwargs):
+    return Inventory.objects.filter(
+      Q(leader_consultor=self.request.user) | Q(consultors=self.request.user)
+    ).distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
+    context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
 
-    user = self.request.user
-
-    inventory = context["inventory"]
-
-    items = Item.objects.filter(
-        room__inventories=inventory
-    ).count()
-
-    items_records = Record.objects.filter(
-        inventory=inventory
-    ).values("item").distinct().count()
-
-    records_qs = Record.objects.filter(inventory=inventory)
+    records_qs = Record.objects.filter(inventory=self.object)
     filterset = RecordFilter(self.request.GET, queryset=records_qs)
+    paginator = Paginator(filterset.qs, context["size"])
+    page_number = self.request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
-    institution = inventory.institution
-    
-    if items == 0 :
-      percentage_calc = "0%"
-    else :
-      percentage_calc = f"{items_records/items:.0%}"
-
-    context["records"] = filterset.qs.distinct
+    context["is_inventory_leader"] = Inventory.objects.filter(
+      leader_consultor=self.request.user, id=self.object.id
+    ).exists()
+    context["page_obj"] = page_obj
+    context["records"] = page_obj.object_list
     context["form"] = RegisterSerialForm()
     context["filter"] = filterset
-    context["total_items"] = items
-    context["items_records"] = items_records
-    context["items_pendent"] = items - items_records
-    context["percentage"] = percentage_calc
-    context["role"] = get_object_or_404(Permission, institution=institution, user = user).role
-    context["rooms"] = Room.objects.filter(inventories__institution=institution).distinct()
-    context["institution"] = self.kwargs["institution_id"]
-    context["inventory_id"] = self.kwargs["inventory_id"]
+    context["rooms"] = self.object.rooms.all()
     return context
 
-class UpdateInventoryView(UpdateView):
+class UpdateInventoryView(AccessMixin, BaseContextView, UpdateView):
   model = Inventory
   form_class = InventoryForm
-  pk_url_kwarg = "id"
+  pk_url_kwarg = "inventory_id"
   template_name="inventory/inventory-form.html"
+  title = "Editar Processo de Inventário"
+  button = "Editar Inventário"
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_manager_access()
+    return super().dispatch(request, *args, **kwargs)
 
   def get_success_url(self):
     return reverse_lazy(
-      "inventory-detail",
-      kwargs={"institution_id": self.kwargs["institution_id"],
-              "id": self.kwargs["id"]}
+        "inventory-detail",
+        kwargs={
+          "institution_id": self.kwargs["institution_id"],
+          "inventory_id": self.kwargs["inventory_id"]
+        }
       )
 
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context["institution"] = self.kwargs["institution_id"]
-    context["inventory_id"] = self.kwargs["id"]
-    return context
+  def get_form_kwargs(self):
+    form_kwargs = super().get_form_kwargs()
+    form_kwargs["institution_id"] = self.kwargs.get('institution_id')
+    form_kwargs["user_id"] = self.request.user.id
+    return form_kwargs
 
-class ConcludeInventoryView(View):
+
+class ConcludeInventoryView(AccessMixin, View):
+
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    return super().dispatch(request, *args, **kwargs)
+
   def post(self, request, *args, **kwargs):
-    inventory = get_object_or_404(Inventory, id = self.kwargs["id"])
+    inventory = get_object_or_404(
+      Inventory, id=self.kwargs["inventory_id"], leader_consultor=self.request.user
+    )
 
     if inventory.status == Status.OPEN:
+      inventory.close_inventory()
       inventory.status = Status.CLOSED
     elif inventory.status == Status.CLOSED:
+      inventory.unclose_inventory()
       inventory.status = Status.OPEN
-          
+
     inventory.save()
 
     return redirect(
       "inventory-detail",
       institution_id=kwargs["institution_id"],
-      id=kwargs["id"],
+      inventory_id=kwargs["inventory_id"],
     )
+  
 
-def autocomplete_rooms_view(request):
-  search = request.GET.get("search")
-  limit = 20
+class AutocompleteRoomsView(AccessMixin, View):
 
-  found_rooms = Room.objects.filter(name__icontains=search)
+  def dispatch(self, request, *args, **kwargs):
+    self.check_has_user_access()
+    return super().dispatch(request, *args, **kwargs)
 
-  response = [
-    {"name": room.name, "id": room.id} for room in found_rooms
-  ][:limit]
+  def get(self, request, institution_id):
+    search = request.GET.get("search")
+    limit = 20
+
+    found_rooms = Room.objects.filter(name__icontains=search)
+
+    response = [
+      {"name": room.name, "id": room.id} for room in found_rooms
+    ][:limit]
 
 
-  return JsonResponse(response, safe=False)
+    return JsonResponse(response, safe=False)
