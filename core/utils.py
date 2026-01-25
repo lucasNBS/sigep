@@ -1,14 +1,16 @@
 from institution import models
 from item.models import Item
 
-def handle_selected_element(model, element_id, element_name):
+def handle_selected_element(model, element_id, element_name, institution_id):
   if (element_id):
     element = model.objects.get(id=element_id)
     element.name = element_name
     element.save(update_fields=["name"])
     element.refresh_from_db()
   else:
-    element = model(name=element_name, institution=models.Institution.objects.get(id=1))
+    element = model(
+      name=element_name, institution=models.Institution.objects.get(id=institution_id)
+    )
     element.full_clean()
     element.save()
   return element
