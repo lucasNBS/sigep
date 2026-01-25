@@ -18,6 +18,8 @@ from core.views import BaseContextView, AccessMixin
 from .forms import SignupForm, UserSelfUpdateForm, UserFilterForm
 from .models import Permission, Role, PasswordResetCode
 
+from .tasks import send_email_with_otp
+
 User = get_user_model()
 
 MAX_ATTEMPTS = 5
@@ -125,12 +127,12 @@ class ForgotPasswordView(View):
 
     def post(self, request):
         email = (request.POST.get("email") or "").strip().lower()
-
+        
         messages.success(
             request,
             "Se este e-mail estiver cadastrado, enviaremos um código de verificação.",
         )
-
+        
         user = User.objects.filter(email__iexact=email).first()
         if user:
             PasswordResetCode.objects.filter(
@@ -145,7 +147,13 @@ class ForgotPasswordView(View):
                 expires_at=timezone.now() + timedelta(minutes=self.code_ttl_minutes),
             )
 
-            print(f"[DEV] Código de redefinição para {email}: {raw_code}")
+            try:
+                send_email_with_otp.delay(email, raw_code)
+                print("[DEV] E-mail enviado com sucesso para", email)
+                messages.success(request, 'E-mail enviado com sucesso!')
+            except Exception as e:
+                print("[DEV] Erro ao enviar e-mail para", email, ":", str(e))
+                messages.error(request, 'Erro ao enviar o formulário')
 
         request.session["pwreset_email"] = email
         return redirect("reset-password")
