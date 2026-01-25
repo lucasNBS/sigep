@@ -91,3 +91,22 @@ a {
   font-style: normal;
   font-display: swap;
 }
+
+.errors-container {
+  background-color: #fff5c2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 16px;
+  gap: 8px;
+}
+
+.error-text {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  color: var(--dark-100);
+}
+
+.error-text span {
+  font-family: var(--font-primary-bold);
+}

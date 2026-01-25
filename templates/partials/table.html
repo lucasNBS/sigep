@@ -124,7 +124,7 @@
       <tbody class="table-body">
         {% for record in records %}
           <tr class="table-row">
-            <td class="table-cell">{{ record.item.observations }}</td>
+            <td class="table-cell">{{ record.item.observations|default:"-" }}</td>
             <td class="table-cell">{{ record.get_conservation_state_display }}</td>
             <td class="table-cell">{{ record.user }}</td>
             <td class="table-cell">{{ record.recorded_at|date:"d/m/y" }}</td>

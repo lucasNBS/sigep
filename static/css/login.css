@@ -231,6 +231,10 @@ input:-webkit-autofill {
   padding: 16px 0;
 }
 
+.signup-container {
+  margin-top: 32px;
+}
+
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;

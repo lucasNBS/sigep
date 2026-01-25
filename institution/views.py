@@ -111,7 +111,9 @@ class DetailInstitutionView(AccessMixin, BaseContextView, DetailView):
 
     items_total = Item.objects.filter(institution__id=institution_id).count()
 
-    records = Record.objects.filter(inventory__institution_id = institution_id, conservation_state__gt=ConservationState.POOR).count
+    records = Record.objects.filter(
+      inventory__institution_id=institution_id, conservation_state__gt=ConservationState.POOR
+    ).count()
 
     items_lost = Item.objects.filter(institution__id=institution_id, status=Status.LOST).count()
 
@@ -133,7 +135,9 @@ class AutocompleteCategoriesView(AccessMixin, View):
     search = request.GET.get("search")
     limit = 20
 
-    found_categories = Category.objects.filter(name__icontains=search)
+    found_categories = Category.objects.filter(
+      name__icontains=search, institution__id=institution_id
+    )
 
     response = [
       {"name": categorie.name, "id": categorie.id} for categorie in found_categories

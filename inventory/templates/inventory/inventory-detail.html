@@ -86,7 +86,7 @@
             <span>Editar</span>
           </div>
         </a>
-        <button class="action-button action" id="conclude" data-url="{% url 'inventory-close' institution.id inventory.id %}"> 
+        <button class="action-button action" id="conclude" data-url="{% url 'inventory-close' institution.id inventory.id %}" data-open-modal-confirm="{{ inventory.id }}"> 
           <img class="action-icon" src="{% static 'icons/EditSave.svg' %}" alt="Concluir Inventário">
           {% if inventory.status == 'Aberto' %}
             <span>Concluir Inventário</span>
@@ -103,5 +103,7 @@
 {% include 'partials/modal_items_register.html' %}
 
 {% url 'inventory-close' institution.id inventory.id as close_url %}
-{% include 'partials/modal_confirm.html' with title=view.title  text=view.text action_url=close_url %}
+{% include 'partials/modal_confirm.html' with title=view.title  text=view.text action_url=close_url instance=inventory %}
+
+<script src="{% static 'js/modal_confirm.js' %}"></script>
 {% endblock %}

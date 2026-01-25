@@ -1,5 +1,5 @@
 {% load static %}
-<div class="modal" id="removeModal">
+<div class="modal" id="removeModal" data-confirm-modal="{{ instance.id }}">
   <div class="modal-box">
     <form id="form-remove" method="POST" action="{{ action_url|default:'' }}">
       {% csrf_token %}
@@ -29,4 +29,3 @@
     </form>
   </div>
 </div>
-<script src="{% static 'js/modal_confirm.js' %}"></script>
