@@ -1,8 +1,8 @@
 function togglePassword1Visibility() {
-  const passwordInput1 = document.getElementById("new_password1");
+  const passwordInput1 = document.getElementById("password");
 
   const toggleButton1 = document.querySelector(
-    ".toggle-password-visibility-1 img",
+    "#toggle-password-visibility-1 img",
   );
 
   if (passwordInput1.type === "password") {
@@ -15,10 +15,10 @@ function togglePassword1Visibility() {
 }
 
 function togglePassword2Visibility() {
-  const passwordInput2 = document.getElementById("new_password2");
+  const passwordInput2 = document.getElementById("confirm_password");
 
   const toggleButton2 = document.querySelector(
-    ".toggle-password-visibility-2 img",
+    "#toggle-password-visibility-2 img",
   );
 
   if (passwordInput2.type === "password") {
@@ -31,9 +31,9 @@ function togglePassword2Visibility() {
 }
 
 document
-  .querySelector(".toggle-password-visibility-1")
+  .querySelector("#toggle-password-visibility-1")
   .addEventListener("click", togglePassword1Visibility);
 
 document
-  .querySelector(".toggle-password-visibility-2")
+  .querySelector("#toggle-password-visibility-2")
   .addEventListener("click", togglePassword2Visibility);
