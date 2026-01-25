@@ -56,7 +56,7 @@ class Item(models.Model):
         return f"{self.name}"
 
     def clean(self):
-        if Item.objects.filter(serial=self.serial, institution=self.institution).exclude(id=self.id).exists():
+        if Item.objects.filter(serial=self.serial, institution_id=self.institution_id).exclude(id=self.id).exists():
             raise ValidationError("Item com este serial já existe")
     
     def delete(self):
