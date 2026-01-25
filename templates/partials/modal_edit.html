@@ -1,5 +1,5 @@
 {% load static %}
-<div class="modal" id="editModal">
+<div class="modal" data-edit-modal="{{ instance.item.id }}">
   <div class="modal-box">
     <form id="form-edit" method="POST" enctype="multipart/form-data" action="{{ action_url }}">
       {% csrf_token %}
@@ -34,4 +34,3 @@
     </form>
   </div>
 </div>
-<script src="{% static 'js/modal_edit.js' %}"></script>

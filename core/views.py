@@ -51,6 +51,14 @@ class AccessMixin(LoginRequiredMixin):
   def has_user_access(self):
     role = self.get_permission().role
     return role == Role.USER.value
+  
+  def has_manager_access(self):
+    role = self.get_permission().role
+    return role == Role.MANAGER.value
+  
+  def has_admin_access(self):
+    role = self.get_permission().role
+    return role == Role.ADMIN.value
 
 def profile(request):
   return render(request, "pages/profile.html", {})
