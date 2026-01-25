@@ -1,6 +1,7 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import ContextMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from institution.models import Institution
 from user.models import Permission, Role
@@ -17,7 +18,7 @@ class BaseContextView(ContextMixin):
     return context
   
 
-class AccessMixin:
+class AccessMixin(LoginRequiredMixin):
 
   def get_institution(self):
     return Institution.objects.get(id=self.kwargs.get('institution_id'))
@@ -53,3 +54,6 @@ class AccessMixin:
 
 def profile(request):
   return render(request, "pages/profile.html", {})
+
+def root_redirect(request):
+  return redirect("dashboard")

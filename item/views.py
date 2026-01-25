@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
 from django.views.generic.edit import FormMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.settings import MAX_ERRORS
 from core.utils import handle_selected_element, validate_dataframe_column
@@ -210,7 +211,7 @@ class DeleteItemView(AccessMixin, DeleteView):
     self.check_has_manager_access()
     return super().dispatch(request, *args, **kwargs)
 
-class DownloadItemSpreadSheetView(View):
+class DownloadItemSpreadSheetView(LoginRequiredMixin, View):
   filepath = "static/media/PlanilhaItem.ods"
   filename = "PlanilhaItem.ods"
 
