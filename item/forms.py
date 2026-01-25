@@ -137,16 +137,20 @@ class ItemFilter(django_filters.FilterSet):
     widget=widgets.InputField(label="Serial", type="text",
     label_class="label-text", input_class="filter-input"),
   )
-  category = django_filters.CharFilter(
-    lookup_expr="name__icontains",
-    widget=widgets.InputField(
-      label="Categoria", type="text", label_class="label-text", input_class="filter-input"
+  category = django_filters.ModelChoiceFilter(
+    queryset=Category.objects.all(),
+    widget=widgets.Select(
+      label="Categoria",
+      label_class="label-text",
+      input_class="filter-input custom-arrow"
     )
   )
-  room = django_filters.CharFilter(
-    lookup_expr="name__icontains",
-    widget=widgets.InputField(
-      label="Sala", type="text", label_class="label-text", input_class="filter-input"
+  room = django_filters.ModelChoiceFilter(
+    queryset=Room.objects.all(),
+    widget=widgets.Select(
+      label="Sala",
+      label_class="label-text",
+      input_class="filter-input custom-arrow"
     )
   )
   date_start = django_filters.CharFilter(
@@ -199,6 +203,16 @@ class ItemFilter(django_filters.FilterSet):
     return queryset.annotate(latest_conservation_state=Subquery(latest_state)).filter(
       latest_conservation_state=value
     )
+
+  def __init__(self, *args, **kwargs):
+    self.institution_id = kwargs.pop("institution_id")
+    super().__init__(*args, **kwargs)
+    self.filters["room"].queryset = Room.objects.filter(
+      institution__id=self.institution_id
+    ).distinct()
+    self.filters["category"].queryset = Category.objects.filter(
+      institution__id=self.institution_id
+    ).distinct()
 
 
 class ItemImport(forms.Form):

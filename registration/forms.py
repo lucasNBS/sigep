@@ -107,3 +107,13 @@ class RecordFilter(django_filters.FilterSet):
             "item__created_at",
             "recorded_at",
         ]
+
+    def __init__(self, *args, **kwargs):
+        self.institution_id = kwargs.pop("institution_id")
+        super().__init__(*args, **kwargs)
+        self.filters["user"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()
+        self.filters["item__room"].queryset = Room.objects.filter(
+            institution__id=self.institution_id
+        ).distinct()

@@ -1,7 +1,7 @@
 import django_filters
 from core import widgets
 from django import forms
-from .models import Inventory  
+from .models import Inventory, Room  
 from .choices import Status
 from institution import models as institution_models
 from django.contrib.auth import get_user_model
@@ -32,6 +32,13 @@ class InventoryForm(forms.ModelForm):
         self.institution_id = kwargs.pop('institution_id')
         self.user_id = kwargs.pop('user_id')
         super().__init__(*args, **kwargs)
+        self.fields["rooms"].queryset = Room.objects.filter(institution__id=self.institution_id)
+        self.fields["leader_consultor"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()
+        self.fields["consultors"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()
 
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -93,3 +100,16 @@ class InventoryFilter(django_filters.FilterSet):
             "date_end",
             "status",
         ]
+
+    def __init__(self, *args, **kwargs):
+        self.institution_id = kwargs.pop('institution_id')
+        super().__init__(*args, **kwargs)
+        self.filters["leader_consultor"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()
+        self.filters["consultors"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()
+        self.filters["responsible"].queryset = User.objects.filter(
+            permissions__institution__id=self.institution_id
+        ).distinct()

@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -33,8 +34,12 @@ class ListRecordsView(AccessMixin, BaseContextView, ListView):
   def get_queryset(self):
     queryset = Record.objects.select_related("item", "user").prefetch_related("item__room")
 
-    self.filterset = RecordFilter(self.request.GET, queryset=queryset)
-    return self.filterset.qs.distinct()
+    self.filterset = RecordFilter(
+      self.request.GET, queryset=queryset, institution_id=self.kwargs.get('institution_id')
+    )
+    return self.filterset.qs.filter(
+      inventory__institution__id=self.kwargs.get("institution_id")
+    ).distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -81,27 +86,42 @@ class CreateRecordView(AccessMixin, BaseContextView, CreateView):
 
     user_has_access_to_inventory = Inventory.objects.filter(
       Q(leader_consultor=self.request.user) | Q(consultors=self.request.user),
-      id=self.request.session.get("inventory_id")
+      id=self.request.session.get("inventory_id"),
+      institution__id=self.kwargs.get("institution_id")
     ).distinct().exists()
 
     item = get_object_or_404(Item, id=self.kwargs["item_id"])
 
     item_belongs_to_inventory = Inventory.objects.filter(
-      id=self.request.session.get("inventory_id"), rooms=item.room
+      id=self.request.session.get("inventory_id"),
+      rooms=item.room,
+      institution__id=self.kwargs.get("institution_id")
     ).exists()
 
-    invenvtory_is_open = Inventory.objects.filter(
-      id=self.request.session.get("inventory_id"), rooms=item.room, status=Status.OPEN
+    inventory_is_open = Inventory.objects.filter(
+      id=self.request.session.get("inventory_id"),
+      rooms=item.room,
+      status=Status.OPEN,
+      institution__id=self.kwargs.get("institution_id")
     ).exists()
 
-    if not invenvtory_is_open:
-      raise PermissionError("Este inventário foi encerrado")
+    item_has_been_registered = Record.objects.filter(
+      item=item,
+      inventory__id=self.request.session.get("inventory_id"),
+      inventory__institution__id=self.kwargs.get("institution_id")
+    ).exists()
+
+    if not inventory_is_open:
+      return HttpResponse("Este inventário foi encerrado")
 
     if not item_belongs_to_inventory:
-      raise PermissionError("Este item não faz parte deste inventário")
+      return HttpResponse("Este item não faz parte deste inventário")
 
     if not user_has_access_to_inventory:
-      raise PermissionError("Você não tem autorização para realizar esta ação")
+      return HttpResponse("Você não tem autorização para realizar esta ação")
+    
+    if item_has_been_registered:
+      return HttpResponse("Este item já foi registrado")
 
     return super().dispatch(request, *args, **kwargs)
   

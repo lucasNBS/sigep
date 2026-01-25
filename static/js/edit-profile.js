@@ -18,7 +18,11 @@ const closeProfileEditButtons = document.querySelectorAll(
 );
 for (const button of closeProfileEditButtons) {
   button.addEventListener("click", (e) => {
-    if (e.target.closest("[data-close-profile-modal]") != undefined) {
+    if (
+      e.target.closest(".modal-box") == undefined ||
+      e.target == document.querySelector(".cancel-button") ||
+      e.target.closest(".close-button")
+    ) {
       closeModal();
     }
   });

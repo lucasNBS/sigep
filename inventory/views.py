@@ -33,15 +33,29 @@ class ListInventoryView(AccessMixin, BaseContextView, ListView):
     return 10
 
   def get_queryset(self):
+    if self.has_manager_access() or self.has_admin_access():
+      self.filterset = InventoryFilter(
+        self.request.GET,
+        queryset=Inventory.objects.all(),
+        institution_id=self.kwargs.get('institution_id')
+      )
+      return self.filterset.qs.filter(
+        institution__id=self.kwargs.get("institution_id")
+      ).distinct()
+
     queryset = Inventory.objects.filter(
       Q(leader_consultor=self.request.user) | Q(consultors=self.request.user)
     ).distinct().select_related("institution", "responsible", "leader_consultor").prefetch_related(
       "consultors"
     )
 
-    self.filterset = InventoryFilter(self.request.GET, queryset=queryset)
+    self.filterset = InventoryFilter(
+      self.request.GET,
+      queryset=queryset,
+      institution_id=self.kwargs.get('institution_id')
+    )
 
-    return self.filterset.qs.distinct()
+    return self.filterset.qs.filter(institution__id=self.kwargs.get("institution_id")).distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -100,8 +114,12 @@ class DetailInventoryView(AccessMixin, BaseContextView, DetailView):
     return super().dispatch(request, *args, **kwargs)
 
   def get_queryset(self, *args, **kwargs):
+    if self.has_manager_access() or self.has_admin_access():
+      return Inventory.objects.filter(institution__id=self.kwargs.get("institution_id"))
+
     return Inventory.objects.filter(
-      Q(leader_consultor=self.request.user) | Q(consultors=self.request.user)
+      Q(leader_consultor=self.request.user) | Q(consultors=self.request.user),
+      institution__id=self.kwargs.get("institution_id")
     ).distinct()
 
   def get_context_data(self, **kwargs):
@@ -109,7 +127,9 @@ class DetailInventoryView(AccessMixin, BaseContextView, DetailView):
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
 
     records_qs = Record.objects.filter(inventory=self.object)
-    filterset = RecordFilter(self.request.GET, queryset=records_qs)
+    filterset = RecordFilter(
+      self.request.GET, queryset=records_qs, institution_id=self.kwargs.get("institution_id")
+    )
     paginator = Paginator(filterset.qs, context["size"])
     page_number = self.request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -135,6 +155,9 @@ class UpdateInventoryView(AccessMixin, BaseContextView, UpdateView):
   def dispatch(self, request, *args, **kwargs):
     self.check_has_manager_access()
     return super().dispatch(request, *args, **kwargs)
+  
+  def get_queryset(self, *args, **kwargs):
+    return Inventory.objects.filter(institution__id=self.kwargs.get("institution_id"))
 
   def get_success_url(self):
     return reverse_lazy(
@@ -159,9 +182,18 @@ class ConcludeInventoryView(AccessMixin, View):
     return super().dispatch(request, *args, **kwargs)
 
   def post(self, request, *args, **kwargs):
-    inventory = get_object_or_404(
-      Inventory, id=self.kwargs["inventory_id"], leader_consultor=self.request.user
-    )
+    inventory = None
+    if self.has_manager_access() or self.has_admin_access():
+      inventory = get_object_or_404(
+        Inventory, id=self.kwargs["inventory_id"], institution_id=kwargs["institution_id"],
+      )
+    elif self.has_user_access():
+      inventory = get_object_or_404(
+        Inventory,
+        id=self.kwargs["inventory_id"],
+        leader_consultor=self.request.user,
+        institution_id=kwargs["institution_id"]
+      )
 
     if inventory.status == Status.OPEN:
       inventory.close_inventory()
@@ -189,7 +221,7 @@ class AutocompleteRoomsView(AccessMixin, View):
     search = request.GET.get("search")
     limit = 20
 
-    found_rooms = Room.objects.filter(name__icontains=search)
+    found_rooms = Room.objects.filter(name__icontains=search, institution__id=institution_id)
 
     response = [
       {"name": room.name, "id": room.id} for room in found_rooms

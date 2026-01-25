@@ -11,10 +11,18 @@
 
       {% if permission.role == 'admin' %}
         <div class="card-actions">
-          <button class="btn-icon edit" title="Editar" data-open-institution-edit-modal>
+          <button
+            class="btn-icon edit"
+            title="Editar"
+            data-open-institution-edit-modal="{{ instance.item.id }}"
+          >
             <img src="{% static 'icons/Edit.svg' %}" alt="Editar">
           </button>
-          <button class="btn-icon delete" title="Excluir" data-open-institution-remove-modal>
+          <button
+            class="btn-icon delete"
+            title="Excluir"
+            data-open-modal-confirm="{{ instance.item.id }}"
+          >
             <img src="{% static 'icons/Trash.svg' %}" alt="Excluir">
           </button>
         </div>
@@ -56,6 +64,6 @@
   {% include 'partials/modal_edit.html' with instance=instance action_url=edit_url %}
 
   {% url 'institution-delete' instance.item.id as delete_url %}
-  {% include 'partials/modal_confirm.html' with title="Remover Instituição" text="Deseja realmente excluir esta instituição?" action_url=delete_url %}
+  {% include 'partials/modal_confirm.html' with title="Remover Instituição" text="Deseja realmente excluir esta instituição?" action_url=delete_url instance=instance.item %}
 
 {% endwith %}

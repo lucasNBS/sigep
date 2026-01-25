@@ -125,8 +125,10 @@ class ListItemView(AccessMixin, BaseContextView, FormMixin, ListView):
 
   def get_queryset(self):
     queryset = super().get_queryset()
-    self.filterset = ItemFilter(self.request.GET, queryset=queryset)
-    return self.filterset.qs.distinct()
+    self.filterset = ItemFilter(
+      self.request.GET, queryset=queryset, institution_id=self.kwargs.get('institution_id')
+    )
+    return self.filterset.qs.filter(institution__id=self.kwargs.get('institution_id')).distinct()
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -167,6 +169,10 @@ class UpdateItemView(AccessMixin, BaseContextView, UpdateView):
     self.check_has_manager_access()
     return super().dispatch(request, *args, **kwargs)
 
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    return queryset.filter(institution__id=self.kwargs.get("institution_id"))
+
   def get_success_url(self):
     return reverse("item-list", kwargs={"institution_id": self.kwargs.get('institution_id')})
 
@@ -184,12 +190,25 @@ class DetailItemView(AccessMixin, BaseContextView, DetailView):
   def dispatch(self, request, *args, **kwargs):
     self.check_has_manager_access()
     return super().dispatch(request, *args, **kwargs)
+  
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    return queryset.filter(institution__id=self.kwargs.get("institution_id"))
+
+  def get_form_kwargs(self):
+    form_kwargs = super().get_form_kwargs()
+    form_kwargs["institution_id"] = self.kwargs.get('institution_id')
+    return form_kwargs
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
 
-    filterset = RecordFilter(self.request.GET, queryset=self.object.records.all())
+    filterset = RecordFilter(
+      self.request.GET,
+      queryset=self.object.records.all(),
+      institution_id=self.kwargs.get('institution_id')
+    )
     paginator = Paginator(filterset.qs, context["size"])
     page_number = self.request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -230,7 +249,7 @@ class RestoreItemView(AccessMixin, View):
     self.check_has_manager_access()
     return super().dispatch(request, *args, **kwargs)
 
-  def post(self, request, item_id):
+  def post(self, request, institution_id, item_id):
     item = Item.all_objects.get(id=item_id)
     item.restore()
     return redirect("dashboard")

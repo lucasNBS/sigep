@@ -66,7 +66,7 @@
     </a>
 
     <div class="actions-edit-container">
-      <div class="action remove" data-open-institution-remove-modal>
+      <div class="action remove" data-open-modal-confirm="{{ object.id }}">
         {% if object.is_deleted %}
           <img class="action-icon" src="{% static 'icons/OpenBox.svg' %}" alt="Reativar">
           Reativar
@@ -84,13 +84,14 @@
 </div>
 {% include 'partials/filter-base.html' with type='register' %}
 
+{% url 'item-restore' institution.id object.id as restore_url %}
+{% url 'item-delete' institution.id object.id as remove_url %}
+
 {% if object.is_deleted %}
-  {% url 'patrimony-restore' object.id as modal_url %}
-  {% include 'partials/modal_confirm.html' with title="Reativar Item" text="Deseja realmente reativar este item do patrimônio?" action=modal_url %}
+  {% include 'partials/modal_confirm.html' with title="Reativar Item" text="Deseja realmente reativar este item do patrimônio?" action_url=restore_url instance=object %}
 {% else %}
-  {% url 'patrimony-remove' object.id as modal_url %}
-  {% include 'partials/modal_confirm.html' with title="Desativar Item" text="Deseja realmente desativar este item do patrimônio?" action=modal_url %}
+  {% include 'partials/modal_confirm.html' with title="Desativar Item" text="Deseja realmente desativar este item do patrimônio?" action_url=remove_url instance=object %}
 {% endif %}
 
-
+<script src="{% static 'js/modal_confirm.js' %}"></script>
 {% endblock %}
