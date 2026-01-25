@@ -9,20 +9,20 @@
 <div class="main-container">
   <section class="section-container">
   <div class="inventory-data-container">
-    <h2 class="main-title">{{inventory.title}}</h2>
+    <h2 class="main-title">{{ inventory.title }}</h2>
 
-    {% if role != 'user' %}
+    {% if permission.role == 'admin' or permission.role == 'manager' or is_inventory_leader %}
       <div class="cards-container">
-        {% include 'partials/card.html' with title='Total de itens' type='cube' total=total_items data='Itens cadastrados' %}
-        {% include 'partials/card.html' with title='Registrados' type='register' total=items_records data='Itens registrados' %}
-        {% include 'partials/card.html' with title='Pendentes' type='pendent' total=items_pendent data='Itens não registrados' %}
-        {% include 'partials/card.html' with title='progresso' type='progress' total=percentage data='Itens registrados' %}
+        {% include 'partials/card.html' with title='Total de itens' type='cube' total=inventory.get_total_itens data='Itens cadastrados' %}
+        {% include 'partials/card.html' with title='Registrados' type='register' total=inventory.get_total_itens_registered data='Itens registrados' %}
+        {% include 'partials/card.html' with title='Pendentes' type='pendent' total=inventory.get_total_itens_pending data='Itens não registrados' %}
+        {% include 'partials/card.html' with title='progresso' type='progress' total=inventory.get_progress data='Itens registrados' %}
       </div>
     {% endif %}
     
     <div class="details-container">
       <div class="data-container">
-        <p class="data"><span>Data de Abertura:</span> {{ inventory.start_date|date:"d/m/y" }}</p>
+        <p class="data"><span>Data de Abertura:</span> {{ inventory.start_date|date:"d/m/Y" }}</p>
         <p class="data"><span>Aberto por:</span> {{ inventory.responsible }}</p>
         <p class="data"><span>Status:</span> {{ inventory.status }}</p>
         <p class="data">
@@ -68,43 +68,40 @@
         <span>Registrar Item</span>
         {% include 'partials/dropdown_register.html' %}
       </div>
-      <div class="action-button action" data-open-modal-import>
-        <img class="action-icon" src="{% static 'icons/FileDownload.svg' %}" alt="Registrar Itens">
-        <span>Registrar Itens</span>
-      </div>
     </div>
   </div>
   {% include 'partials/table.html' with type='records' %}
-  {% if role != 'user' %}
-    <div class="top-container bottom-container">
-      <div>
-        <a class="back" href="{% url 'inventory' institution %}">
-          <img class="action-icon" src="{% static 'icons/arrow.svg' %}" alt="Registrar Item">
-            <span class="back-button">Voltar</span>
-        </a>
-      </div>
+  <div class="top-container bottom-container">
+    <div>
+      <a class="back" href="{% url 'inventory-list' institution.id %}">
+        <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
+          <span class="back-button">Voltar</span>
+      </a>
+    </div>
+    {% if permission.role == 'admin' or permission.role == 'manager' or is_inventory_leader %}
       <div class="actions-container bottom-buttons">  
-        <a href="{% url 'inventory-edit' institution inventory_id %}">
+        <a href="{% url 'inventory-edit' institution.id inventory.id %}">
           <div class="action-button action" id="btn-scan">
             <img class="action-icon" src="{% static 'icons/Edit.svg' %}" alt="Editar Inventário">
             <span>Editar</span>
           </div>
         </a>
-        <button class="action-button action" id="conclude" data-url="{% url 'conclude-inventory' institution inventory_id %}"> 
+        <button class="action-button action" id="conclude" data-url="{% url 'inventory-close' institution.id inventory.id %}"> 
           <img class="action-icon" src="{% static 'icons/EditSave.svg' %}" alt="Concluir Inventário">
           {% if inventory.status == 'Aberto' %}
-          <span>Concluir Inventário</span>
+            <span>Concluir Inventário</span>
           {% endif %}
 
           {% if inventory.status == 'Encerrado' %}
-          <span>Reabrir Inventário</span>
+            <span>Reabrir Inventário</span>
           {% endif %}
         </button>
       </div>
     {% endif %}
-</div>
+  </div>
 {% include 'partials/filter-base.html' with type='register' %}
-{% include 'partials/import-modal.html' with type='Registrar' description='Baixe e preencha a Planilha Modelo abaixo e registre múltiplos itens simultaneamente' %}
 {% include 'partials/modal_items_register.html' %}
-{% include 'partials/modal_confirm.html' with title='Concluir Inventário'  text='deseja realmente registrar este inventário como encerrado?'%}
+
+{% url 'inventory-close' institution.id inventory.id as close_url %}
+{% include 'partials/modal_confirm.html' with title=view.title  text=view.text action_url=close_url %}
 {% endblock %}

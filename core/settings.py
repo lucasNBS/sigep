@@ -33,7 +33,14 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.7"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.7", "http://localhost:80", "http://127.0.0.1:80",
+    "https://w5txwvqw-80.brs.devtunnels.ms/"]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost','http://127.0.0.1',
+    'http://localhost:80','http://127.0.0.1:80',
+    'https://w5txwvqw-80.brs.devtunnels.ms/'
+]
 
 # Application definition
 
@@ -63,6 +70,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+INSTALLED_APPS += ["django_celery_results"]
+
+CELERY_RESULT_BACKEND = "django-db"
 
 # if DEBUG:
 #     MIDDLEWARE += [
@@ -97,23 +112,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": env("DB_NAME"),
-#         "USER": env("DB_USER"),
-#         "PASSWORD": env("DB_PASSWORD"),
-#         "HOST": env("DB_HOST"),
-#         "PORT": env("DB_PORT"),
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -172,8 +187,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "user.User"
 
-SITE_URL = "http://localhost:8000"
+MAX_ERRORS = 10
+
+SITE_URL = "https://192.168.0.7:8000"
 
 LOGIN_URL = "signin"
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "signin"
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = env('EMAIL_USE_TLS') == 'True'
+
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+
+EMAIL_HOST = env('EMAIL_HOST')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

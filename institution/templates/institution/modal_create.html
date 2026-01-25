@@ -1,7 +1,12 @@
 {% load static %}
 <div class="modal" id="createModal">
   <div class="modal-box">
-    <form id="form-create" method="POST" enctype="multipart/form-data" action="{% url 'criar_instituicao'%}">
+    <form
+      method="POST"
+      id="form-create"
+      enctype="multipart/form-data"
+      action="{% url 'institution-create' %}"
+    >
       {% csrf_token %}
 
       <div class="modal-header">

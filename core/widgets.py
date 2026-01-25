@@ -43,7 +43,17 @@ class Textarea(forms.Textarea):
 class Autocomplete(forms.Select):
   template_name = "widgets/autocomplete.html"
 
-  def __init__(self, label, autocomplete, input_class, label_class, editable = False, value='', **kwargs ):
+  def __init__(
+    self,
+    label,
+    autocomplete,
+    input_class,
+    label_class,
+    data_institution_id = None,
+    editable = False,
+    value='',
+    **kwargs
+  ):
     super().__init__(**kwargs)
     self.label = label
     self.value = value
@@ -51,7 +61,7 @@ class Autocomplete(forms.Select):
     self.editable = editable
     self.input_class = input_class
     self.label_class = label_class
-
+    self.data_institution_id = data_institution_id
 
   def get_context(self, name, value, attrs):
     context = super().get_context(name, value, attrs)
@@ -61,6 +71,7 @@ class Autocomplete(forms.Select):
     context["widget"]["editable"] = self.editable
     context["widget"]["label_class"] = self.label_class
     context["widget"]["input_class"] = self.input_class
+    context["widget"]["attrs"]["data-institution-id"] = self.data_institution_id
     return context
 
 class Select(forms.Select):

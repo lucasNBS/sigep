@@ -52,14 +52,11 @@
   });
 
   const openInstitutionEditButtons = document.querySelectorAll(
-    "[data-open-institution-edit-modal]"
+    "[data-open-institution-edit-modal]",
   );
 
   for (const button of openInstitutionEditButtons) {
     button.addEventListener("click", () => {
-      const url = button.dataset.url;
-
-      form.action = url;
       open();
     });
   }

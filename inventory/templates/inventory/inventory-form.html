@@ -7,7 +7,7 @@
 
 {% block main %}
 <div class="main-container">
-  <h2 class="main-title">Abrir Processo de Inventário</h2>
+  <h2 class="main-title">{{ view.title }}</h2>
   <form class="form-container" method="post">
     {% csrf_token %}
     <div class="form-line">
@@ -31,12 +31,12 @@
       </div>
     </div>
     <div class="actions-container">
-      <a class="action cancel" href="{% url 'inventory' institution%}">
+      <a class="action cancel" href="{% url 'inventory-list' institution.id %}">
         Cancelar
       </a>
       <button class="action confirm">
         <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
-        Abrir Inventário
+        {{ view.button }}
       </button>
     </div>
   </form>

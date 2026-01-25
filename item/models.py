@@ -1,4 +1,6 @@
 import uuid
+
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from . import managers, choices
@@ -52,6 +54,10 @@ class Item(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    def clean(self):
+        if Item.objects.filter(serial=self.serial, institution_id=self.institution_id).exclude(id=self.id).exists():
+            raise ValidationError("Item com este serial já existe")
     
     def delete(self):
         self.is_deleted = True
@@ -60,3 +66,6 @@ class Item(models.Model):
     def restore(self):
         self.is_deleted = False
         self.save()
+
+    def get_last_record(self):
+        return self.records.latest("recorded_at")

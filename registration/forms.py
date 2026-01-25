@@ -66,7 +66,7 @@ class RecordFilter(django_filters.FilterSet):
     item__serial = django_filters.CharFilter(
         lookup_expr = 'icontains',
         widget=widgets.InputField(label="Serial", type="text", 
-        label_class="label-text", input_class="filter-input three-line-input custom-arrow")
+        label_class="label-text", input_class="filter-input three-line-input")
     )
     conservation_state = django_filters.ChoiceFilter(
         choices=ConservationState.choices,

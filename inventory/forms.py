@@ -28,6 +28,19 @@ class InventoryForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        self.institution_id = kwargs.pop('institution_id')
+        self.user_id = kwargs.pop('user_id')
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.institution = institution_models.Institution.objects.get(id=self.institution_id)
+        instance.responsible = User.objects.get(id=self.user_id)
+        instance.save()
+        self.save_m2m()
+        return instance
+
 
             
 class InventoryFilter(django_filters.FilterSet):

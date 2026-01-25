@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import records_scan, CreateRecordView, RegisterSerialView
+from .views import ScanRecordView, RegisterSerialView
 
 urlpatterns = [
-    path('escanear/', records_scan, name='records-scan'),
-    path('serial/', RegisterSerialView.as_view(),name='register-serial'),
-    path('<str:serial>/', CreateRecordView.as_view(), name='create-record'),
+    path('escanear/', ScanRecordView.as_view(), name='registration-scan'),
+    path('serial/', RegisterSerialView.as_view(),name='registration-serial'),
 ]
