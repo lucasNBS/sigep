@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from core.views import profile
+from core.views import root_redirect
 from institution.views import ListInstitutionsView
 from user.views import SigninView, LogoutView, SignupView, ForgotPasswordView, ResetPasswordView, NewPasswordView
 
@@ -21,4 +21,5 @@ urlpatterns = [
     path('instituicao/', include('institution.urls')),
     path('', ListInstitutionsView.as_view(), name='dashboard'),
     path('', include('user.urls')),
+    path('', root_redirect, name='root-redirect'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, F
 
 from core.views import BaseContextView, AccessMixin
@@ -17,7 +18,9 @@ from .models import Institution, Category
 from .forms import InstitutionForm
 
 
-class ListInstitutionsView(ListView):
+class ListInstitutionsView(LoginRequiredMixin, ListView):
+  login_url = reverse_lazy("signin")
+  redirect_field_name = "next"
   model = Institution
   template_name = "pages/dashboard.html"
   form_class = InstitutionForm
@@ -40,7 +43,7 @@ class ListInstitutionsView(ListView):
     return context
 
 
-class CreateInstitutionView(CreateView):
+class CreateInstitutionView(LoginRequiredMixin, CreateView):
   model = Institution
   success_url = reverse_lazy("dashboard")
   form_class = InstitutionForm
