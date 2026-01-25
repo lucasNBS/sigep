@@ -31,15 +31,25 @@ env.read_env(str(BASE_DIR / ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.7", "http://localhost:80", "http://127.0.0.1:80",
-    "https://w5txwvqw-80.brs.devtunnels.ms/"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "192.168.0.7",
+    "http://localhost:80",
+    "http://127.0.0.1:80",
+    "https://w5txwvqw-80.brs.devtunnels.ms/",
+    "http://sigep.todpig.com.br",
+    "https://sigep.todpig.com.br"
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost','http://127.0.0.1',
     'http://localhost:80','http://127.0.0.1:80',
-    'https://w5txwvqw-80.brs.devtunnels.ms/'
+    'https://w5txwvqw-80.brs.devtunnels.ms/',
+    'http://sigep.todpig.com.br',
+    'https://sigep.todpig.com.br'
 ]
 
 # Application definition
