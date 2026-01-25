@@ -80,12 +80,12 @@ class ItemForm(forms.ModelForm):
     clean_data = super().clean()
 
     room = utils.handle_selected_element(
-      Room, self.data.get("room"), self.data.get("room_name")
+      Room, self.data.get("room"), self.data.get("room_name"), self.institution_id
     )
     clean_data["room"] = room
 
     category = utils.handle_selected_element(
-      Category, self.data.get("category"), self.data.get("category_name")
+      Category, self.data.get("category"), self.data.get("category_name"), self.institution_id
     )
     clean_data["category"] = category
 

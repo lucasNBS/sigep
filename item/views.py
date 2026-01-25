@@ -2,6 +2,7 @@ import pandas as pd
 
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.db.models.signals import post_save
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -88,15 +89,20 @@ class ListItemView(AccessMixin, BaseContextView, FormMixin, ListView):
 
     with transaction.atomic():
       for _, row in df.iterrows():
-        institution = Institution.objects.get(id=1)
+        institution = Institution.objects.get(id=self.kwargs.get('institution_id'))
 
         category = Category.objects.filter(name=row["Categoria"], institution=institution).first()
         room = Room.objects.filter(name=row["Sala"], institution=institution).first()
 
         category = handle_selected_element(
-          Category, category.id if category else None, row["Categoria"]
+          Category,
+          category.id if category else None,
+          row["Categoria"],
+          self.kwargs.get('institution_id')
         )
-        room = handle_selected_element(Room, room.id if room else None, row["Sala"])
+        room = handle_selected_element(
+          Room, room.id if room else None, row["Sala"], self.kwargs.get('institution_id')
+        )
 
         itens.append(
           Item(
@@ -112,6 +118,13 @@ class ListItemView(AccessMixin, BaseContextView, FormMixin, ListView):
         )
 
       Item.objects.bulk_create(itens)
+
+      for iten in itens:
+        post_save.send(
+          sender=Item,
+          instance=iten,
+          created=True,
+        )
 
   def dispatch(self, request, *args, **kwargs):
     self.check_has_manager_access()
