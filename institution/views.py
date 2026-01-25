@@ -81,9 +81,7 @@ class DetailInstitutionView(DetailView):
     context = super().get_context_data(**kwargs)
 
     institution_id = self.kwargs["id"]
-    inventories = Inventory.objects.filter(institution__id=institution_id)
-
-    inventories = Inventory.objects.annotate(
+    inventories = Inventory.objects.filter(institution__id=institution_id).annotate(
       total_items=Count("rooms__items",distinct=True),
       recorded_items=Count("records__item",distinct=True),
     ).annotate( pending_items=F("total_items") - F("recorded_items"))
