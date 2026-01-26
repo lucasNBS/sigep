@@ -93,7 +93,7 @@ class DetailInstitutionView(AccessMixin, BaseContextView, DetailView):
   pk_url_kwarg = "institution_id"
 
   def dispatch(self, request, *args, **kwargs):
-    self.check_has_manager_access()
+    self.check_has_user_access()
     if self.has_user_access():
       return redirect(reverse(
         'registration-list', kwargs={'institution_id': self.kwargs["institution_id"]}
