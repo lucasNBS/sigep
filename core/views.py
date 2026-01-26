@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.views.generic.base import ContextMixin
@@ -65,3 +66,9 @@ def profile(request):
 
 def root_redirect(request):
   return redirect("dashboard")
+
+def error(request, exception=None):
+  message = str(exception)
+  return render(
+    request, 'error.html', { 'message': message }
+  )

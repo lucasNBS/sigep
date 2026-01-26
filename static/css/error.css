@@ -1,0 +1,41 @@
+.background {
+  height: 100vh;
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-title {
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-xl);
+  color: var(--dark-100);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.error-text {
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-m);
+  color: var(--dark-90);
+  text-align: center;
+}
+
+.action {
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+}
+
+.cancel {
+  background-color: transparent;
+  color: var(--dark-100);
+}

@@ -1,12 +1,17 @@
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.conf.urls import handler400, handler403, handler404, handler500
 from django.conf.urls.static import static
 
 from core.views import root_redirect
 from institution.views import ListInstitutionsView
 from user.views import SigninView, LogoutView, SignupView, ForgotPasswordView, ResetPasswordView, NewPasswordView
 
+handler400 = 'core.views.error'
+handler403 = 'core.views.error'
+handler404 = 'core.views.error'
+handler500 = 'core.views.error'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

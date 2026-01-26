@@ -70,7 +70,7 @@ class SigninView(View):
             perm = perms.first()
             request.session["institution_id"] = perm.institution_id
             request.session["role"] = perm.role
-            return redirect(next_url or "institution")
+            return redirect(next_url or "dashboard")
 
         if next_url:
             request.session["next_after_institution"] = next_url

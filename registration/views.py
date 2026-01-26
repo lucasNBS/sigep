@@ -1,5 +1,5 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -112,16 +112,16 @@ class CreateRecordView(AccessMixin, BaseContextView, CreateView):
     ).exists()
 
     if not inventory_is_open:
-      return HttpResponse("Este inventário foi encerrado")
+      raise PermissionDenied("Este inventário foi encerrado")
 
     if not item_belongs_to_inventory:
-      return HttpResponse("Este item não faz parte deste inventário")
+      raise PermissionDenied("Este item não faz parte deste inventário")
 
     if not user_has_access_to_inventory:
-      return HttpResponse("Você não tem autorização para realizar esta ação")
+      raise PermissionDenied("Você não tem autorização para realizar esta ação")
     
     if item_has_been_registered:
-      return HttpResponse("Este item já foi registrado")
+      raise PermissionDenied("Este item já foi registrado")
 
     return super().dispatch(request, *args, **kwargs)
   
