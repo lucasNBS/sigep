@@ -422,7 +422,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
 
         if user.exists():
             Permission.objects.create(
-                user=user.first(), institution=institution, role=Role.get(role)
+                user=user.first(), institution=institution, role=Role.get(role).value
             )
             send_invite_email.delay(
                 email,
@@ -431,7 +431,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
         else:
             raw_code = UserInvitation.generate_code(5)
             UserInvitation.objects.create(
-                role=Role.get(role),
+                role=Role.get(role).value,
                 email=email,
                 institution=institution,
                 code_hash=UserInvitation.hash_code(raw_code)
