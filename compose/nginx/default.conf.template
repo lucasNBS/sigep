@@ -11,6 +11,21 @@ server {
   }
 
   location / {
+    return 301 https://$host$request_uri;
+  }
+}
+
+server {
+  listen 443 ssl;
+  server_name sigep.todpig.com.br;
+
+  ssl_certificate /etc/letsencrypt/live/sigep.todpig.com.br/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/sigep.todpig.com.br/privkey.pem;
+
+  ssl_protocols TLSv1.2 TLSv1.3;
+  ssl_prefer_server_ciphers on;
+
+  location / {
     proxy_pass http://web;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $host;
@@ -20,6 +35,7 @@ server {
 
   location /static/ {
     alias /home/app/staticfiles/;
+    expires 30d;
   }
 
   location /media/ {
