@@ -37,11 +37,10 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "192.168.0.7",
-    "http://localhost:80",
-    "http://127.0.0.1:80",
+    "localhost:80",
+    "127.0.0.1:80",
     "https://w5txwvqw-80.brs.devtunnels.ms/",
-    "http://sigep.todpig.com.br",
-    "https://sigep.todpig.com.br"
+    "sigep.todpig.com.br"
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
