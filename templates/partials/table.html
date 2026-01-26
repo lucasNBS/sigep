@@ -75,10 +75,10 @@
         </tr>
       </thead>
       <tbody class="table-body">
-        {% for perm in items %}
+        {% for perm in permissions %}
         <tr class="table-row">
           <td class="table-cell">
-            <a href="{% url 'users-detail' perm.user.id %}">
+            <a href="{% url 'permission-detail' institution.id perm.id %}">
               {{ perm.user.get_full_name|default:perm.user.username }}
             </a>
           </td>
