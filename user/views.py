@@ -14,11 +14,12 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 
 from core.views import BaseContextView, AccessMixin
+from institution.models import Institution
 
 from .forms import SignupForm, UserSelfUpdateForm, UserFilterForm
-from .models import Permission, Role, PasswordResetCode
+from .models import Permission, Role, PasswordResetCode, UserInvitation
 
-from .tasks import send_email_with_otp
+from .tasks import send_email_with_otp, send_invite_email
 
 User = get_user_model()
 
@@ -110,6 +111,20 @@ class SignupView(View):
             user.is_active = True
             user.email = user.email.lower()
             user.save()
+
+            code = request.GET.get('code')
+
+            if code:
+                hash_code = UserInvitation.hash_code(code)
+                user_invitation = UserInvitation.objects.filter(
+                    email=user.email, code_hash=hash_code
+                )
+
+                if user_invitation.exists():
+                    for invitation in user_invitation:
+                        Permission.objects.create(
+                            user=user, institution=invitation.institution, role=invitation.role
+                        )
 
             auth_login(request, user)
             messages.success(request, "Cadastro realizado com sucesso!")
@@ -396,6 +411,32 @@ class UserListView(AccessMixin, BaseContextView, ListView):
     def dispatch(self, request, *args, **kwargs):
         self.check_has_admin_access()
         return super().dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        role = request.POST.get('role')
+
+        user = User.objects.filter(email=email)
+        institution = Institution.objects.get(id=self.kwargs.get('institution_id'))
+
+        if user.exists():
+            Permission.objects.create(user=user.first(), institution=institution, role=role)
+            send_invite_email.delay(
+                email,
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {role}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/"
+            )
+        else:
+            raw_code = UserInvitation.generate_code(5)
+            UserInvitation.objects.create(
+                role=role,
+                email=email,
+                institution=institution,
+                code_hash=UserInvitation.hash_code(raw_code)
+            )
+            send_invite_email.delay(
+                email,
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {role}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/conta/criar/?code={raw_code}"
+            )
 
     def get_paginate_by(self, queryset):
         page_size = self.request.GET.get("size")
@@ -404,7 +445,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
         return 10
 
     def get_queryset(self):
-        institution_id = self.request.session.get("institution_id")
+        institution_id = self.kwargs.get("institution_id")
 
         if not institution_id:
             return Permission.objects.none()
@@ -412,7 +453,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
         permissions_qs = (
             Permission.objects
             .select_related("user", "institution")
-            .filter(institution_id=institution_id, revoked_at__isnull=True)
+            .filter(institution__id=institution_id, revoked_at__isnull=True)
             .exclude(user=self.request.user)
         )
 
@@ -450,14 +491,14 @@ class UserListView(AccessMixin, BaseContextView, ListView):
         return context
 
 
-class UserDetailView(AccessMixin, DetailView):
+class UserDetailView(AccessMixin, BaseContextView, DetailView):
     login_url = "signin"
     redirect_field_name = "next"
 
-    model = User
+    model = Permission
     template_name = "pages/user-detail.html"
     context_object_name = "user_obj"
-    pk_url_kwarg = "id"
+    pk_url_kwarg = "permission_id"
 
     def dispatch(self, request, *args, **kwargs):
         self.check_has_admin_access()
@@ -466,12 +507,14 @@ class UserDetailView(AccessMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        institution_id = self.request.session.get("institution_id")
+        institution_id = self.kwargs.get("institution_id")
         if institution_id:
             permission = (
                 Permission.objects
                 .select_related("institution")
-                .filter(user=self.object, institution_id=institution_id, revoked_at__isnull=True)
+                .filter(
+                    user=self.object.user, institution_id=institution_id, revoked_at__isnull=True
+                )
                 .first()
             )
         else:
@@ -479,8 +522,9 @@ class UserDetailView(AccessMixin, DetailView):
 
         context["permission"] = permission
         context["remove_action_url"] = (
-            reverse("permission_remove", kwargs={"pk": permission.pk})
-            if permission else ""
+            reverse("permission-delete", kwargs={
+                "institution_id": institution_id,"permission_id": permission.pk
+            })
         )
 
         return context
@@ -492,12 +536,10 @@ class PermissionUpdateView(AccessMixin, View):
         self.check_has_admin_access()
         return super().dispatch(request, *args, **kwargs)
     
-    def post(self, request, pk):
-        institution_id = request.session.get("institution_id")
-
+    def post(self, request, institution_id, permission_id):
         perm = get_object_or_404(
             Permission,
-            pk=pk,
+            pk=permission_id,
             institution_id=institution_id,
             revoked_at__isnull=True,
         )
@@ -505,7 +547,7 @@ class PermissionUpdateView(AccessMixin, View):
         perm.role = request.POST.get("role")
         perm.save(update_fields=["role"])
 
-        return redirect("users")
+        return redirect("permission-list")
 
 
 class PermissionRevokeView(AccessMixin, View):
@@ -513,15 +555,13 @@ class PermissionRevokeView(AccessMixin, View):
     def dispatch(self, request, *args, **kwargs):
         self.check_has_admin_access()
         return super().dispatch(request, *args, **kwargs)
-    
-    def post(self, request, pk):
-        institution_id = request.session.get("institution_id")
+
+    def post(self, request, institution_id, permission_id):
         perm = get_object_or_404(
             Permission,
-            pk=pk,
+            pk=permission_id,
             institution_id=institution_id,
             revoked_at__isnull=True,
         )
         perm.revoke()
-        return redirect("users")
-
+        return redirect('permission-list')

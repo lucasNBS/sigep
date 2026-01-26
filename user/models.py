@@ -102,3 +102,18 @@ class PasswordResetCode(models.Model):
     @staticmethod
     def hash_code(raw_code: str) -> str:
         return hashlib.sha256(raw_code.encode()).hexdigest()
+    
+
+class UserInvitation(models.Model):
+    email = models.EmailField(null=False, blank=False)
+    role = models.CharField(max_length=20,choices=Role.choices(),default=Role.USER.value)
+    institution = models.ForeignKey("institution.Institution", on_delete=models.PROTECT)
+    code_hash = models.CharField(max_length=64)
+
+    @staticmethod
+    def generate_code(length=6):
+        return "".join(str(secrets.randbelow(10)) for _ in range(length))
+
+    @staticmethod
+    def hash_code(raw_code: str) -> str:
+        return hashlib.sha256(raw_code.encode()).hexdigest()
