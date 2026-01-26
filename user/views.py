@@ -7,6 +7,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -420,23 +421,29 @@ class UserListView(AccessMixin, BaseContextView, ListView):
         institution = Institution.objects.get(id=self.kwargs.get('institution_id'))
 
         if user.exists():
-            Permission.objects.create(user=user.first(), institution=institution, role=role)
+            Permission.objects.create(
+                user=user.first(), institution=institution, role=Role.get(role)
+            )
             send_invite_email.delay(
                 email,
-                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {role}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/"
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/"
             )
         else:
             raw_code = UserInvitation.generate_code(5)
             UserInvitation.objects.create(
-                role=role,
+                role=Role.get(role),
                 email=email,
                 institution=institution,
                 code_hash=UserInvitation.hash_code(raw_code)
             )
             send_invite_email.delay(
                 email,
-                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {role}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/conta/criar/?code={raw_code}"
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/conta/criar/?code={raw_code}"
             )
+        url = reverse(
+            'permission-list', kwargs={'institution_id': self.kwargs.get('institution_id')}
+        )
+        return HttpResponseRedirect(url)
 
     def get_paginate_by(self, queryset):
         page_size = self.request.GET.get("size")

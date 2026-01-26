@@ -19,6 +19,13 @@ class Role(Enum):
     @classmethod
     def choices(cls):
         return [(role.value, role.label) for role in cls]
+    
+    @classmethod
+    def get(cls, value):
+        for role in cls:
+            if role.value == value:
+                return role
+        return None
 
 
 class User(AbstractUser):
