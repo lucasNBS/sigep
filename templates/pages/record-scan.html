@@ -13,9 +13,9 @@
     <div id="reader" class="camera-container">
       <img src="{% static 'icons/Camera.svg' %}" width="128" height="128" alt="">
     </div>
-    <a class="action cancel" href="{% url 'dashboard' %}">
+    <button class="action cancel" onclick="window.history.back()">
       <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
       Voltar
-    </a>
+    </button>
   </section>
 {% endblock %}

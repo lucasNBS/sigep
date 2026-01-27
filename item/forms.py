@@ -89,6 +89,17 @@ class ItemForm(forms.ModelForm):
     )
     clean_data["category"] = category
 
+    if self.instance and self.instance.id:
+      if models.Item.objects.filter(serial=clean_data["serial"], institution__id=self.institution_id).exclude(id=self.instance.id).exists():
+        raise ValidationError("Item com este serial já existe")
+      if models.Item.objects.filter(serial=clean_data["invoice_key"], institution__id=self.institution_id).exclude(id=self.instance.id).exists():
+        raise ValidationError("Item com esta nota fiscal já existe")
+    else:
+      if models.Item.objects.filter(serial=clean_data["serial"], institution__id=self.institution_id).exists():
+        raise ValidationError("Item com este serial já existe")
+      if models.Item.objects.filter(serial=clean_data["invoice_key"], institution__id=self.institution_id).exists():
+        raise ValidationError("Item com esta nota fiscal já existe")
+
     return clean_data
 
   def _handle_category_and_room_left(self, instance, old_instance):

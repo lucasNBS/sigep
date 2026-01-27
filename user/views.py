@@ -527,7 +527,7 @@ class UserDetailView(AccessMixin, BaseContextView, DetailView):
         else:
             permission = None
 
-        context["permission"] = permission
+        context["user_permission"] = permission
         context["remove_action_url"] = (
             reverse("permission-delete", kwargs={
                 "institution_id": institution_id,"permission_id": permission.pk
@@ -570,5 +570,5 @@ class PermissionRevokeView(AccessMixin, View):
             institution_id=institution_id,
             revoked_at__isnull=True,
         )
-        perm.revoke()
+        perm.delete()
         return redirect('permission-list')

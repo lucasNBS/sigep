@@ -28,8 +28,8 @@
           <li><strong>E-mail:</strong> {{ user_obj.user.email|default:"—" }}</li>
 
           <li><strong>Cargo:</strong>
-            {% if permission %}
-              {{ permission.get_role_display }}
+            {% if user_permission %}
+              {{ user_permission.get_role_display }}
             {% endif %}
           </li>
         </ul>
@@ -60,7 +60,7 @@
   </div>
 
   {% include "partials/modal_user_role.html" %}
-  {% include 'partials/modal_confirm.html' with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" instance=permission action_url=remove_action_url %}
+  {% include 'partials/modal_confirm.html' with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" instance=user_permission action_url=remove_action_url %}
 </section>
 
 <script src="{% static 'js/modal_confirm.js' %}"></script>
