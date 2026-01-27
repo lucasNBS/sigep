@@ -23,6 +23,7 @@
 }
 
 .action {
+  background-color: transparent;
   width: fit-content;
   display: flex;
   justify-content: flex-start;
