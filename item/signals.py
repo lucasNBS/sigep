@@ -13,7 +13,7 @@ def create_qrcode(sender, instance, created, **kwargs):
   if not created or instance.qrcode:
     return
 
-  url = f"https://w5txwvqw-80.brs.devtunnels.ms/instituicao/{instance.institution.id}/patrimonio/{instance.id}/registrar/"
+  url = f"https://sigep.todpig.com.br/instituicao/{instance.institution.id}/patrimonio/{instance.id}/registrar/"
 
   qr = qrcode.make(url)
 

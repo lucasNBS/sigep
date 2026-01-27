@@ -87,7 +87,7 @@
       }
 
       const results = await fetch(
-        `https://w5txwvqw-80.brs.devtunnels.ms/instituicao/${this.id}/${this.url}/autocomplete/?search=${input.value}`,
+        `https://sigep.todpig.com.br/instituicao/${this.id}/${this.url}/autocomplete/?search=${input.value}`,
       ).then((res) => res.json());
 
       results.forEach((option) => {
