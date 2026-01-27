@@ -61,6 +61,7 @@ class ListInventoryView(AccessMixin, BaseContextView, ListView):
     context = super().get_context_data(**kwargs)
     context["size"] = self.request.GET.get("size") if self.request.GET.get('size') else 10
     context["filter"] = self.filterset
+    context["is_user"] = self.has_user_access()
     return context
 
   
