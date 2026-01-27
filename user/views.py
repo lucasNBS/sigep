@@ -426,7 +426,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
             )
             send_invite_email.delay(
                 email,
-                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/"
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://sigep.todpig.com.br/"
             )
         else:
             raw_code = UserInvitation.generate_code(5)
@@ -438,7 +438,7 @@ class UserListView(AccessMixin, BaseContextView, ListView):
             )
             send_invite_email.delay(
                 email,
-                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://w5txwvqw-80.brs.devtunnels.ms/conta/criar/?code={raw_code}"
+                f"Você foi convidado à se jutar a instituição {institution} no sistema SIGEP como um {Role.get(role).label}. Acesse o sistema através do link https://sigep.todpig.com.br/conta/criar/?code={raw_code}"
             )
         url = reverse(
             'permission-list', kwargs={'institution_id': self.kwargs.get('institution_id')}
