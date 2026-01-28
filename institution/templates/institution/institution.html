@@ -1,0 +1,47 @@
+{% load static %}
+<article class="card">
+  <div class="card-header {% if role == 'admin' %}is-admin{% endif %}">
+    <a href="{% url 'detalhar_instituicao' institution.id %}">
+      <p class="card-title">{{ company_name }}</p>
+    </a>
+
+    {% if role == 'admin' %}
+    <div class="card-actions">
+      <button class="btn-icon edit" title="Editar" data-open-institution-edit-modal data-url="{% url 'editar_instituicao' institution.id %}">
+        <img src="{% static 'icons/Edit.svg' %}" alt="Editar">
+      </button>
+      <button class="btn-icon delete" title="Excluir" data-url="{% url 'excluir_instituicao' institution.id %}">
+        <img src="{% static 'icons/Trash.svg' %}" alt="Excluir">
+      </button>
+    </div>
+    {% endif %}
+  </div>
+
+  <img src="media/{{ logo }}" alt="company_logo" class="company-logo">
+
+  {% if role == 'admin' %}
+  <p class="admin-role">{{ role }}</p>
+  {% else %}
+  <p class="card-role">{{ role }}</p>
+  {% endif %}
+
+  <div class="card-stats">
+    <div class="stat">
+      <div class="stat-icon stat-box">
+        <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+      </div>
+      <p class="stat-number">{{ items_total }}</p>
+      <p class="stat-label">Itens em Estoque</p>
+    </div>
+
+    <div class="stat">
+      <div class="stat-icon stat-user">
+        <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+      </div>
+      <p class="stat-number">{{ users_total }}</p>
+      <p class="stat-label">Usuários</p>
+    </div>
+  </div>
+</article>
+{% include 'partials/modal_edit.html' %}
+{% include 'partials/modal_confirm.html' with title="Remover Instituição" text="Deseja realmente excluir esta instituição?" instance=institution %}

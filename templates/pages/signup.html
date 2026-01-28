@@ -1,0 +1,123 @@
+{% extends "base-login.html" %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/register.js' %}" defer></script>
+{% endblock head %}
+{% block main %}
+<div class="login-form-container">
+  <form class="login-form" method="POST" novalidate>
+    {% csrf_token %}
+
+    <h1 class="login-form-title">Bem-vindo!</h1>
+    <p class="login-form-subtitle">Cadastre-se no SIGEP</p>
+
+    {# Erros gerais (ex.: senhas não conferem, regras de senha) #}
+    {% include 'partials/errors.html' %}
+
+    <div class="signup-container">
+      <div class="input-group">
+        <label class="input-label" for="id_full_name">Nome</label>
+        <input
+          class="input-field"
+          type="text"
+          id="id_full_name"
+          name="full_name"
+          placeholder="Digite seu nome completo"
+          value="{{ form.full_name.value|default:'' }}"
+          required
+          autocomplete="name"
+        />
+      </div>
+  
+      <div class="input-group">
+        <label class="input-label" for="id_email">Email</label>
+        <input
+          class="input-field"
+          type="email"
+          id="id_email"
+          name="email"
+          placeholder="Digite seu email"
+          value="{{ form.email.value|default:'' }}"
+          required
+          autocomplete="email"
+        />
+      </div>
+  
+      <div class="input-group">
+        <div class="input-with-toggle">
+          <div class="password-input-group">
+            <label class="input-label" for="password">Senha</label>
+            <input
+              class="input-field"
+              type="password"
+              id="password"
+              name="password1"
+              placeholder="Digite sua senha"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+  
+          <div class="password-visibility-toggle">
+            <button
+              type="button"
+              class="toggle-password-visibility"
+              id="toggle-password-visibility-1"
+              data-target="#password"
+              aria-label="Mostrar/ocultar senha"
+            >
+              <img
+                src="{% static 'icons/CrossedEye.svg' %}"
+                alt="Mostrar/ocultar senha"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <div class="input-group">
+        <div class="input-with-toggle">
+          <div class="password-input-group">
+            <label class="input-label" for="confirm_password"
+              >Confirmar senha</label
+            >
+            <input
+              class="input-field"
+              type="password"
+              id="confirm_password"
+              name="password2"
+              placeholder="Confirme sua senha"
+              required
+              autocomplete="new-password"
+            />
+          </div>
+  
+          <div class="password-visibility-toggle">
+            <button
+              type="button"
+              class="toggle-password-visibility"
+              data-target="#confirm_password"
+              id="toggle-password-visibility-2"
+              aria-label="Mostrar/ocultar confirmar senha"
+            >
+              <img
+                src="{% static 'icons/CrossedEye.svg' %}"
+                alt="Mostrar/ocultar confirmar senha"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-form-footer">
+      <button type="submit" class="login-button-link">Cadastrar</button>
+
+      <span class="register-prompt">
+        Já possui uma conta?
+        <a class="register-link" href="{% url 'signin' %}">Entre</a>
+      </span>
+    </div>
+  </form>
+</div>
+{% endblock main %}

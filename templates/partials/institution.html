@@ -1,0 +1,69 @@
+{% load static %}
+{% load utils %}
+
+{% with permission=instance.item|get_permission_for_user:user %}
+
+  <article class="card">
+    <div class="card-header {% if permission.role == 'admin' %}is-admin{% endif %}">
+      <a href="{% url 'institution-detail' instance.item.id %}">
+        <p class="card-title">{{ instance.item.name }}</p>
+      </a>
+
+      {% if permission.role == 'admin' %}
+        <div class="card-actions">
+          <button
+            class="btn-icon edit"
+            title="Editar"
+            data-open-institution-edit-modal="{{ instance.item.id }}"
+          >
+            <img src="{% static 'icons/Edit.svg' %}" alt="Editar">
+          </button>
+          <button
+            class="btn-icon delete"
+            title="Excluir"
+            data-open-modal-confirm="{{ instance.item.id }}"
+          >
+            <img src="{% static 'icons/Trash.svg' %}" alt="Excluir">
+          </button>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if instance.item.logo_url %}
+      <img src="{{ instance.item.logo_url.url }}" alt="company_logo" class="company-logo">
+    {% else %}
+      <img src="{% static 'img/institution.png' %}" alt="company_logo" class="company-logo">
+    {% endif %}
+
+    {% if permission.role == 'admin' %}
+      <p class="admin-role">{{ permission.get_role_display }}</p>
+    {% else %}
+      <p class="card-role">{{ permission.get_role_display }}</p>
+    {% endif %}
+
+    <div class="card-stats">
+      <div class="stat">
+        <div class="stat-icon stat-box">
+          <img src="{% static 'icons/BoxCard.svg' %}" aria-hidden="true">
+        </div>
+        <p class="stat-number">{{ instance.item.get_total_itens }}</p>
+        <p class="stat-label">Itens em Estoque</p>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon stat-user">
+          <img src="{% static 'icons/UserCard.svg' %}" aria-hidden="true">
+        </div>
+        <p class="stat-number">{{ instance.item.get_total_users }}</p>
+        <p class="stat-label">Usuários</p>
+      </div>
+    </div>
+  </article>
+
+  {% url 'institution-edit' instance.item.id as edit_url %}
+  {% include 'partials/modal_edit.html' with instance=instance action_url=edit_url %}
+
+  {% url 'institution-delete' instance.item.id as delete_url %}
+  {% include 'partials/modal_confirm.html' with title="Remover Instituição" text="Deseja realmente excluir esta instituição?" action_url=delete_url instance=instance.item %}
+
+{% endwith %}

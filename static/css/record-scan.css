@@ -1,0 +1,36 @@
+.container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.text {
+  text-align: center;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-m);
+  color: var(--gray-100);
+}
+
+.camera-container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 350px;
+  border: 2px dashed var(--dark-100);
+}
+
+.action {
+  background-color: transparent;
+  width: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
+  padding: 14px 20px;
+  gap: 10px;
+  border-radius: 10px;
+}

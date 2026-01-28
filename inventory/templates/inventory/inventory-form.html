@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/inventory-form.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="main-container">
+  <h2 class="main-title">{{ view.title }}</h2>
+  <form class="form-container" method="post">
+    {% csrf_token %}
+    <div class="form-line">
+      <div class="form-field">
+        <label class="form-field-label">Título</label>
+        {{ form.title }}
+      </div>
+      <div class="form-field flex-1">
+        <label class="form-field-label">Consultor Líder</label>
+        {{ form.leader_consultor }}
+      </div>
+    </div>
+    <div class="form-line">
+      <div class="form-field flex-2">
+        <label class="form-field-label">Equipe de Consultoria</label>
+        {{ form.consultors }}
+      </div>
+      <div class="form-field">
+        <label class="form-field-label">Salas</label>
+        {{ form.rooms }}
+      </div>
+    </div>
+    <div class="actions-container">
+      <a class="action cancel" href="{% url 'inventory-list' institution.id %}">
+        Cancelar
+      </a>
+      <button class="action confirm">
+        <img class="action-icon" src="{% static 'icons/Clipboard.svg' %}" alt="Cadastrar">
+        {{ view.button }}
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

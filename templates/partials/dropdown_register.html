@@ -1,0 +1,12 @@
+{% load static %}
+
+<div class="dropdown-menu" id="dropdown-scan">
+  <a class="dropdown-item" href="{% url 'registration-scan' institution.id inventory.id %}">
+    <img src="{% static 'icons/Scan.svg' %}" alt="" class="dropdown-item__icon">
+    <span>Escanear</span>
+  </a>
+  <button type="button" class="dropdown-item" data-open-register-item-modal>
+    <img src="{% static 'icons/Register.svg' %}" alt="" class="dropdown-item__icon">
+    <span>Manual</span>
+  </button>
+</div>

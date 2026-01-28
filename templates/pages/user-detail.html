@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/institution.css' %}">
+{% endblock %}
+
+{% block main %}
+<section class="main-content-container">
+  <div class="profile-spacer">
+
+    <section class="p-profile">
+      <div class="profile__photo">
+        {% if user_obj.user.photo_url %}
+        <img src="{{ user_obj.user.photo_url.url }}" alt="Foto do usuário">
+        {% else %}
+        <img src="{% static 'icons/UserProfile.svg' %}" alt="Sem foto">
+        {% endif %}
+      </div>
+
+      <div class="profile__info">
+        <h2 class="profile__name">
+          {{ user_obj.user.get_full_name|default:user_obj.user.username }}
+        </h2>
+
+        <ul class="profile__meta">
+          <li><strong>E-mail:</strong> {{ user_obj.user.email|default:"—" }}</li>
+
+          <li><strong>Cargo:</strong>
+            {% if user_permission %}
+              {{ user_permission.get_role_display }}
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="p-actions">
+      <a class="btn btn--ghost" href="{% url 'permission-list' institution.id %}">
+        <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
+        </svg>
+        Voltar
+      </a>
+
+      <div class="actions-container">
+        <button type="button" class="btn btn--primary" data-open-modal-confirm="{{ user_obj.id }}">
+          <img src="{% static 'icons/UserRemove.svg' %}" alt="Remover Permissão" width="24" height="24">
+          Remover Permissão
+        </button>
+
+        <button type="button" class="btn btn--primary" data-open-user-role-modal>
+          <img src="{% static 'icons/Edit.svg' %}" alt="Editar Permissão" width="20" height="20">
+          Editar Permissão
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  {% include "partials/modal_user_role.html" %}
+  {% include 'partials/modal_confirm.html' with title="Remover Usuário" text="Deseja realmente remover a permissão deste usuário?" instance=user_permission action_url=remove_action_url %}
+</section>
+
+<script src="{% static 'js/modal_confirm.js' %}"></script>
+{% endblock %}

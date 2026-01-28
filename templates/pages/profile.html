@@ -1,0 +1,49 @@
+{% extends 'base-dashboard.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/institution.css' %}">
+{% endblock %}
+
+{% block main %}
+<section class="main-content-container">
+  <section class="p-profile">
+    <div class="profile__photo">
+      {% if user_obj.photo_url %}
+        <img src="{{ user_obj.photo_url.url }}" alt="Foto do usuário">
+      {% else %}
+        <img src="{% static 'icons/User.svg' %}" alt="Foto do usuário">
+      {% endif %}
+    </div>
+
+    <div class="profile__info">
+      <h2 class="profile__name">
+        {{ user_obj.get_full_name|default:user_obj.username }}
+      </h2>
+
+      <ul class="profile__meta">
+        <li><strong>E-mail:</strong> {{ user_obj.email|default:"—" }}</li>
+        <li><strong>Total de Registros:</strong> {{ user_obj.records.count }}</li>
+        <li><strong>Total de Inventários Abertos:</strong> {{ user_obj.inventories.count }}</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="p-actions">
+    <a class="btn btn--ghost" href="{% url 'dashboard' %}">
+      <svg class="chev-left" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" />
+      </svg>
+      Voltar
+    </a>
+
+    <a class="btn btn--primary" href="#" data-open-profile-modal>
+      <img src="{% static 'icons/Edit.svg' %}" alt="Editar" width="20" height="20">
+      Editar
+    </a>
+  </section>
+
+  {% include 'partials/profile-modal.html' %}
+</section>
+{% endblock %}

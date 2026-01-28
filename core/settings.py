@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,10 +31,27 @@ env.read_env(str(BASE_DIR / ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "192.168.0.7",
+    "localhost:80",
+    "127.0.0.1:80",
+    "https://w5txwvqw-80.brs.devtunnels.ms/",
+    "sigep.todpig.com.br"
+]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost','http://127.0.0.1',
+    'http://localhost:80','http://127.0.0.1:80',
+    'https://w5txwvqw-80.brs.devtunnels.ms/',
+    'http://sigep.todpig.com.br',
+    'https://sigep.todpig.com.br'
+]
 
 # Application definition
 
@@ -45,6 +63,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'user',
+    'institution',
+    'inventory',
+    'item',
+    'registration',
+    'django_filters',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +81,24 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+
+INSTALLED_APPS += ["django_celery_results"]
+
+CELERY_RESULT_BACKEND = "django-db"
+
+# if DEBUG:
+#     MIDDLEWARE += [
+#         'django.middleware.cache.UpdateCacheMiddleware',
+#         'django.middleware.cache.FetchFromCacheMiddleware',
+#     ]
+
+#     CACHE_MIDDLEWARE_SECONDS = 0  # Não guarda cache
+#     CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -91,6 +134,13 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -113,7 +163,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+USE_L10N = True
+
+LANGUAGE_CODE = 'pt-br'
+
+LANGUAGES = [
+    ('pt-br', 'Português'),
+    ('en', 'English'),
+]
 
 TIME_ZONE = 'UTC'
 
@@ -129,7 +186,7 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles_build", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -138,3 +195,28 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "user.User"
+
+MAX_ERRORS = 10
+
+SITE_URL = "https://192.168.0.7:8000"
+
+LOGIN_URL = "signin"
+LOGIN_REDIRECT_URL = "dashboard"
+LOGOUT_REDIRECT_URL = "signin"
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = env('EMAIL_USE_TLS') == 'True'
+
+EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+
+EMAIL_HOST = env('EMAIL_HOST')
+
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')

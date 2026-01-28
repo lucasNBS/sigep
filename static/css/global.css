@@ -16,6 +16,18 @@
   --red: #e03137;
   --white: #fff;
   --blue: #113d65;
+
+  --font-primary-light: "Lexend Light";
+  --font-primary: "Lexend";
+  --font-primary-bold: "Lexend Bold";
+
+  --font-size-xxl: 32px;
+  --font-size-xl: 30px;
+  --font-size-l: 24px;
+  --font-size-m: 20px;
+  --font-size-s: 16px;
+  --font-size-xs: 14px;
+  --font-size-xxs: 12px;
 }
 
 *,
@@ -25,6 +37,11 @@
   padding: 0;
   margin: 0;
   border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
 }
 
 @font-face {
@@ -73,4 +90,23 @@
   font-weight: bolder;
   font-style: normal;
   font-display: swap;
+}
+
+.errors-container {
+  background-color: #fff5c2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 16px;
+  gap: 8px;
+}
+
+.error-text {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
+  color: var(--dark-100);
+}
+
+.error-text span {
+  font-family: var(--font-primary-bold);
 }

@@ -1,0 +1,43 @@
+{% load static %}
+<div class="modal" id="createModal">
+  <div class="modal-box">
+    <form
+      method="POST"
+      id="form-create"
+      enctype="multipart/form-data"
+      action="{% url 'institution-create' %}"
+    >
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Cadastrar Instituição</p>
+        <button type="button" class="close-button" id="createModalCloseBtn">
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <label class="label">Logo</label>
+          <label class="dropzone" for="logo-input">
+            {{ form.logo_url }}
+          </label>
+        </div>
+
+        <div>
+          <label class="label" for="create-nome">Nome</label>
+          {{ form.name }}
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="filter-button cancel-button" id="createModalCancelBtn">Cancelar</button>
+        <button type="submit" class="filter-button apply-button">
+          <img src="{% static 'icons/EditSave.svg' %}" alt="Salvar"> Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="{% static 'js/modal_create.js' %}"></script>

@@ -1,0 +1,18 @@
+<article class="content">
+  <div class="one-input-inline">
+    <label for="{{ filter_form.name.id_for_label }}" class="label-text">Nome</label>
+    {{ filter_form.name }}
+  </div>
+
+  <div class="two-input-inline">
+    <div>
+      <label for="{{ filter_form.role.id_for_label }}" class="label-text">Cargo</label>
+      {{ filter_form.role }}
+    </div>
+
+    <div>
+      <label for="{{ filter_form.email.id_for_label }}" class="label-text">E-mail</label>
+      {{ filter_form.email }}
+    </div>
+  </div>
+</article>

@@ -1,10 +1,59 @@
-version: "3"
-
 services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    container_name: django
+    env_file:
+      - .env
+    volumes:
+      - static_volume:/home/app/staticfiles
+      - media_volume:/home/app/media
+    command: /entrypoint.sh
+    depends_on:
+      - postgresql
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    container_name: nginx
+    volumes:
+      - static_volume:/home/app/staticfiles
+      - media_volume:/home/app/media
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - django
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    container_name: celery
+    command: celery -A core worker -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - postgresql
+      - redis
+    env_file:
+      - .env
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - 6380:6379
+
   postgresql:
     image: postgres:16-bullseye
     ports:
       - ${DB_PORT}:5432
+    container_name: postgresql
     volumes:
       - data:/var/lib/postgresql/data
     environment:
@@ -12,5 +61,15 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
 
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot_www:/var/www/certbot
+      - certbot_conf:/etc/letsencrypt
+
 volumes:
-  data:
+  static_volume: {}
+  media_volume: {}
+  data: {}
+  certbot_www: {}
+  certbot_conf: {}

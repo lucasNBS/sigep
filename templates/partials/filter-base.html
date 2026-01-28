@@ -1,0 +1,45 @@
+{% load static %}
+<div class="modal" id="filterModal" data-close-filter-modal>
+    <div class="filter-box">
+        <form method="get">
+        <div class="filter-header">
+            {% if type == 'patrimony' %}
+                <p class="filter-title">Filtrar Patrimônios</p>
+            {% elif type == 'user' %}
+                <p class="filter-title">Filtrar Usuários</p>
+            {% elif type == 'inventory' %}
+                <p class="filter-title">Filtrar Inventários</p>        
+            {% elif type == 'register' %}
+                <p class="filter-title">Filtrar Registros</p>        
+            {% endif %}
+            
+            <button class="close-button" type="button">
+                <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar" data-close-filter-modal>
+            </button>
+            
+        </div class="filter-form">           
+            {% if type == 'patrimony' %}
+                {% include 'item/_filter-patrimony.html' %}
+            {% elif type == 'user' %}
+                {% include 'partials/filter-user.html' %}
+            {% elif type == 'inventory' %}
+                {% include 'inventory/filter-inventory.html' %}        
+            {% elif type == 'register' %}
+                {% include 'registration/filter-register.html' %}        
+            {% endif %}
+        <div>
+            
+        </div>
+
+        <div class="buttons-row">
+            <button class="filter-button cancel-button" data-close-filter-modal type="button">
+                Cancelar
+            </button>
+            <button class="filter-button apply-button"> 
+                <img src="{% static 'icons/Search.svg'%}" alt="Aplicar">Aplicar
+            </button>
+        </div>
+        </form>
+    </div>
+</div>
+<script src="{% static 'js/filter.js' %}"></script>

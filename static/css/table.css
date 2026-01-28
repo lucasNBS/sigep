@@ -4,7 +4,12 @@
   gap: 24px;
 }
 
+.table-responsive-container {
+  width: 100%;
+}
+
 .table-container {
+  width: 100%;
   border: none;
   border-collapse: collapse;
 }
@@ -24,7 +29,7 @@
 .table-cell {
   padding: 16px;
   font-family: "Poppins";
-  font-size: 12px;
+  font-size: var(--font-size-xxs);
   letter-spacing: 0.4px;
 }
 
@@ -42,20 +47,21 @@
 }
 
 .table-pagination-text {
-  font-family: "Lexend Light";
-  font-size: 14px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
   color: var(--gray-100);
 }
 
 .table-pagination-number {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 12px;
   border: 1px solid var(--gray-20);
   border-radius: 10px;
-  font-family: "Lexend";
-  font-size: 14px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   gap: 16px;
 }
@@ -96,15 +102,32 @@
   align-items: center;
   width: 36px;
   height: 36px;
-  font-family: "Lexend";
-  font-size: 14px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xs);
   color: var(--dark-100);
   border: 1px solid var(--gray-20);
   border-radius: 8px;
 }
 
 .table-pagination-numbers-item.selected {
-  font-family: "Lexend Bold";
+  font-family: var(--font-primary-bold);
   border: 1px solid var(--primary);
   color: var(--primary);
+}
+
+@media screen and (max-width: 1200px) {
+  .table-container {
+    min-width: 984px;
+  }
+
+  .table-responsive-container {
+    width: calc(100vw - 40px);
+    overflow: auto;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .table-pagination-text {
+    display: none;
+  }
 }

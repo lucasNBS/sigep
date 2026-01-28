@@ -1,0 +1,66 @@
+.main-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.top-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-title {
+  font-family: var(--font-primary-bold);
+  font-size: var(--font-size-xl);
+  color: var(--dark-100);
+}
+
+.main-options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.option-container {
+  border-radius: 10px;
+  padding: 13px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-primary-light);
+  font-size: var(--font-size-xs);
+}
+
+.filter {
+  border: 1px solid var(--gray-20);
+}
+
+.action {
+  color: var(--white);
+  background-color: var(--primary);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .top-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .main-options-container {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    justify-content: flex-end;
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/record-scan.css' %}">
+  <script src="{% static 'js/qrcode/index.js' %}" defer></script>
+  <script src="{% static 'js/scan.js' %}" defer></script>
+{% endblock %}
+
+{% block main %}
+  <section class="container">
+    <p class="text">Escaneie o QR Code de um dos itens do patrimônio para registrá-lo</p>
+    <div id="reader" class="camera-container">
+      <img src="{% static 'icons/Camera.svg' %}" width="128" height="128" alt="">
+    </div>
+    <button class="action cancel" onclick="window.history.back()">
+      <img class="action-icon" src="{% static 'icons/Arrow.svg' %}" alt="Voltar">
+      Voltar
+    </button>
+  </section>
+{% endblock %}

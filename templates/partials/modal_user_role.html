@@ -1,0 +1,63 @@
+{% load static %}
+<div class="modal" id="editUserRoleModal">
+  <div class="modal-box">
+    <form
+      id="form-edit-user-role"
+      method="POST"
+      action="{% url 'permission-edit' institution.id user_permission.pk %}"
+    >
+      {% csrf_token %}
+
+      <div class="modal-header">
+        <p class="modal-title">Editar Permissão</p>
+
+        <button type="button" class="close-button" id="editUserRoleModalCloseBtn">
+          <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="confirm-text secondary-text">
+          Selecione a nova permissão para o usuário.
+        </p>
+
+        <label class="label" for="edit-role">Cargo</label>
+
+        <div class="select-wrapper">
+          <select id="edit-role" name="role" class="input select-custom" required>
+            <option value="user"
+              {% if permission.role == "consultor" %}selected{% endif %}
+            >
+              Consultor de Patrimônio
+            </option>
+
+            <option value="manager"
+              {% if permission.role == "gerente" %}selected{% endif %}
+            >
+              Gerente de Patrimônio
+            </option>
+          </select>
+
+          <img src="{% static 'icons/ArrowDown.svg' %}" class="select-icon">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="filter-button cancel-button"
+          id="editUserRoleModalCancelBtn"
+        >
+          Cancelar
+        </button>
+
+        <button type="submit" class="filter-button apply-button">
+          Salvar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="{% static 'js/modal_user_role.js' %}" defer></script>

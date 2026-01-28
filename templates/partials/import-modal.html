@@ -1,0 +1,51 @@
+{% load static %}
+<div class="modal" id="invitationModal" data-close-import-modal>
+    <div class="modal-box">
+        <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'item-list' institution.id %}"
+        >
+            {% csrf_token %}
+        <div class="modal-header">
+
+            <p class="modal-title" >{{ type }} Itens</p>
+
+            <button class="close-button" type="button">
+                <img src="{% static 'icons/Cancel.svg' %}" alt="Fechar" data-close-import-modal>
+            </button>
+        </div >           
+
+        <div class="modal-body">
+
+            <p class="secondary-text">{{ description }}</p>
+
+            <a
+                class="import-download import-font"
+                href="{% url 'item-spreadsheet-download' institution.id %}"
+            >
+                <img src="{% static 'icons/ExcelModel.svg'%}" alt="Aplicar"> Planilha Modelo
+            </a>
+        
+            <label class="dropzone import-select" for="logo-input">
+                <input id="logo-input" name="spreadsheet" type="file" hidden>
+                <span id="logo-filename" class="file-select import-font">Escolher Arquivo</span>
+            </label>
+        </div>
+
+        <div class="modal-footer buttons-row" >
+            <button
+                data-close-import-modal
+                class="filter-button cancel-button"
+                type="button"
+            >
+                Cancelar
+            </button>
+            <button class="filter-button apply-button" type="submit">
+                <img src="{% static 'icons/FileDownload.svg'%}" alt="Aplicar">{{ type }}
+            </button>
+        </div>
+        </form>
+    </div>
+</div>
+<script src="{% static 'js/import-sheet.js' %}"></script>
